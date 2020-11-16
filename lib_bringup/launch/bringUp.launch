@@ -1,0 +1,12 @@
+<launch>
+    <!-- Bringup -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+        <param name="publish_frequency" type="double" value="50.0" />
+    </node>
+    <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter" output="screen" >
+        <rosparam command="load" file="$(find lib_navigation)/config/scan_data_filter.yaml" />
+    </node>
+    <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find lib_bringup)/urdf/librarian.urdf.xacro'" />
+    <param name="robot_description" command="$(arg urdf_file)" />
+
+</launch>

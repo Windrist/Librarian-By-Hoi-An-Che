@@ -1,0 +1,17 @@
+<launch>
+    <!-- Run Main -->
+    <node pkg="lib_bringup" name="Main" type="main_node.py" output="screen" />
+
+    <!-- Run Microphone -->
+    <node pkg="lib_microphone" name="Mic" type="SpeechRecognition.py" output="screen" />
+
+    <!-- Run Speaker -->
+    <node pkg="lib_speaker" name="Play" type="Play.py" output="screen" /> 
+    <node pkg="lib_speaker" name="Talk" type="Talk.py" output="screen" />
+
+    <!-- Run Chatbot -->
+    <node pkg="lib_chatbot" name="Chatbot" type="connect_rasa.py" output="screen" /> 
+    <!-- <node pkg="lib_bringup" name="Demo" type="demo.py" output="screen" /> -->
+  
+</launch>
+
