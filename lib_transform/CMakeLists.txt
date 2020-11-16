@@ -10,6 +10,7 @@ project(lib_transform)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -203,3 +204,9 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+add_executable(tf_transform src/tf_transform.cpp)
+target_link_libraries(tf_transform ${catkin_LIBRARIES})
+
+add_executable(odom_transform src/odom_transform.cpp)
+target_link_libraries(odom_transform ${catkin_LIBRARIES})
