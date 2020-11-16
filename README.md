@@ -25,17 +25,19 @@ python3 -m venv venv
 cd src && git clone https://github.com/Windrist/Librarian-By-Hoi-An-Che
 cd Librarian-By-Hoi-An-Che
 . setup.sh
-cd ../.. && catkin_make
+cd ../../../.. && catkin_make
 ```
 
 ## Usage
 
 #### Run All:
 ```bash
+cd ~/Librarian_ws/src/lib_run
 . runAll.sh
 ```
 #### Run Only ChatBot:
 ```bash
+cd ~/Librarian_ws/src/lib_run
 . runChatBot.sh
 ```
 
