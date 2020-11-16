@@ -1,0 +1,4 @@
+#!/bin/bash
+sudo cp `rospack find lib_bringup`/../lib_run/scripts/99-librarian-cdc.rules /etc/udev/rules.d/
+sudo udevadm control --reload-rules
+sudo udevadm trigger

@@ -25,6 +25,7 @@ python3 -m venv venv
 cd src && git clone https://github.com/Windrist/Librarian-By-Hoi-An-Che
 cd Librarian-By-Hoi-An-Che
 . setup.sh
+pip install --upgrade pip
 pip install -r requirements.txt
 cd ../.. && catkin_make
 ```

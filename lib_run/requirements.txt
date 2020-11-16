@@ -236,8 +236,6 @@ tf2-ros==0.6.5
 topic-tools==1.14.10
 tornado==6.1
 tqdm==4.45.0
-turtlebot3-example==1.2.4
-turtlebot3-teleop==1.2.4
 twilio==6.26.3
 typing-extensions==3.7.4.3
 tzlocal==2.1
