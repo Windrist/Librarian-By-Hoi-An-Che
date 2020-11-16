@@ -32,12 +32,12 @@ cd ../../../.. && catkin_make
 
 #### Run All:
 ```bash
-cd ~/Librarian_ws/src/lib_run
+cd ~/Librarian_ws/src/Librarian-By-Hoi-An-Che/lib_run
 . runAll.sh
 ```
 #### Run Only ChatBot:
 ```bash
-cd ~/Librarian_ws/src/lib_run
+cd ~/Librarian_ws/src/Librarian-By-Hoi-An-Che/lib_run
 . runChatBot.sh
 ```
 
@@ -47,11 +47,11 @@ Project Made By Hoi An Che-K63R, consists of:
 - Tran Huu Quoc Dong - [Project Manager]
 - Bui Duy Nam - [Main Coder]
 - Hoang Quoc Anh - [ChatBot Coder]
-- Dam Phuong Nam - [Designer]
-- Do Tuan Anh - [Designer]
 - Duong Thi Thuy Ngan - [Control Coder]
 - Ngo Thi Ngoc Quyen - [Control Coder]
 - Pham Quang Hung - [Control Coder]
-- Dang Van Hieu - [Designer]
 - Nguyen Ba Chung - [Control Coder]
+- Dam Phuong Nam - [Designer]
+- Do Tuan Anh - [Designer]
+- Dang Van Hieu - [Designer]
 
