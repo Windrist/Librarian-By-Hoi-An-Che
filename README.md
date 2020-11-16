@@ -21,7 +21,7 @@ SLAM and Navigation with Lidar
 ```bash
 mkdir Librarian_ws && cd Librarian_ws && mkdir src
 python3 -m venv venv
-. venv/bin/active
+. venv/bin/activate
 cd src && git clone https://github.com/Windrist/Librarian-By-Hoi-An-Che
 cd Librarian-By-Hoi-An-Che
 . setup.sh
