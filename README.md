@@ -19,7 +19,7 @@ SLAM and Navigation with Lidar
 
 ## Installation
 ```bash
-mkdir Librarian_ws && cd Librarian_ws && mkdir src
+mkdir Workspace/Librarian_ws/src && cd Workspace/Librarian_ws
 python3 -m venv venv
 . venv/bin/activate
 cd src && git clone https://github.com/Windrist/Librarian-By-Hoi-An-Che
@@ -32,12 +32,12 @@ cd ../../../.. && catkin_make
 
 #### Run All:
 ```bash
-cd ~/Librarian_ws/src/Librarian-By-Hoi-An-Che/lib_run
+cd ~/Workspace/Librarian_ws/src/Librarian-By-Hoi-An-Che/lib_run
 . runAll.sh
 ```
 #### Run Only ChatBot:
 ```bash
-cd ~/Librarian_ws/src/Librarian-By-Hoi-An-Che/lib_run
+cd ~/Workspace/Librarian_ws/src/Librarian-By-Hoi-An-Che/lib_run
 . runChatBot.sh
 ```
 
