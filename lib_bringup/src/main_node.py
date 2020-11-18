@@ -86,10 +86,6 @@ class StateMachine(object):
             self.state = "End_Borrow_Book"
             self.play.data = "End_Borrow_Book.mp3"
             self.pub_play.publish(self.play)
-        # elif msg.data == "Done" and self.state == "@End_With_Deny":
-        #     self.state = "Record5"
-        #     self.main.data = self.state
-        #     self.pub_main.publish(self.main)
         elif msg.data == "Done" and self.state == "@Chitchat":
             self.state = "Ask_Again"
             self.play.data = "Ask_Again.mp3"
@@ -144,7 +140,7 @@ class StateMachine(object):
             self.pub_main.publish(self.main)
 
     def callbackMic(self, msg):
-        if msg.data != u"hướng dẫn cho tôi ":
+        if msg.data != u"hướng dẫn cho tôi " or msg.data != "hướng dẫn " or msg.data != "hướng dẫn cho mình " or msg.data != "hướng dẫn đi ":
             if msg.state == "Got" and self.state == "Idle" and msg.data == u"xin chào ":
                 self.state = "Busy"
                 self.main.data = self.state

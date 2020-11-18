@@ -19,7 +19,7 @@ SLAM and Navigation with Lidar
 
 ## Installation
 ```bash
-mkdir Workspace/Librarian_ws/src && cd Workspace/Librarian_ws
+mkdir -p Workspace/Librarian_ws/src && cd Workspace/Librarian_ws
 python3 -m venv venv
 . venv/bin/activate
 cd src && git clone https://github.com/Windrist/Librarian-By-Hoi-An-Che
