@@ -14,6 +14,7 @@ intents:
   - wrong
   - correct
   - return_books 
+  - ask_weather_today
   
 responses:
   utter_greet:
@@ -67,6 +68,7 @@ actions:
   - action_resolve
   - action_take_book
   - action_set_state
+  - action_ask_weather
   
 forms:
   - form_ask_book
