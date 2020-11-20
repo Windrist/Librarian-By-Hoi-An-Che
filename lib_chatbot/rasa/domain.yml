@@ -1,32 +1,87 @@
 intents:
   - greet
   - goodbye
-  - affirm
+  - ask_book
+  - give_name
+  - ask_infor_robot
+  - thank_robot
+  - out_of_scope
+  - wrong_book_name
+  - wrong_user_name
   - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
-
+  - affirm
+  - give_book_name
+  - wrong
+  - correct
+  - return_books 
+  
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
-
+  - text: "@Greeting-Hề lố , tôi có thể giúp gì cho bạn"
+  - text: "@Greeting-Xin chào nhé, tôi có thể giúp gì cho bạn"
+  - text: "@Greeting-Chào bạn, tôi có thể giúp gì cho bạn"
+  
   utter_goodbye:
-  - text: "Bye"
+  - text: "@goodbye-tạm biệt nha"
+  - text: "@goodbye-hẹn gặp lại"
+  - text: "@goodbye-ngày mai quay lại nhé"
+  
+  utter_did_that_help:
+  - text: "tôi có thể giúp gì cho bạn"
+  
+  utter_about_robot:
+  - text: "@aboutrobot-"
+  
+  utter_thank_robot:
+  - text: "@thankrobot-"
 
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+  utter_please_rephrase:
+  - text: "@rephrase-xin lỗi mình không nghe rõ, bạn nói lại được không"
+
+  utter_ask_continue:
+  - text: "bạn có muốn tiếp tục thủ tục mượn sách không"
+  
+  utter_ask_what_wrong:
+  - text: "@wrong-bạn có thể cho mình biết rằng mình sai tên của bạn hay là sai tên của sách không"
+
+  utter_ask_book_name:
+  - text: "{state}"
+  utter_ask_user_name:
+  - text: "@Book_With_Name-"
 
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+
+actions:
+  - utter_greet
+  - utter_goodbye
+  - utter_did_that_help
+  - utter_please_rephrase
+  - utter_ask_book_name
+  - utter_ask_user_name
+  - utter_ask_continue
+  - utter_ask_what_wrong
+  - action_fallback
+  - action_ask_confirm
+  - action_resolve
+  - action_take_book
+  - action_set_state
+  
+forms:
+  - form_ask_book
+  - form_return_book
+  
+
+entities:
+  - book_name
+  - user_name
+  
+slots:
+  book_name:
+    type: unfeaturized
+  user_name:
+    type: unfeaturized
+  state:
+    type: text
+    auto_fill: True

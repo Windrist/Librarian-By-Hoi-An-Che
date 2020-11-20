@@ -2,10 +2,10 @@
 # https://rasa.com/docs/rasa/nlu/components/
 language: en
 pipeline:
+  - name: EntitySynonymMapper
   - name: WhitespaceTokenizer
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
-  - name: CountVectorsFeaturizer
   - name: CountVectorsFeaturizer
     analyzer: "char_wb"
     min_ngram: 1
@@ -26,6 +26,8 @@ policies:
   - name: MappingPolicy
   - name: FormPolicy
   - name: FallbackPolicy
-    nlu_threshold: 0.75
+    nlu_threshold: 0.6
     core_threshold: 0.3
     fallback_action_name: "action_fallback"
+  
+

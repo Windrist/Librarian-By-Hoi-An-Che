@@ -1,56 +1,391 @@
-## intent:greet
-- hey
+## intent: greet
+- hêy
 - hello
+- xin chào
 - hi
-- good morning
-- good evening
-- hey there
+- chào buổi sáng
+- chào buổi chiều
+- chào buổi tối
+- hề lố
+- chào
+- chào bot 
+- bạn ơi
+- bạn ưi
+- cậu ơi
+- lô lô
+- bạn gì ơi
+- em gì ơi
+- này này là em gì ơi
+- bạn gì đẹp trai xinh gái ơi
+- bạn gì gì ơi
+- bạn gì có bánh xe ơi
+- bạn rô bốt ơi
+- cậu gì giống rô bốt ơi
 
-## intent:goodbye
-- bye
-- goodbye
-- see you around
-- see you later
+## intent: goodbye
+- tạm biệt
+- hẹn gặp lại
+- bai bai nhé
+- bai bai
+- mình sẽ quay lại
+- tớ sẽ quay lại
+- gặp lại ngày mai nha
+- gút bai
+- lại phải tạm biệt bạn rồi
+- gặp lại bot sau nhé
+- cút cút
+- tớ té đây
+- tao té đây
+- mình biến đây
+- tao cút nhé
+- lần sau gặp nha
+- tạm biệt nhé
 
-## intent:affirm
-- yes
-- indeed
-- of course
-- that sounds good
-- correct
+## intent: ask_infor_robot
+- bạn giới thiệu về bản thân đi
+- bạn là ai vậy
+- bạn là robot phải không
+- bạn là ai thế
+- cậu là gì vậy
+- mày tự giới thiệu đi
+- mày là thằng nào
+- bot phải không
+- cậu nói gì đi
+- nói gì đi bạn
+- sủa vài câu đi
+- nói gì đê
+- tự giới thiệu xem nào
 
-## intent:deny
-- no
-- never
-- I don't think so
-- don't like that
-- no way
-- not really
+## intent: thank_robot
+- cảm ơn cậu nhé
+- thanh ciu cậu
+- cảm ơn nha
+- bạn tốt bụng thật đó
+- xin cảm ơn
+- cảm ơn
+- cảm ơn nhé
+- ái chà giỏi ghê
+- ghê thật đây
+- ghê nha
+- quá ghê luôn á
+- xịn xò đấy
+- quá xịn xò luôn
+- cực kì cảm ơn bạn luôn
+- quá giỏi đấy
 
-## intent:mood_great
-- perfect
-- very good
-- great
-- amazing
-- wonderful
-- I am feeling very good
-- I am great
-- I'm good
+## intent: ask_book
+- mình muốn mượn sách
+- mình muốn mượn sách
+- tôi muốn mượn sách
+- tôi muốn mượn sách
+- tao muốn mượn sách
+- tớ muốn mượn sách
+- tớ muốn mượn sách
+- mình muốn mượn sách [học máy](book_name)
+- mình muốn mượn sách [cách làm giàu nhanh nhất](book_name)
+- tớ muốn mượn cuốn [xác suất thống kê](book_name)
+- mình muốn mượn cuốn [mô hình hóa](book_name)
+- tớ muốn mượn sách [tin học cơ sở](book_name)
+- mình muốn mượn quyển [động lực học](book_name)
+- cậu có quyển [giải tích](book_name) không
+- cậu có sách [đại số](book_name) không
+- cậu có sách [thể dục thể chất](book_name) không
+- cậu có sách [vật lý kĩ thuật](book_name) không
+- sách [tin học](book_name)
+- quyển [văn hóa](book_name)
+- tớ là [hoàng anh](user_name) và tớ muốn mượn sách [từ điển](book_name)
+- mình tên là [đình dương](user_name) và tớ muốn mượn quyển [lập trình máy](book_name)
+- tên của tao là [nguyễn nhân huấn](user_name) tao muốn mượn [giải tích hai](book_name)
+- tôi tên là [trần yến nhi](user_name) tôi muốn mượn sách [đắc nhân tâm](book_name)
+- tôi tên là [lê văn hải](user_name) tôi muốn mượn sách [khoa học đại cương](book_name)
+- tôi tên là [nguyễn vân anh](user_name) tôi muốn mượn sách [xác suất](book_name)
+- tôi tên là [trần thị thúy hạnh](user_name) tôi muốn mượn sách [đường lối cách mạng](book_name)
+- tôi tên là [đàm phương nam](user_name) tôi muốn mượn sách [cơ cấu rô bốt](book_name)
+- tôi tên là [văn tuấn](user_name) tôi muốn mượn sách [mạng máy tính](book_name)
+- mình tên là [nguyễn văn phúc](user_name) tôi muốn mượn sách [hình học](book_name)
+- mình tên là [trần thị hương giang](user_name) tôi muốn mượn sách [kinh tế ](book_name)
+- mình tên là [trần hữu quốc đông](user_name) tôi muốn mượn sách [bài tập kỹ thuật cơ khí](book_name)
+- mình tên là [đỗ nam trung](user_name) tôi muốn mượn sách [ngoại giao với trung quốc](book_name)
+- mình tên là [đường thị thủy ngân](user_name) tôi muốn mượn sách [cách tán trai của họ đường](book_name)
 
-## intent:mood_unhappy
-- sad
-- very sad
-- unhappy
-- bad
-- very bad
-- awful
-- terrible
-- not very good
-- extremely sad
-- so sad
+## intent: return_books
+- trả sách
+- trả sách
+- mình muốn trả sách
+- tớ muốn trả sách
+- tôi muốn trả sách
+- tao muốn trả sách
+- cậu ơi mình muốn trả sách
+- mày ơi tao trả sách
+- bạn ơi tớ trả sách
+- bạn ơi mình muốn trả sách
+- tôi trả sách
+- tớ trả sách
+- tao trả sách
+- mày ơi, tao muốn trả sách
+- cậu ơi, tớ muốn trả sách
+- robot ơi, tớ trả sách
+- robot ơi, tôi trả sách
+- robot ơi, mình trả sách
+- tớ là [hoàng quốc anh](user_name) tớ muốn trả sách
+- tớ là [trần hữu quốc đông](user_name) tớ muốn trả sách
+- tớ là [thủy ngân](user_name) tớ muốn trả sách
+- tớ là [duy nam](user_name) tớ muốn trả sách
+- tôi là [đường thị thuyr ngân](user_name) tôi muốn trả lại sách
+- tôi là [nguyễn phúc vinh](user_name) tôi muốn trả lại sách
+- tôi là [nguyễn quang minh](user_name) tôi muốn trả lại sách
+- mình là [nguyễn đình dương](user_name) mình muốn trả sách
+- mình là [phan anh](user_name) mình muốn trả sách
+- tớ là [hoàng anh](user_name) và tớ muốn trả sách [từ điển](book_name)
+- mình tên là [đình dương](user_name) và tớ muốn trả lại quyển [lập trình máy](book_name)
+- tên của tao là [nguyễn nhân huấn](user_name) tao muốn trả [giải tích hai](book_name)
+- tôi tên là [trần yến nhi](user_name) tôi muốn trả lại sách [đắc nhân tâm](book_name)
+- tôi tên là [lê văn hải](user_name) tôi muốn trả lại sách [khoa học đại cương](book_name)
+- tôi tên là [nguyễn vân anh](user_name) tôi muốn trả sách [xác suất](book_name)
+- tôi tên là [trần thị thúy hạnh](user_name) tôi muốn trả sách [đường lối cách mạng](book_name)
+- tôi tên là [đàm phương nam](user_name) tôi muốn trả sách [cơ cấu rô bốt](book_name)
+- tôi tên là [văn tuấn](user_name) tôi muốn trả sách [mạng máy tính](book_name)
+- mình tên là [nguyễn văn phúc](user_name) tôi muốn trả sách [hình học](book_name)
+- mình tên là [trần thị hương giang](user_name) tôi muốn trả sách [kinh tế ](book_name)
+- mình tên là [trần hữu quốc đông](user_name) tôi muốn trả sách [bài tập kỹ thuật cơ khí](book_name)
+- mình tên là [đỗ nam trung](user_name) tôi muốn trả lại sách [ngoại giao với trung quốc](book_name)
+- mình tên là [đường thị thủy ngân](user_name) tôi muốn trả lại sách [cách tán trai của họ đường](book_name)
 
-## intent:bot_challenge
-- are you a bot?
-- are you a human?
-- am I talking to a bot?
-- am I talking to a human?
+## intent: give_name
+- mình tên là [hiếu](user_name)
+- tớ tên là [đàm nam](user_name)
+- tôi tên là [đông](user_name)
+- tên mình là [ngọc quyên](user_name)
+- tên tớ là [quang hải](user_name)
+- tên tôi là [hoàng quốc anh](user_name)
+- [nam bùi](user_name) là tên tôi
+- [đường thủy ngân](user_name) là tên mình
+- [đặng văn hiếu](user_name)
+- [minh](user_name)
+- [văn quyết](user_name)
+- [trần hữu quốc đông](user_name)
+- [nguyễn văn việt hoàng](user_name)
+- [trần như chí](user_name)
+- [hoàng văn ngọc thái](user_name)
+- [bùi duy nam](user_name)
+- [đặng văn sơn](user_name)
+- [đàm phương nam](user_name)
+- [phạm quang hùng](user_name)
+- [nguyễn bá chung](user_name)
+- [nguyễn quang minh](user_name)
+- [nguyễn thế hưởng](user_name)
+- [bùi thanh tùng](user_name)
+- [trần thanh tùng](user_name)
+- [dương xuân biên](user_name)
+- [chu anh mỳ](user_name)
+- [nguyễn hoàng trung](user_name)
+- [chử đức trình](user_name)
+- [phan hoàng anh](user_name)
+- [vũ đình thành](user_name)
+- [trần đức sơn](user_name)
+- [đặng văn sơn](user_name)
+- [hoàng quốc việt](user_name)
+- [lê đình long](user_name)
+- [trần thủy long](user_name)
+- [bùi tiến dũng](user_name)
+- [nguyễn ngọc hoa](user_name)
+- [vũ văn vỹ](user_name)
+- [trần thụy sĩ](user_name)
+- [khuất thành đông](user_name)
+- [mai anh tài](user_name)
+- [hà văn tấn](user_name)
+- [hà anh tuấn](user_name)
+- [bùi anh tuấn](user_name)
+- [vũ minh hiếu](user_name)
+- [ngô thị ngọc quyên](user_name)
+- [đường thị thủy ngân](user_name)
+- [nguyễn thị thanh vân](user_name)
+- [trần thị thanh vân](user_name)
+- [phùng thị thúy hồng](user_name)
+- [phùng thị ngọc ánh](user_name)
+- [lê vũ tuấn anh](user_name)
+- [trần thị hồng ánh](user_name)
+- [nguyễn duy hoàng anh](user_name)
+- [nguyễn ngọc trường sơn](user_name)
+- [nguyễn thị thu nguyệt](user_name)
+- [nguyễn vũ tùng quân](user_name)
+- [trương thị cẩm nhung](user_name)
+- [hoàng minh đức anh](user_name)
+- [dương minh hoàng anh](user_name)
+
+## intent: give_book_name
+- [cơ khí](book_name)
+- [vợ nhặt](book_name)
+- [chí phèo](book_name)
+- [số đỏ](book_name)
+- [học máy](book_name)
+- [xác suất](book_name)
+- [năng lượng](book_name)
+- [tắt đèn](book_name)
+- [toán cao cấp](book_name)
+- [toán đại số](book_name)
+- [lập trình xi](book_name)
+- [đắc nhân tâm](book_name)
+- [dữ liệu lớn](book_name)
+- [kĩ thuật đo](book_name)
+- [nguyên lý marketing](book_name)
+- [cơ học chất lỏng](book_name)
+- [nghệ thuật quảng cáo](book_name)
+- [cơ học vật liệu](book_name)
+- [kỹ thuật cơ khí](book_name)
+- [động lực học sông](book_name)
+- [lý thuyết đàn hồi](book_name)
+- [vật lý đại cương](book_name)
+- [xử lý tín hiệu](book_name)
+- [kiến trúc máy tính](book_name)
+- [trải nghiệm rô bốt](book_name)
+- [cơ học rô bốt](book_name)
+- [xác suất thống kê](book_name)
+- [đại số tuyến tính](book_name)
+- [lược sử thời gian](book_name)
+- [cánh đồng bất tận](book_name)
+- [nỗi buồn chiến tranh](book_name)
+- [chiến tranh và hòa bình](book_name)
+- [cơ sở kỹ thuật nhiệt](book_name)
+- [vẽ kỹ thuật cơ khí](book_name)
+- [giáo trình cơ sở kỹ thuật](book_name)
+- [mở đầu về lý thuyết xác suất](book_name)
+- [bài tập sức bền vật liệu](book_name)
+- [xử lý tín hiệu và lọc số](book_name)
+- [cơ sở công nghệ vi điện tử](book_name)
+- [giáo trình kỹ thuật điện](book_name)
+- [sức bền vật liệu và kết cấu](book_name)
+- [nguyên lý kĩ thuật điện tử](book_name)
+- [tâm lý học đại cương](book_name)
+- [phân tích và điểu khiển robot công nghiệp](book_name)
+- [cơ sở văn hóa việt nam](book_name)
+- [giáo trình nhà nước và pháp luật đại cương](book_name)
+- [mô hình hóa và mô phỏng](book_name)
+- [giáo trình khai phá dữ liệu](book_name)
+
+## intent: wrong_book_name
+- tên sách sai rồi cậu ơi
+- sai tên sách rồi
+- tên sách không đúng
+- không phải quyển này
+- tên sách không phải như này
+- đó không phải tên sách
+- tên sách nhầm rồi
+- nhầm tên sách rồi
+- đó không phải tên sách
+- hình như nhầm tên sách
+- đấy không phải tên sách
+- đó không phải sách mình cần
+- đó không phải sách tôi cần
+- đó không phải sách tớ muốn
+- đó không phải cuốn tớ muốn
+- không phải sách đó
+- không đúng sách mình muốn mượn
+- sách mình muốn mượn không phải vậy
+- không phải sách đó nha
+
+## intent: wrong_user_name
+- bạn nhầm tên mình rồi
+- đó không phải tên mình
+- không phải tên tôi
+- sửa lại tên tôi đi
+- nhầm tên tôi rồi
+- sai tên mình rồi
+- xem lại tên tôi kìa
+- nhìn lại tên tớ kìa
+- tên tao sai rồi
+- tên mình sai rồi
+- tên mình nhầm rồi
+- tên tớ sai kìa
+- hình như cậu sai tên mình
+- tên mình đâu phải vậy
+- cậu sửa lại tên mình đi
+- mày sửa lại tên tao đi
+- bạn thay lại tên của mình đi
+- sai tên tôi kìa
+- tên tên tôi đó
+- sai tên tớ đấy
+
+## intent: deny
+- không
+- không cần
+- không cần đâu
+- thôi không cần
+- thôi
+- không muốn
+- không thích
+- mình không thích
+- tôi không muốn
+- chắc là không đâu
+- chắc thôi
+- chắc không cần
+- mình tự lấy cũng được
+- thôi để mình tự lấy
+- thôi để tôi tự làm
+- thôi để mình tự làm
+
+## intent: wrong
+- sai rồi
+- vậy là sai rồi
+- sai hoàn toàn
+- sai quá sai
+- nhầm rồi bạn
+- nhầm rồi cậu
+- không đúng
+- không phải vậy
+- không phải thế
+- không đúng rồi
+- bạn sai rồi
+- thông tin đang bị sai
+- sai thông tin rồi nhé
+- sửa lại đi bạn
+- sai
+- sai 
+- chưa đúng sửa lại đi
+- chưa đúng
+- chưa đúng rồi
+
+## intent: correct
+- đúng rồi
+- đúng
+- đúng
+- quá đúng
+- ok rồi
+- ok
+- hoàn hảo
+- ổn rồi
+- rất đúng
+- rất tốt
+- rất ổn nha
+- quá đúng luôn
+- không lệch đi đâu được
+- quá đúng cậu ạ
+
+## intent: affirm
+- có
+- có
+- có nhé
+- có nha
+- có đi
+- có cậu nhé
+- có lấy nha
+- đồng ý
+- đồng ý nhé
+- có bạn ơi
+- bạn lấy giúp mình nhé 
+- bạn lấy hộ mình với
+- robot lấy hộ mình được không
+- cậu lấy giúp mình được không
+- mày lấy giúp tao đi
+- cậu lấy giúp mình nhé
+- được
+- được
+
+## intent: out_of_scope
+- một cộng một bằng mấy
+- con gà có trước hay trứng có trước
+- vị có mấy chân
+- con người có thể bay không
+- voi đánh được sư tử không
+- chó gáy được nhỉ
+- bây giờ anh biết vì sao
