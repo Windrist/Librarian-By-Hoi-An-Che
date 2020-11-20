@@ -1,22 +1,47 @@
 #!/usr/bin/env python
 '''
 The node control planar arm 3DOF
-Subscribe: goal - the goal position that the arm have to move to
-Publish: 
+Subscribe: /goal_point - the goal position in Oxyz
+Publish: /joint_states - joint states of planar arm
 '''
 
 import rospy
 import numpy as np
 from geometry_msgs.msg import Point
 from std_msgs.msg import Float32
+from std_msgs.msg import Header
+from sensor_msgs.msg import JointState
 
 # Declare the params of planar arm
-arm_length = np.array([5.2, 6.9, 6.8])  # cm
-grip = 10                               # cm
+global ARM_LENGTH
+ARM_LENGTH = np.array([5.2, 6.9, 6.8])  # cm
+global GRIP
+GRIP = 10                               # cm
+global is_new_goal
+is_new_goal = False
+global is_grip
+is_grip = False
 
 # Global variance
-goal = Point()
-rate = 200 # 200Hz
+global JOINT_NAMES
+JOINT_NAMES = ["joint_1", "joint_2", "joint_3"]
+global RATE
+RATE = 200 # 200Hz
+global GOAL
+GOAL = Point()
+GOAL.x = GOAL.y = GOAL.z = 0
+
+def goal_point_callback(data):
+    '''
+    Receive the goal position that planar arm have to move to it
+    data - geomatry_msgs/Point
+    '''
+    global GOAL
+    if not(data.x - GOAL.x == 0.0 and data.y - GOAL.y == 0.0 and data.z - GOAL.z == 0.0):
+        print("change")
+        GOAL = data
+        is_new_goal = True
+        rospy.loginfo(rospy.get_caller_id() + " New goal: %s", data)
 
 def inverse_kinematic(arm_length, goal):
     '''
@@ -50,23 +75,9 @@ def inverse_kinematic(arm_length, goal):
     theta_1 = np.arctan2(s1,c1)
     theta_3 = phi-theta_1-theta_2
 
-    # Convert radian to degree
-    theta_1 = np.rad2deg(theta_1)
-    theta_2 = np.rad2deg(theta_2)
-    theta_3 = np.rad2deg(theta_3)
-
     joint_target = np.array([theta_1, theta_2, theta_3])
     print "Target joint: {}".format(joint_target)
     return joint_target
-
-def goal_point_callback(data):
-    '''
-    Receive the goal position that planar arm have to move to it
-    data - geomatry_msgs/Point
-    '''
-    global goal
-    goal = data
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data)
 
 def compute_joint_sets(current, goal):
     '''
@@ -74,12 +85,11 @@ def compute_joint_sets(current, goal):
     Build parameter set for each joint. [c0 c1 c2 tc tf]
     Output: Joint value set of each joint
     '''
-    global rate
     # Compute the max time tf
     speed_max = 150
     angle_max = np.max(np.abs(goal - current))  # Angle max of moving in all joints
     tf = 1.0*angle_max/speed_max    # Time max of moving
-    dt = 1.0/rate             # The time step
+    dt = 1.0/RATE             # The time step
     steps = int(round(tf/dt))    # Number the joint value
 
     joint_sets = np.zeros((len(goal), steps))
@@ -109,39 +119,44 @@ def compute_joint_sets(current, goal):
     print joint_sets
     return joint_sets
 
+def gripper_pick_up():
+    print("Pick up")
+
+def gripper_droff_off():
+    print("Droff off")
+
 def state_planar_arm():
     pass
-
-# def publish_joint_state():
-#     pub = rospy.Publisher('chatter', String, queue_size=10)
-#     rospy.init_node('talker', anonymous=True)
-#     rate = rospy.Rate(10) # 10hz
-    # while not rospy.is_shutdown():
-        # hello_str = "hello world %s" % rospy.get_time()
-        # rospy.loginfo(hello_str)
-        # pub.publish(hello_str)
-        # rate.sleep()
 
 def ros_control():
     rospy.init_node("planar_arm", anonymous=True)
     # Subscribe to goal point that arm have to move to
     rospy.Subscriber("/goal_point", Point, goal_point_callback)
-
     # Publish joint values
-    pub_t1 = rospy.Publisher('/planar_arm/theta1', Float32)
-    pub_t2 = rospy.Publisher('/planar_arm/theta2', Float32)
-    pub_t3 = rospy.Publisher('/planar_arm/theta3', Float32)
+    pub_joint = rospy.Publisher('/joint_states', JointState, queue_size=RATE)
 
-    global rate
-    r = rospy.Rate(rate)
+    # Create a robot joint state message
+    joint_states = JointState()
+    joint_states.header = Header()
+    joint_states.header.stamp = rospy.Time.now()
+    joint_states.name = JOINT_NAMES
 
+    joint_states.position = [0, 0, 0]
+    joint_states.velocity = []
+    joint_states.effort = []
+
+    r = rospy.Rate(RATE)
     while not rospy.is_shutdown():
         # state_machine()
+
+        joint_states.header.stamp = rospy.Time.now()
+        # Publish robot joint state data
+        pub_joint.publish(joint_states)
         r.sleep()
 
 if __name__ == '__main__':    
     try:
-        # ros_control()
+        ros_control()
         # inverse_kinematic(arm_length, goal)
         # compute_joint_sets(np.array([0,0,0]), np.array([20,50,40]))
     except rospy.ROSInterruptException:
