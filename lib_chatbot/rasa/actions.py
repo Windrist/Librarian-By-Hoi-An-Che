@@ -104,7 +104,7 @@ class ActionResolve(Action):
             elif confirm == 'wrong':
                 return [AllSlotsReset(), FollowupAction("form_return_book")]
             elif confirm == 'correct':
-                dispatcher.utter_message(text = "Correct-")
+                dispatcher.utter_message(text = "@Correct-")
                 return [AllSlotsReset()]
 
         return []
