@@ -49,7 +49,7 @@ class ActionAskBook(FormAction):
 
 class ActionReturnBook(FormAction):
     def name(self) -> Text:
-        return "form_return_book"
+        return "form_return_boo"
     
     @staticmethod
     def required_slots(tracker: Tracker) -> List[Text]:
