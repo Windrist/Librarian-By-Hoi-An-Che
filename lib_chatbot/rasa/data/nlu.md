@@ -389,3 +389,11 @@
 - voi đánh được sư tử không
 - chó gáy được nhỉ
 - bây giờ anh biết vì sao
+
+## intent: ask_weather_today
+- thời tiết hôm nay
+- thời tiết
+- thời tiết hôm nay như nào
+- thời tiết hôm nay như nào bạn ơi
+- thời tiết hôm nay ra sao
+- thời tiết hôm nay dư nào vậy
