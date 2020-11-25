@@ -8,7 +8,7 @@ Publish: /joint_states - joint states of planar arm
 import rospy
 import numpy as np
 from geometry_msgs.msg import Point
-from std_msgs.msg import Float32
+from std_msgs.msg import Bool
 from std_msgs.msg import Header
 from sensor_msgs.msg import JointState
 
@@ -17,12 +17,14 @@ global ARM_LENGTH
 ARM_LENGTH = np.array([5.2, 6.9, 6.8])  # cm
 global GRIP
 GRIP = 10                               # cm
-global is_new_goal
-is_new_goal = False
-global is_grip
-is_grip = False
+global CURRENT
+CURRENT = JointState()
+global JOINT_SETS
+JOINT_SETS = []
 
 # Global variance
+global STATE
+STATE = 0
 global JOINT_NAMES
 JOINT_NAMES = ["joint_1", "joint_2", "joint_3"]
 global RATE
@@ -30,6 +32,21 @@ RATE = 200 # 200Hz
 global GOAL
 GOAL = Point()
 GOAL.x = GOAL.y = GOAL.z = 0
+global COUNT
+COUNT = 0
+
+# The flag checking state
+global is_new_goal, is_grip
+is_new_goal = False
+is_grip = False
+
+def current_joint_callback(data):
+    '''
+    Receive the current joint state of planar arm
+    data - sensor_msgs/JointState
+    '''
+    CURRENT = data
+    rospy.loginfo(rospy.get_caller_id() + " Current joint state: %s", data)
 
 def goal_point_callback(data):
     '''
@@ -119,14 +136,62 @@ def compute_joint_sets(current, goal):
     print joint_sets
     return joint_sets
 
-def gripper_pick_up():
-    print("Pick up")
+def computing():
+    '''
+    STATE Computing - When Arm are idle and receive new goal to move to
+    system will compute joint sets of each joint will be moved
+    '''
+    print("computing")
+    goal = inverse_kinematic(ARM_LENGTH, GOAL)
+    JOINT_SETS = compute_joint_sets(CURRENT, goal)
+    STATE = 2   # STATE: Moving
 
-def gripper_droff_off():
-    print("Droff off")
+def moving():
+    '''
+    STATE Moving - After computing STATE, the arm will move to each joint set
+    in joint sets that computed in Computing State
+    '''
+    print("Move to goal")
+    pre_pos = np.array(CURRENT.position)
+    cur_pos = np.array(JOINT_SETS[COUNT])
 
+    # Update Joint State
+    CURRENT.position = list(cur_pos)
+    CURRENT.velocity = list((cur_pos-pre_pos)*RATE)
+
+    COUNT += 1
+    if COUNT >= len(JOINT_SETS):
+        STATE = 3   # STATE: Gripping
+
+def gripping():
+    '''
+    STATE Gripping - After Moving State was done, the gripper will change
+    from pick up (True) to droff off (False) or vice versa
+    '''
+    print("gripping")
+    is_grip = not is_grip
+    STATE = 0   # STATE: Stop
+    
 def state_planar_arm():
-    pass
+    '''
+    STATE:  0 - Stop
+            1 - Computing
+            2 - Moving
+            3 - Gripping
+    '''
+    global STATE, is_new_goal
+    if STATE == 0 and is_new_goal:
+        STATE = 1
+    elif STATE == 1:
+        computing()
+    elif STATE == 2:
+        moving()
+    elif STATE == 3:
+        gripping()
+    else:
+        print("Stop")
+        STATE = 0
+    
 
 def ros_control():
     rospy.init_node("planar_arm", anonymous=True)
@@ -134,6 +199,7 @@ def ros_control():
     rospy.Subscriber("/goal_point", Point, goal_point_callback)
     # Publish joint values
     pub_joint = rospy.Publisher('/joint_states', JointState, queue_size=RATE)
+    pub_is_grip = rospy.Publisher('/grip_state', Bool, queue_size=RATE)
 
     # Create a robot joint state message
     joint_states = JointState()
@@ -145,13 +211,18 @@ def ros_control():
     joint_states.velocity = []
     joint_states.effort = []
 
+    # Create a gripper state message
+    grip_state = Bool()
+
     r = rospy.Rate(RATE)
     while not rospy.is_shutdown():
-        # state_machine()
+        state_planar_arm()
 
         joint_states.header.stamp = rospy.Time.now()
+        grip_state.data = is_grip
         # Publish robot joint state data
         pub_joint.publish(joint_states)
+        pub_is_grip.publish(grip_state)
         r.sleep()
 
 if __name__ == '__main__':    
