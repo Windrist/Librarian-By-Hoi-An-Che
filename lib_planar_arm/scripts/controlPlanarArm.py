@@ -45,6 +45,7 @@ def current_joint_callback(data):
     Receive the current joint state of planar arm
     data - sensor_msgs/JointState
     '''
+    global CURRENT
     CURRENT = data
     rospy.loginfo(rospy.get_caller_id() + " Current joint state: %s", data)
 
@@ -53,7 +54,7 @@ def goal_point_callback(data):
     Receive the goal position that planar arm have to move to it
     data - geomatry_msgs/Point
     '''
-    global GOAL
+    global GOAL, is_new_goal
     if not(data.x - GOAL.x == 0.0 and data.y - GOAL.y == 0.0 and data.z - GOAL.z == 0.0):
         print("change")
         GOAL = data
@@ -103,7 +104,7 @@ def compute_joint_sets(current, goal):
     Output: Joint value set of each joint
     '''
     # Compute the max time tf
-    speed_max = 150
+    speed_max = 150*np.pi/180
     angle_max = np.max(np.abs(goal - current))  # Angle max of moving in all joints
     tf = 1.0*angle_max/speed_max    # Time max of moving
     dt = 1.0/RATE             # The time step
@@ -142,8 +143,9 @@ def computing():
     system will compute joint sets of each joint will be moved
     '''
     print("computing")
+    global ARM_LENGTH, GOAL, JOINT_SETS, STATE
     goal = inverse_kinematic(ARM_LENGTH, GOAL)
-    JOINT_SETS = compute_joint_sets(CURRENT, goal)
+    JOINT_SETS = compute_joint_sets(np.array(CURRENT.position), goal)
     STATE = 2   # STATE: Moving
 
 def moving():
@@ -152,6 +154,7 @@ def moving():
     in joint sets that computed in Computing State
     '''
     print("Move to goal")
+    global CURRENT, COUNT, STATE, JOINT_SETS, RATE
     pre_pos = np.array(CURRENT.position)
     cur_pos = np.array(JOINT_SETS[COUNT])
 
@@ -169,6 +172,7 @@ def gripping():
     from pick up (True) to droff off (False) or vice versa
     '''
     print("gripping")
+    global is_grip
     is_grip = not is_grip
     STATE = 0   # STATE: Stop
     
@@ -180,8 +184,12 @@ def state_planar_arm():
             3 - Gripping
     '''
     global STATE, is_new_goal
-    if STATE == 0 and is_new_goal:
-        STATE = 1
+    if STATE == 0:
+        if not is_new_goal:
+            print("Stop")
+        else:
+            print("Computing")
+            STATE = 1
     elif STATE == 1:
         computing()
     elif STATE == 2:
@@ -189,7 +197,6 @@ def state_planar_arm():
     elif STATE == 3:
         gripping()
     else:
-        print("Stop")
         STATE = 0
     
 
@@ -215,6 +222,8 @@ def ros_control():
     grip_state = Bool()
 
     r = rospy.Rate(RATE)
+
+
     while not rospy.is_shutdown():
         state_planar_arm()
 
