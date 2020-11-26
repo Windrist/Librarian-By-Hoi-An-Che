@@ -17,6 +17,8 @@ import random
 import requests
 import rospy
 from rasa_sdk.events import UserUtteranceReverted
+from bs4 import BeautifulSoup
+import urllib
 
 class ActionAskBook(FormAction):
     def name(self) -> Text:
@@ -141,49 +143,33 @@ class ActionSetState(Action):
 #         dispatcher.utter_message(text = "bạn xác nhận lại giúp mình với")
 #         return []
         
-# class ActionFacilitiesSearch(Action):
-#     def name(self) -> Text:
-#         return "action_facilities_search"
+
+class ActionAskWeather(Action):
+    def name(self) -> Text:
+        return "action_ask_weather"
     
-#     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, 
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#             listener()
-#             facility = tracker.get_slot("facilities")
-#             address = "Ngõ 32, phố Chùa Hà, Cầu Giấy, Hà Nội"
-#             dispatcher.utter_message(text = "Đây là địa chỉ của {}:{}".format(facility, address))
-#             return []
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, 
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-# class ActionAskWeather(Action):
-#     def name(self) -> Text:
-#         return "action_ask_weather"
-    
-#     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, 
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+            url = 'https://nchmf.gov.vn/Kttvsite/vi-VN/1/tp-ha-noi-w28.html'
+            page = urllib.request.urlopen(url)
+            soup = BeautifulSoup(page, 'html.parser')
 
-#             url = 'https://nchmf.gov.vn/Kttvsite/vi-VN/1/tp-ha-noi-w28.html'
-#             page = urllib.request.urlopen(url)
-#             soup = BeautifulSoup(page, 'html.parser')
+            status = soup.find('section', class_='row-wrp').find_all('div',{'class': 'uk-width-1-4'})
+            value = soup.find('section', class_='row-wrp').find_all('div',{'class': 'uk-width-3-4'})
+            info = []
+            for i in range(len(status)):
+                status[i]= status[i].get_text()
+                value[i]= value[i].get_text()
+                info.append(status[i]+value[i])
 
-#             status = soup.find('section', class_='row-wrp').find_all('div',{'class': 'uk-width-1-4'})
-#             value = soup.find('section', class_='row-wrp').find_all('div',{'class': 'uk-width-3-4'})
-#             info = []
-#             for i in range(len(status)):
-#                 status[i]= status[i].get_text()
-#                 value[i]= value[i].get_text()
-#                 info.append(status[i]+value[i])
-
-#             weather = str(tracker.get_slot("weather"))
-#             day_time = str(tracker.get_slot("time"))
-#             if day_time=='ngày mai':
-#                  dispatcher.utter_message(text = "{} {} thì {}".format(weather, day_time, 'Bot không biết :))'))
-#             elif day_time=='hôm nay':
-#                 dispatcher.utter_message(text = "Đây là thông tin về thời tiết hôm nay:")
-#                 for i in info:
-#                     dispatcher.utter_message(text = i)
-#             else:
-#                 dispatcher.utter_message(text = "không biết:{}".format(day_time))
-#                 dispatcher.utter_message(text = "hỏi câu khác đi")
-#             return []
+            weather = str(tracker.get_slot("weather"))
+            day_time = str(tracker.get_slot("time"))
+            response = ""
+            for i in info:
+                response = response + ' ' + i
+            dispatcher.utter_message(text = "@Chit_Chat- đây là thông tin về thời tiết hôm nay {}".format(response))
+            return []
 
 # class ActionAskKQXS(Action):
 #     def name(self) -> Text:
@@ -213,17 +199,3 @@ class ActionSetState(Action):
 #         attendee_no = tracker.get_slot("attendee_no")
 #         dispatcher.utter_message("{} {} {} {}".format(user_name, phone_number, attendee_no))
         # return []
-#
-#
-# class ActionHelloWorld(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hello_world"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         dispatcher.utter_message(text="Hello World!")
-#
-#         return []

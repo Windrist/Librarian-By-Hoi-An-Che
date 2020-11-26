@@ -43,7 +43,8 @@ class SoundRecognition(object):
                     self.check_noise = False
                 audio = self.r.listen(s)
                 print("Got Something!")
-                text = self.r.recognize_google_cloud(audio, self.json_key, "vi-VN")
+                # text = self.r.recognize_google_cloud(audio, self.json_key, "vi-VN")
+                text = self.r.recognize_google(audio, None, "vi-VN")
                 text = text.lower()
                 print("I heard: " + text)
                 self.mic.data = text
@@ -72,7 +73,8 @@ class SoundRecognition(object):
                 # audio = self.r.record(file)
                 audio = self.r.listen(s)
                 print("Got Something!")
-                text = self.r.recognize_google_cloud(audio, self.json_key, "vi-VN")
+                # text = self.r.recognize_google_cloud(audio, self.json_key, "vi-VN")
+                text = self.r.recognize_google(audio, None, "vi-VN")
                 text = text.lower()
                 print("I heard: " + text)
                 self.mic.data = text

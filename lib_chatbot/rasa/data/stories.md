@@ -82,3 +82,7 @@
 ## out of scope
 * out_of_scope
   - action_fallback
+
+## ask weather
+* ask_weather_today
+  - action_ask_weather

@@ -86,7 +86,7 @@ class StateMachine(object):
             self.state = "End_Borrow_Book"
             self.play.data = "End_Borrow_Book.mp3"
             self.pub_play.publish(self.play)
-        elif msg.data == "Done" and self.state == "@Chitchat":
+        elif msg.data == "Done" and self.state == "@Chit_Chat":
             self.state = "Ask_Again"
             self.play.data = "Ask_Again.mp3"
             self.pub_play.publish(self.play)
@@ -140,8 +140,12 @@ class StateMachine(object):
             self.pub_main.publish(self.main)
 
     def callbackMic(self, msg):
-        if msg.data != u"hướng dẫn cho tôi " or msg.data != "hướng dẫn " or msg.data != "hướng dẫn cho mình " or msg.data != "hướng dẫn đi ":
-            if msg.state == "Got" and self.state == "Idle" and msg.data == u"xin chào ":
+        if msg.data == u"hướng dẫn cho tôi" or msg.data == "hướng dẫn" or msg.data == "hướng dẫn cho mình" or msg.data == "hướng dẫn đi":
+            self.state = "Help"
+            self.play.data = "Help.mp3"
+            self.pub_play.publish(self.play)
+        else:
+            if msg.state == "Got" and self.state == "Idle" and msg.data == u"xin chào":
                 self.state = "Busy"
                 self.main.data = self.state
                 self.pub_main.publish(self.main)
@@ -152,11 +156,7 @@ class StateMachine(object):
                 self.main.data = self.state
                 self.pub_main.publish(self.main)
                 self.recog.data = msg.data
-                self.pub_recog.publish(self.recog)
-        else:
-            self.state = "Help"
-            self.play.data = "Help.mp3"
-            self.pub_play.publish(self.play)
+                self.pub_recog.publish(self.recog)  
 
     def callbackChat(self, msg):
         if msg.state == "@Greeting":
@@ -240,7 +240,7 @@ class StateMachine(object):
                 self.state = "Good_Luck"
                 self.talk.data = u"mình xin nhắc lại, sách {} bạn đang muốn tìm ".format(self.book_name) + "của tác giả {}".format(self.author) + " hiện còn {}".format(self.amount) + " quyển, vị trí ở {}.".format(self.location)
                 self.pub_talk.publish(self.talk)
-        elif msg.state == "@Chitchat":
+        elif msg.state == "@Chit_Chat":
             self.borrow_state = False
             self.return_state = False
             self.chitchat_state = True
