@@ -159,43 +159,7 @@ class ActionAskWeather(Action):
             value = soup.find('section', class_='row-wrp').find_all('div',{'class': 'uk-width-3-4'})
             info = []
             for i in range(len(status)):
-                status[i]= status[i].get_text()
                 value[i]= value[i].get_text()
-                info.append(status[i]+value[i])
-
-            weather = str(tracker.get_slot("weather"))
-            day_time = str(tracker.get_slot("time"))
-            response = ""
-            for i in info:
-                response = response + ' ' + i
-            dispatcher.utter_message(text = "@Chit_Chat- đây là thông tin về thời tiết hôm nay {}".format(response))
+            dispatcher.utter_message(text = "@Chit_Chat- đây là thông tin về thời tiết hôm nay nhiệt độ {}, bầu trời {}, độ ẩm {} phần trăm, hướng {}  ".format(value[0], value[1], value[2], value[3]))
             return []
 
-# class ActionAskKQXS(Action):
-#     def name(self) -> Text:
-#         return "action_ask_kqxs"
-    
-#     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#             url = 'https://xoso.me/xsmb-sxmb-xstd-xshn-kqxsmb-ket-qua-xo-so-mien-bac.html'
-#             page = urllib.request.urlopen(url)
-#             soup = BeautifulSoup(page, 'html.parser')
-
-#             status = soup.find('section', class_ = 'content main clearfix').find_all('td', {'class': 'number'}, {'colspan': '12'})
-#             dispatcher.utter_message(text = 'Giải đặc biệt : {}'.format(status[0].get_text()))
-
-# class WorkshopForm(FormAction):
-#     def name(self):
-#         return "workshop_form"
-    
-#     @staticmethod
-#     def required_slots(tracker: Tracker) -> List[Text]:
-#         return ["user_name", "phone_number", "attendee_no"]
-
-#     def submit(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict]:
-#         dispatcher.utter_message("Thanks, great job !")
-#         user_name = tracker.get_slot("user_name")
-#         phone_number = tracker.get_slot("phone_number")
-#         attendee_no = tracker.get_slot("attendee_no")
-#         dispatcher.utter_message("{} {} {} {}".format(user_name, phone_number, attendee_no))
-        # return []
