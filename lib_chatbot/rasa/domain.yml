@@ -15,7 +15,7 @@ intents:
   - correct
   - return_books 
   - ask_weather_today
-  
+  - need_help
 responses:
   utter_greet:
   - text: "@Greeting-Hề lố , tôi có thể giúp gì cho bạn"
@@ -69,6 +69,7 @@ actions:
   - action_take_book
   - action_set_state
   - action_ask_weather
+  - action_need_help
   
 forms:
   - form_ask_book

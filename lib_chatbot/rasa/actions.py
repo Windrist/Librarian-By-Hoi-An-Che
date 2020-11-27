@@ -163,3 +163,13 @@ class ActionAskWeather(Action):
             dispatcher.utter_message(text = "@Chit_Chat- đây là thông tin về thời tiết hôm nay nhiệt độ {}, bầu trời {}, độ ẩm {} phần trăm, hướng {}  ".format(value[0], value[1], value[2], value[3]))
             return []
 
+class ActionNeedHelp(Action):
+    def name(self) -> Text:
+        return "action_need_help"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+            dispatcher.utter_message(text = "@Need_Help-")
+
+            return []

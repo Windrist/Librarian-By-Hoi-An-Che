@@ -930,3 +930,26 @@
 - thời tiết hôm nay như nào bạn ơi
 - thời tiết hôm nay ra sao
 - thời tiết hôm nay dư nào vậy
+
+## intent: need_help
+- hãy giúp mình
+- bạn chỉ mình với
+- giúp mình
+- giúp tớ
+- hãy hướng dẫn tớ
+- hướng dẫn tớ
+- giúp tớ đi
+- hãy hướng dẫn tôi
+- hãy giúp tôi
+- tôi chưa biết hãy bảo tôi
+- mình chưa biết hãy bảo mình
+- giúp mình được không
+- hướng dẫn mình được không
+- cậu giúp tớ đi
+- cậu giúp mình đi
+- bạn hướng dẫn tớ đi
+- bạn giúp tớ đi
+- mày giúp tao đi
+- mày hướng dẫn tao đi
+- hướng dẫn cái coi
+- hướng dẫn xem nào
