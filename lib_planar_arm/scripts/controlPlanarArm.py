@@ -47,7 +47,7 @@ def current_joint_callback(data):
     '''
     global CURRENT
     CURRENT = data
-    rospy.loginfo(rospy.get_caller_id() + " Current joint state: %s", data)
+    # rospy.loginfo(rospy.get_caller_id() + " Current joint state: %s", data)
 
 def goal_point_callback(data):
     '''
@@ -160,7 +160,7 @@ def moving():
 
     # Update Joint State
     CURRENT.position = list(cur_pos)
-    CURRENT.velocity = list((cur_pos-pre_pos)*RATE)
+    # CURRENT.velocity = list((cur_pos-pre_pos)*RATE)
 
     COUNT += 1
     if COUNT >= len(JOINT_SETS):
@@ -172,6 +172,7 @@ def gripping():
     from pick up (True) to droff off (False) or vice versa
     '''
     print("gripping")
+    global STATE
     global is_grip
     is_grip = not is_grip
     STATE = 0   # STATE: Stop
@@ -184,12 +185,8 @@ def state_planar_arm():
             3 - Gripping
     '''
     global STATE, is_new_goal
-    if STATE == 0:
-        if not is_new_goal:
-            print("Stop")
-        else:
-            print("Computing")
-            STATE = 1
+    if STATE == 0 and is_new_goal:
+        STATE = 1
     elif STATE == 1:
         computing()
     elif STATE == 2:
@@ -204,6 +201,7 @@ def ros_control():
     rospy.init_node("planar_arm", anonymous=True)
     # Subscribe to goal point that arm have to move to
     rospy.Subscriber("/goal_point", Point, goal_point_callback)
+    rospy.Subscriber("/joint_states", JointState, current_joint_callback)
     # Publish joint values
     pub_joint = rospy.Publisher('/joint_states', JointState, queue_size=RATE)
     pub_is_grip = rospy.Publisher('/grip_state', Bool, queue_size=RATE)
