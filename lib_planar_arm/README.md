@@ -1,2 +1,2 @@
 # List tasks to do
-* Check State planar arm
+* Determine the working area of planar arm
