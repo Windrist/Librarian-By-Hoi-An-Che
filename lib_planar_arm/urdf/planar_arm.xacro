@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="planar_arm">
+    <xacro:include filename="$(find lib_planar_arm)/urdf/materials.xacro" />
+	<xacro:property name="offset" value="0.02" />
+    <xacro:property name="base_link_length" value="0.05" />
+    <xacro:property name="base_link_radius" value="0.08" />
+    <xacro:property name="link_width" value="0.02" />
+	<xacro:property name="link1_length" value="0.20" />
+	<xacro:property name="link2_length" value="0.20" />
+	<xacro:property name="link3_length" value="0.20" />
+
+    <link name="base_link">
+		<visual>
+			<geometry>
+				<cylinder length="${base_link_length}" radius="${base_link_radius}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${base_link_length/2}"/>
+			<material name="blue"/>
+		</visual>
+		<collision>
+			<geometry>
+				<cylinder length="${base_link_length}" radius="${base_link_radius}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${base_link_length/2}"/>
+			<material name="blue"/>
+		</collision>
+	</link>
+
+	<joint name="joint_1" type="revolute">
+		<parent link="base_link"/>
+		<child link="link_1"/>
+		<origin xyz="0.0 ${link_width} ${base_link_length+offset}"/>
+		<axis xyz="0 1 0"/>
+		<limit effort="1000" lower="-3.14" upper="3.14" velocity="5"/>
+	</joint>
+
+	<link name="link_1">
+		<visual>
+			<geometry>
+				<box size="${link_width} ${link_width} ${link1_length}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${link1_length/2-offset}"/>
+			<material name="black"/>
+		</visual>
+		<collision>
+			<geometry>
+				<box size="${link_width} ${link_width} ${link1_length}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${link1_length/2-offset}"/>
+			<material name="black"/>
+		</collision>
+	</link>
+
+	<joint name="joint_2" type="revolute">
+		<parent link="link_1"/>
+		<child link="link_2"/>
+		<origin xyz="0.0 ${-link_width} ${link2_length-offset}"/>
+		<axis xyz="0 1 0"/>
+		<limit effort="1000" lower="-3.14" upper="3.14" velocity="5"/>
+	</joint>
+
+	<link name="link_2">
+		<visual>
+			<geometry>
+				<box size="${link_width} ${link_width} ${link2_length}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${link2_length/2-offset}"/>
+			<material name="white"/>
+		</visual>
+		<collision>
+			<geometry>
+				<box size="${link_width} ${link_width} ${link2_length}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${link2_length/2-offset}"/>
+			<material name="white"/>
+		</collision>
+	</link>
+
+	<joint name="joint_3" type="revolute">
+		<parent link="link_2"/>
+		<child link="link_3"/>
+		<origin xyz="0.0 ${link_width} ${link3_length-offset}"/>
+		<axis xyz="0 1 0"/>
+		<limit effort="1000" lower="-3.14" upper="3.14" velocity="5"/>
+	</joint>
+
+	<link name="link_3">
+		<visual>
+			<geometry>
+				<box size="${link_width} ${link_width} ${link3_length}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${link3_length/2-offset}"/>
+			<material name="red"/>
+		</visual>
+		<collision>
+			<geometry>
+				<box size="${link_width} ${link_width} ${link3_length}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${link3_length/2-offset}"/>
+		</collision>
+	</link>
+
+</robot>
