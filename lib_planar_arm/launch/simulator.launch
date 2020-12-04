@@ -1,15 +1,15 @@
 <launch>
     <arg name="model" default="$(find lib_planar_arm )/urdf/planar_arm.xacro"/>
-    <arg name="gui" default="false" />
+    <!-- <arg name="gui" default="false" /> -->
     <arg name="rvizconfig" default="$(find lib_planar_arm )/rviz/urdf.rviz" />
 
     <param name="robot_description" command="$(find xacro)/xacro.py '$(find lib_planar_arm )/urdf/planar_arm.xacro'" />
-    <param name="use_gui" value="$(arg gui)"/>
+    <!-- <param name="use_gui" value="$(arg gui)"/> -->
 
-    <!-- <node name="control_planar_arm" pkg="lib_planar_arm" type="controlPlanarArm.py" 
-        output="screen"/> -->
+    <node name="control_planar_arm" pkg="lib_planar_arm" type="controlPlanarArm.py" 
+        output="screen"/>
 
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
 </launch>

@@ -28,7 +28,7 @@ STATE = 0
 global JOINT_NAMES
 JOINT_NAMES = ["joint_1", "joint_2", "joint_3"]
 global RATE
-RATE = 10 # 200Hz
+RATE = 10 # 10Hz
 global GOAL
 GOAL = Point()
 GOAL.x = GOAL.y = GOAL.z = 0
@@ -134,7 +134,7 @@ def compute_joint_sets(current, goal):
                 joint_set[j] = goal[i] - 0.5*c2*(tf-dt*j)**2
         
         joint_sets[i] = joint_set
-    # print joint_sets
+    print joint_sets
     return np.array(joint_sets)
 
 def computing():
