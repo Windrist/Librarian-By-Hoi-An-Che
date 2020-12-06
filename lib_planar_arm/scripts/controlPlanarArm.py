@@ -161,7 +161,7 @@ def moving():
 
     # Update Joint State
     CURRENT.position = list(cur_pos)
-    # CURRENT.velocity = list((cur_pos-pre_pos)*RATE)
+    CURRENT.velocity = list((cur_pos-pre_pos)*RATE)
 
     COUNT += 1
     if COUNT >= JOINT_SETS.shape[1]:
@@ -185,7 +185,7 @@ def state_planar_arm():
             2 - Moving
             3 - Gripping
     '''
-    global STATE, is_new_goal
+    global STATE,CURRENT, is_new_goal
     if STATE == 0 and is_new_goal:
         STATE = 1
         is_new_goal = False
@@ -198,6 +198,8 @@ def state_planar_arm():
     else:
         STATE = 0
     
+    if STATE != 2:
+        CURRENT.velocity = [0.0, 0.0, 0.0]
 
 def ros_control():
     rospy.init_node("planar_arm", anonymous=True)
