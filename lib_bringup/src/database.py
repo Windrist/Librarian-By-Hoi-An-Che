@@ -8,8 +8,8 @@ def checkBook(book):
     csv_file = csv.reader(open(file + '/../data/Borrow.csv', 'r'), delimiter=",")
     for row in csv_file:
         if book == row[0]:
-            return row[1], int(row[2]), row[3]
-    return "", -1, ""
+            return row[1], int(row[2]), int(row[3]), int(row[4])
+    return "", -1, "", -1, -1
 
 def checkName(name, book):
     file = os.path.dirname(__file__)

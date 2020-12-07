@@ -1,6 +1,6 @@
-tên sách,tác giả,số lượng,vị trí
-đại số,nguyễn đình trí,1,kệ số 3 hàng 2
-xác suất thống kê,đào hữu hồ,2,kệ số 3 hàng 1
-học máy,nguyễn thế bình,0,kệ số 1 hàng 1
-giải tích,trần đức long,6,kệ số 3 hàng 3
-thực tập điện tử tương tự,chử đức trình,5,kệ số 2 hàng 1
+tên sách,tác giả,số lượng,kệ,hàng
+đại số,nguyễn đình trí,1,3,2
+xác suất thống kê,đào hữu hồ,2,3,1
+học máy,nguyễn thế bình,0,1,1
+giải tích,trần đức long,6,3,3
+thực tập điện tử tương tự,chử đức trình,5,2,1
