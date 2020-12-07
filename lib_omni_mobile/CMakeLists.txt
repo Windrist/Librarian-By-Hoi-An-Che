@@ -8,13 +8,18 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   std_msgs
+  tf
 )
 
 catkin_package()
 
 include_directories(${catkin_INCLUDE_DIRS})
 
+add_executable(omni_mobile src/OmniMobile.cpp)
+target_link_libraries(omni_mobile ${catkin_LIBRARIES})
+
 catkin_install_python(PROGRAMS
   scripts/controlOmniMobile.py
+  scripts/controlKeyboard.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
