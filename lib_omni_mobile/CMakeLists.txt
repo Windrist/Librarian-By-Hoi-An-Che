@@ -15,5 +15,6 @@ catkin_package()
 include_directories(${catkin_INCLUDE_DIRS})
 
 catkin_install_python(PROGRAMS
+  scripts/controlOmniMobile.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
