@@ -3,6 +3,7 @@
 import rospy
 import os
 from std_msgs.msg import String
+from geometry_msgs import Pose2D
 from lib_chatbot.msg import Chatbot
 from database import checkBook, checkName, borrowBook, returnBook
 import sys
@@ -17,6 +18,7 @@ class StateMachine(object):
         self.pub_chat = rospy.Publisher("/Chat_state", Chatbot, queue_size=100)
         self.pub_talk = rospy.Publisher("/Talk_text", String, queue_size=100)
         self.pub_play = rospy.Publisher("/Play_file", String, queue_size=100)
+        self.pub_nav = rospy.Publisher("/Nav_point", Pose2D, queue_size=100)
         rospy.Subscriber("/Main_state", String, self.callbackState)
         rospy.Subscriber("/Mic_state", Chatbot, self.callbackMic)
         rospy.Subscriber("/Chat_state", Chatbot, self.callbackChat)
@@ -26,6 +28,7 @@ class StateMachine(object):
         self.recog = String()
         self.talk = String()
         self.play = String()
+        self.nav = Pose2D()
         self.state = "Idle"
         self.prev_state = ""
         self.borrow_state = False
@@ -35,7 +38,8 @@ class StateMachine(object):
         self.book_name = ""
         self.author = ""
         self.amount = ""
-        self.location = ""
+        self.column = ""
+        self.row = ""
 
         self.return_book_name = []
         self.name = ""
@@ -80,7 +84,10 @@ class StateMachine(object):
         elif msg.data == "Done" and self.state == "Wait_Me":
             self.state = "Navigation"
             self.main.data = self.state
+            self.nav.x = self.column
+            self.nav.y = self.row
             self.pub_main.publish(self.main)
+            self.pub_nav.publish(self.nav)
         elif msg.data == "Done" and (self.state == "Navigation" or self.state == "Good_Luck"):
             borrowBook(self.name, self.book_name, self.author)
             self.state = "End_Borrow_Book"
@@ -182,7 +189,7 @@ class StateMachine(object):
             list_name = msg.data.split("%")
             self.name = list_name[0]
             self.book_name = list_name[1]
-            self.author, self.amount, self.location = checkBook(self.book_name)
+            self.author, self.amount, self.column, self.row = checkBook(self.book_name)
             self.state = msg.state
             self.talk.data = u"tên bạn là {}".format(self.name) + " và hiện taị bạn muốn mượn sách {}. bạn xác nhận lại thông tin giúp mình được không?".format(self.book_name)
             self.pub_talk.publish(self.talk)
@@ -220,7 +227,7 @@ class StateMachine(object):
                     self.pub_talk.publish(self.talk)
                 else:
                     self.state = "Correct_Borrow_Book"
-                    self.talk.data = "sách {} bạn đang muốn tìm ".format(self.book_name) + "của tác giả {}".format(self.author) + " hiện còn {}".format(self.amount) + " quyển, vị trí ở {}.".format(self.location)
+                    self.talk.data = "sách {} bạn đang muốn tìm ".format(self.book_name) + "của tác giả {}".format(self.author) + " hiện còn {}".format(self.amount) + " quyển, vị trí ở kệ số {}".format(self.column) + ", hàng {}.".format(self.row)
                     self.pub_talk.publish(self.talk)
         elif msg.state == "@Affirm_Take_Book":
             if self.chitchat_state == True:
@@ -238,7 +245,7 @@ class StateMachine(object):
                 self.pub_play.publish(self.play)
             elif self.borrow_state == True:
                 self.state = "Good_Luck"
-                self.talk.data = u"mình xin nhắc lại, sách {} bạn đang muốn tìm ".format(self.book_name) + "của tác giả {}".format(self.author) + " hiện còn {}".format(self.amount) + " quyển, vị trí ở {}.".format(self.location)
+                self.talk.data = u"mình xin nhắc lại, sách {} bạn đang muốn tìm ".format(self.book_name) + "của tác giả {}".format(self.author) + " hiện còn {}".format(self.amount) + " quyển, vị trí ở kệ số {}".format(self.column) + ", hàng {}.".format(self.row)
                 self.pub_talk.publish(self.talk)
         elif msg.state == "@Chit_Chat":
             self.borrow_state = False

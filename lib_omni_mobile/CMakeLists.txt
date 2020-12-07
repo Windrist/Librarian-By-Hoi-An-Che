@@ -19,7 +19,6 @@ add_executable(omni_mobile src/OmniMobile.cpp)
 target_link_libraries(omni_mobile ${catkin_LIBRARIES})
 
 catkin_install_python(PROGRAMS
-  scripts/controlOmniMobile.py
   scripts/controlKeyboard.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
