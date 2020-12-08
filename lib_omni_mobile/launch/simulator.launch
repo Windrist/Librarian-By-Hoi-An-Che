@@ -9,6 +9,7 @@
     <node pkg="lib_omni_mobile" type="controlKeyboard.py" name="control_keyboard"
         output="screen" />
     <node pkg="lib_omni_mobile" type="omni_mobile" name="omni_mobile"/>
+    <node pkg="lib_omni_mobile" type="convert" name="convert"/>
     
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
