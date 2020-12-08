@@ -9,15 +9,15 @@
 
 // define Step pins
 #define MotorInterfaceType 1
-#define step1_pin1 1
-#define step1_pin2 2
-#define step2_pin1 3
-#define step2_pin2 4
-#define step3_pin1 5
-#define step3_pin12 6
-AccelStepper Step1(MotorInterfaceType, step1_pin1, step1_pin2);
-AccelStepper Step2(MotorInterfaceType, step2_pin1, step2_pin2);
-AccelStepper Step3(MotorInterfaceType, step3_pin1, step3_pin2);
+#define step1_pin 1
+#define step1_dir 2
+#define step2_pin 3
+#define step2_dir 4
+#define step3_pin 5
+#define step3_dir 6
+AccelStepper Step1(MotorInterfaceType, step1_pin, step1_dir);
+AccelStepper Step2(MotorInterfaceType, step2_pin, step2_dir);
+AccelStepper Step3(MotorInterfaceType, step3_pin, step3_dir;
 
 ros::NodeHandle nh;
 
@@ -29,16 +29,24 @@ void speed1StateCallback(const std_msgs::Float32& msg)
 {
     /*Wheel 1 velocity call back (rad/s) adn control wheel 1*/
     speed = convertVelocity2StepSpeed(msg->data);
+    Step1.setSpeed(speed);
+    Step1.runSpeed();
 }
 
 void speed2StateCallback(const std_msgs::Float32& msg)
 {
     /*Wheel 2 velocity call back (rad/s) adn control wheel 2*/
+    speed = convertVelocity2StepSpeed(msg->data);
+    Step2.setSpeed(speed);
+    Step2.runSpeed();
 }
 
 void speed3StateCallback(const std_msgs::Float32& msg)
 {
     /*Wheel 3 velocity call back (rad/s) adn control wheel 3*/
+    speed = convertVelocity2StepSpeed(msg->data);
+    Step3.setSpeed(speed);
+    Step3.runSpeed();
 }
 
 int convertVelocity2StepSpeed(vel)
@@ -51,6 +59,11 @@ void setup()
     // ros init arduino
     nh.initNode();
     nh.subscribe(joint_sub);   
+
+    // Set max Speed for each stepper
+    Step1.setMaxSpeed(10000);
+    Step2.setMaxSpeed(10000);
+    Step3.setMaxSpeed(10000);
 }
 
 void loop()

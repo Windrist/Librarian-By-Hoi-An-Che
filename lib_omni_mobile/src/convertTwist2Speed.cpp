@@ -9,20 +9,22 @@ geometry_msgs::Twist twist;
 
 void velocityCallback(const geometry_msgs::Twist::ConstPtr& msg)
 {
+    /* Subscribe velocity of robot */
     twist = *msg;
 }
 
 void convert2Speed(const geometry_msgs::Twist& twist,
         std_msgs::Float32& w1, std_msgs::Float32& w2, std_msgs::Float32& w3)
 {
+    /* Inverse kinematic */
+
     float vx = twist.linear.x;
     float vy = twist.linear.y;
     float w = twist.angular.z;
 
-    // Inverse kinematic
-    w1.data = (-L*w + vx)/R;
-    w2.data = (-L*w -0.5*vx - 0.866*vy)/R;
-    w3.data = (-L*w -0.5*vy + 0.866*vy)/R;
+    w1.data = (L*w - vy)/R;
+    w2.data = (L*w - 0.866*vx + 0.5*vy)/R;
+    w3.data = (L*w + 0.866*vx + 0.5*vy)/R;
 }
 
 int main(int argc, char** argv)
