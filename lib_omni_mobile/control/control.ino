@@ -27,7 +27,7 @@ ros::Subscriber<std_msgs::Float32> w3_sub("/omni/speed_1", &speed3StateCallback)
 
 void speed1StateCallback(const std_msgs::Float32& msg)
 {
-    /*Wheel 1 velocity call back (rad/s) adn control wheel 1*/
+    /*Wheel 1 velocity call back (rad/s) and control wheel 1*/
     speed = convertVelocity2StepSpeed(msg->data);
     Step1.setSpeed(speed);
     Step1.runSpeed();
@@ -35,7 +35,7 @@ void speed1StateCallback(const std_msgs::Float32& msg)
 
 void speed2StateCallback(const std_msgs::Float32& msg)
 {
-    /*Wheel 2 velocity call back (rad/s) adn control wheel 2*/
+    /*Wheel 2 velocity call back (rad/s) and control wheel 2*/
     speed = convertVelocity2StepSpeed(msg->data);
     Step2.setSpeed(speed);
     Step2.runSpeed();
@@ -43,7 +43,7 @@ void speed2StateCallback(const std_msgs::Float32& msg)
 
 void speed3StateCallback(const std_msgs::Float32& msg)
 {
-    /*Wheel 3 velocity call back (rad/s) adn control wheel 3*/
+    /*Wheel 3 velocity call back (rad/s) and control wheel 3*/
     speed = convertVelocity2StepSpeed(msg->data);
     Step3.setSpeed(speed);
     Step3.runSpeed();
@@ -51,7 +51,9 @@ void speed3StateCallback(const std_msgs::Float32& msg)
 
 int convertVelocity2StepSpeed(vel)
 {
-    /*Convert angular velocity of wheel to step per sec to control Stepper*/
+    /*Convert angular velocity (rad/s) of wheel to step/s to control Stepper*/
+    speed = int(vel*2*PI*200);
+    return speed;
 }
 
 void setup()
