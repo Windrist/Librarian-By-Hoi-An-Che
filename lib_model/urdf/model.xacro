@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omni_mobile">
+    <xacro:include filename="$(find lib_omni_mobile)/urdf/materials.xacro" />
+	<xacro:property name="PI" value="3.14" />
+    <xacro:property name="base_link_length" value="0.1" />
+    <xacro:property name="base_link_radius" value="0.15" />
+	<xacro:property name="wheel_length" value="0.035" />
+	<xacro:property name="wheel_radius" value="0.1" />
+	<xacro:property name="offset" value="0.02" />
+    <xacro:property name="base_arm_length" value="0.05" />
+    <xacro:property name="base_arm_radius" value="0.08" />
+    <xacro:property name="link_width" value="0.02" />
+	<xacro:property name="link1_length" value="0.20" />
+	<xacro:property name="link2_length" value="0.20" />
+	<xacro:property name="link3_length" value="0.20" />
+
+	<!-- Mobile -->
+    <link name="base_link">
+		<visual>
+			<geometry>
+				<cylinder length="${base_link_length}" radius="${base_link_radius}"/>
+			</geometry>
+			<origin xyz="0 0 ${base_link_length/2+wheel_radius/2}"/>
+			<material name="blue"/>
+		</visual>
+		<collision>
+			<geometry>
+				<cylinder length="${base_link_length}" radius="${base_link_radius}"/>
+			</geometry>
+			<origin xyz="0 0 ${base_link_length/2+wheel_radius/2}"/>
+			<material name="blue"/>
+		</collision>
+	</link>
+
+	<joint name="jwheel_1" type="revolute">
+		<parent link="base_link"/>
+		<child link="wheel_1"/>
+		<origin xyz="${base_link_radius+wheel_length/2} 0 ${base_link_length}" rpy="0 ${PI/2} 0"/>
+		<axis xyz="0 0 1"/>
+		<limit effort="1000" lower="${-PI}" upper="${PI}" velocity="5"/>
+	</joint>
+
+	<link name="wheel_1">
+		<visual>
+			<geometry>
+				<cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+			</geometry>
+			<origin xyz="0 0 0"/>
+			<material name="black"/>
+		</visual>
+		<collision>
+			<geometry>
+				<cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+			</geometry>
+			<origin xyz="0 0 0"/>
+			<material name="black"/>
+		</collision>
+	</link>
+
+	<joint name="jwheel_2" type="revolute">
+		<parent link="base_link"/>
+		<child link="wheel_2"/>
+		<origin xyz="${-0.5*(base_link_radius+wheel_length/2)} ${0.866*(base_link_radius+wheel_length/2)} ${base_link_length}" rpy="0 ${PI/2} ${2*PI/3}"/>
+		<axis xyz="0 0 1"/>
+		<limit effort="1000" lower="${-PI}" upper="${PI}" velocity="5"/>
+	</joint>
+
+	<link name="wheel_2">
+		<visual>
+			<geometry>
+				<cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+			</geometry>
+			<origin xyz="0 0 0"/>
+			<material name="black"/>
+		</visual>
+		<collision>
+			<geometry>
+				<cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+			</geometry>
+			<origin xyz="0 0 0"/>
+			<material name="black"/>
+		</collision>
+	</link>
+
+	<joint name="jwheel_3" type="revolute">
+		<parent link="base_link"/>
+		<child link="wheel_3"/>
+		<origin xyz="${-0.5*(base_link_radius+wheel_length/2)} ${-0.866*(base_link_radius+wheel_length/2)} ${base_link_length}" rpy="0 ${PI/2} ${-2*PI/3}"/>
+		<axis xyz="0 0 1"/>
+		<limit effort="1000" lower="${-PI}" upper="${PI}" velocity="5"/>
+	</joint>
+
+	<link name="wheel_3">
+		<visual>
+			<geometry>
+				<cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+			</geometry>
+			<origin xyz="0 0 0"/>
+			<material name="black"/>
+		</visual>
+		<collision>
+			<geometry>
+				<cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+			</geometry>
+			<origin xyz="0 0 0"/>
+			<material name="black"/>
+		</collision>
+	</link>
+
+	<!-- Planar 3DOF Arm -->
+	<joint name="rigid" type="fixed">
+		<parent link="base_link"/>
+		<child link="base_arm"/>
+		<origin xyz="0 0 ${base_link_length/2+wheel_radius/2}" rpy="0 0 0"/>
+		<axis xyz="0 0 1"/>
+	</joint>
+
+	<link name="base_arm">
+		<visual>
+			<geometry>
+				<cylinder length="${base_arm_length}" radius="${base_arm_radius}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${base_arm_length/2}"/>
+			<material name="blue"/>
+		</visual>
+		<collision>
+			<geometry>
+				<cylinder length="${base_arm_length}" radius="${base_arm_radius}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${base_arm_length/2}"/>
+			<material name="blue"/>
+		</collision>
+	</link>
+
+	<joint name="joint_1" type="revolute">
+		<parent link="base_arm"/>
+		<child link="link_1"/>
+		<origin xyz="0.0 ${link_width} ${base_arm_length+offset}"/>
+		<axis xyz="0 1 0"/>
+		<limit effort="1000" lower="-3.14" upper="3.14" velocity="5"/>
+	</joint>
+
+	<link name="link_1">
+		<visual>
+			<geometry>
+				<box size="${link_width} ${link_width} ${link1_length}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${link1_length/2-offset}"/>
+			<material name="black"/>
+		</visual>
+		<collision>
+			<geometry>
+				<box size="${link_width} ${link_width} ${link1_length}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${link1_length/2-offset}"/>
+			<material name="black"/>
+		</collision>
+	</link>
+
+	<joint name="joint_2" type="revolute">
+		<parent link="link_1"/>
+		<child link="link_2"/>
+		<origin xyz="0.0 ${-link_width} ${link2_length-offset}"/>
+		<axis xyz="0 1 0"/>
+		<limit effort="1000" lower="-3.14" upper="3.14" velocity="5"/>
+	</joint>
+
+	<link name="link_2">
+		<visual>
+			<geometry>
+				<box size="${link_width} ${link_width} ${link2_length}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${link2_length/2-offset}"/>
+			<material name="white"/>
+		</visual>
+		<collision>
+			<geometry>
+				<box size="${link_width} ${link_width} ${link2_length}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${link2_length/2-offset}"/>
+			<material name="white"/>
+		</collision>
+	</link>
+
+	<joint name="joint_3" type="revolute">
+		<parent link="link_2"/>
+		<child link="link_3"/>
+		<origin xyz="0.0 ${link_width} ${link3_length-offset}"/>
+		<axis xyz="0 1 0"/>
+		<limit effort="1000" lower="-3.14" upper="3.14" velocity="5"/>
+	</joint>
+
+	<link name="link_3">
+		<visual>
+			<geometry>
+				<box size="${link_width} ${link_width} ${link3_length}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${link3_length/2-offset}"/>
+			<material name="red"/>
+		</visual>
+		<collision>
+			<geometry>
+				<box size="${link_width} ${link_width} ${link3_length}"/>
+			</geometry>
+			<origin xyz="0.0 0.0 ${link3_length/2-offset}"/>
+		</collision>
+	</link>
+</robot>

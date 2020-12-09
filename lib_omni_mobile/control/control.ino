@@ -6,6 +6,7 @@
 #include <AccelStepper.h>
 
 #define PI 3.14159265
+#define MAX_SPEED 10000
 
 // define Step pins
 #define MotorInterfaceType 1
@@ -63,9 +64,9 @@ void setup()
     nh.subscribe(joint_sub);   
 
     // Set max Speed for each stepper
-    Step1.setMaxSpeed(10000);
-    Step2.setMaxSpeed(10000);
-    Step3.setMaxSpeed(10000);
+    Step1.setMaxSpeed(MAX_SPEED);
+    Step2.setMaxSpeed(MAX_SPEED);
+    Step3.setMaxSpeed(MAX_SPEED);
 }
 
 void loop()
