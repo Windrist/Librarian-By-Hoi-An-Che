@@ -18,7 +18,7 @@
     <arg name="model" default="$(find lib_omni_mobile)/urdf/omni_mobile.xacro"/>
     <arg name="gui" default="false" />
     <arg name="rvizconfig" default="$(find lib_omni_mobile)/rviz/urdf.rviz" />
-    <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find lib_omni_mobile)/urdf/omni_mobile.xacro'" />
+    <arg name="urdf_file" default="$(find xacro)/xacro '$(find lib_omni_mobile)/urdf/omni_mobile.xacro'" />
 
     <param name="robot_description" command="$(arg urdf_file)" />
     <param name="use_gui" value="$(arg gui)"/>
