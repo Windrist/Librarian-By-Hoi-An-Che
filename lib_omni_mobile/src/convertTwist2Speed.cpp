@@ -4,7 +4,7 @@
 
 const float PI = 3.14159265;
 const float R = 0.1;
-const float L = 0.15;
+const float L = 0.18;
 geometry_msgs::Twist twist;
 
 void velocityCallback(const geometry_msgs::Twist::ConstPtr& msg)

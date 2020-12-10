@@ -1,17 +1,17 @@
 <launch>
-    <arg name="model" default="$(find lib_omni_mobile )/urdf/omni_mobile.xacro"/>
+    <!-- <arg name="model" default="$(find lib_omni_mobile )/urdf/omni_mobile.xacro"/> -->
     <arg name="gui" default="false" />
     <arg name="rvizconfig" default="$(find lib_omni_mobile )/rviz/urdf.rviz" />
 
-    <param name="robot_description" command="$(find xacro)/xacro.py '$(find lib_omni_mobile )/urdf/omni_mobile.xacro'" />
-    <param name="use_gui" value="$(arg gui)"/>
+    <!-- <param name="robot_description" command="$(find xacro)/xacro.py '$(find lib_omni_mobile )/urdf/omni_mobile.xacro'" /> -->
+    <!-- <param name="use_gui" value="$(arg gui)"/> -->
 
     <node pkg="lib_omni_mobile" type="controlKeyboard.py" name="control_keyboard"
         output="screen" />
     <node pkg="lib_omni_mobile" type="omni_mobile" name="omni_mobile"/>
     <node pkg="lib_omni_mobile" type="convert" name="convert"/>
     
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+    <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> -->
+    <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /> -->
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" /> -->
 </launch>
