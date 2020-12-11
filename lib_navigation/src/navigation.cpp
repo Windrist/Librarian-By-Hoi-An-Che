@@ -6,7 +6,7 @@
 #include <std_msgs/String.h>
 
 #define PI 3.141592654
-#define V_x 0.12
+#define V_x 0.6
 #define V_z 1.2
 #define distance_to_stop 0.2
 #define MAX_SPEED 1216
@@ -35,7 +35,7 @@ int main(int argc, char** argv)
 
     // Init Publisher and Subcriber
     cli_makePlan = nh.serviceClient<nav_msgs::GetPlan>("/global_plan/planner/make_plan");
-    pub = nh.advertise<geometry_msgs::Twist>("/omni_mobile/cmd_vel", 100);
+    pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
     pubMain = nh.advertise<std_msgs::String>("/Main_state", 100);
     ros::Subscriber goal_subscribe = nh.subscribe("/move_base_simple/goal", 1000, goalCallback);
     ros::Subscriber odom_subscribe = nh.subscribe("/amcl", 1000, odomCallback);

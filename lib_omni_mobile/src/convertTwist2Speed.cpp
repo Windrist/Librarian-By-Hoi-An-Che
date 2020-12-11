@@ -34,7 +34,7 @@ int main(int argc, char** argv)
     ros::NodeHandle nh;
 
     // Init publisher and subscriber
-    ros::Subscriber vel_sub = nh.subscribe("/omni_mobile/cmd_vel", 10, velocityCallback);
+    ros::Subscriber vel_sub = nh.subscribe("/cmd_vel", 10, velocityCallback);
     ros::Publisher w1_pub = nh.advertise<std_msgs::Float32>("/omni/speed_1", 10);
     ros::Publisher w2_pub = nh.advertise<std_msgs::Float32>("/omni/speed_2", 10);
     ros::Publisher w3_pub = nh.advertise<std_msgs::Float32>("/omni/speed_3", 10);

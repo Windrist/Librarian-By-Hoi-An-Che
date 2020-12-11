@@ -59,7 +59,7 @@ def vels(speed,turn):
 if __name__=="__main__":
     settings = termios.tcgetattr(sys.stdin)
 
-    pub = rospy.Publisher('/omni_mobile/cmd_vel', Twist, queue_size = 1)
+    pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 1)
     rospy.init_node('control_keyboard')
 
     speed = rospy.get_param("~speed", 0.5)
