@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omni_mobile">
     <xacro:include filename="$(find lib_omni_mobile)/urdf/materials.xacro" />
+	<xacro:include filename="$(find lib_omni_mobile)/urdf/roller_wheel.urdf.xacro"/>
 	<xacro:include filename="$(find lib_omni_mobile)/urdf/omni_mobile.gazebo.xacro" />
 	<xacro:property name="PI" value="3.14" />
     <xacro:property name="base_link_length" value="0.1" />
@@ -27,13 +28,6 @@
 			<!-- <origin xyz="0 0 0" rpy="1.5708 0 0"/> -->
 			<material name="blue"/>
 		</collision>
-		<!-- <inertial>
-			<origin xyz="0.0 0 0.0" rpy="0 0 0"/>
-			<mass value="1.6329594e+00"/>
-			<inertia ixx="1.0" ixy="0.0" ixz="0.0"
-					iyy="1.0" iyz="0.0"
-					izz="1.0" />
-		</inertial> -->
 	</link>
 
 	<joint name="jwheel_1" type="continuous">
@@ -142,7 +136,6 @@
 		<visual>
 			<origin xyz="0 0 0"/>
 			<geometry>
-				<!-- <cylinder length="0.0315" radius="0.045"/> -->
 				<mesh filename="package://turtlebot3_description/meshes/sensors/lds.stl" scale="0.001 0.001 0.001"/>
 			</geometry>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
@@ -163,13 +156,5 @@
 					izz="0.001" />
 		</inertial>
 	</link>
-
-	<!-- <joint name="imu_joint" type="fixed">
-    	<parent link="base_link"/>
-    	<child link="imu_link"/>
-    	<origin xyz="0.0 0 0.068" rpy="0 0 0"/>
-  	</joint>
-
-  	<link name="imu_link"/> -->
-
+	
 </robot>
