@@ -1,12 +1,12 @@
 <launch>
 
     <!-- Launch Robot Bringup -->
-    <include file="$(find lib_bringup)/launch/bringUp.launch" />
+    <!-- <include file="$(find lib_bringup)/launch/bringUp.launch" /> -->
 
     <!-- Launch Navigation-->
-    <!-- <include file="$(find lib_navigation)/launch/navigation.launch" /> -->
+    <include file="$(find lib_navigation)/launch/navigation.launch" />
 
     <!-- Launch ChatBot -->
-    <include file="$(find lib_bringup)/launch/chatBot.launch" />
+    <!-- <include file="$(find lib_bringup)/launch/chatBot.launch" /> -->
 
 </launch>

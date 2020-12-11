@@ -1,23 +1,40 @@
 <launch>
     <!-- Bringup -->
-    <!-- <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-        <param name="publish_frequency" type="double" value="50.0" />
-    </node> -->
-    <!-- <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter" output="screen" >
+    <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter" output="screen" >
         <rosparam command="load" file="$(find lib_navigation)/config/scan_data_filter.yaml" />
-    </node> -->
-    <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find lib_bringup)/urdf/librarian.urdf.xacro'" />
-    <!-- <param name="robot_description" command="$(arg urdf_file)" /> -->
+    </node>
 
-    <!-- <arg name="set_frame_id" default="base_scan"/> -->
+    <arg name="set_frame_id" default="base_scan"/>
 
     <!-- <node pkg="hls_lfcd_lds_driver" type="hlds_laser_publisher" name="lib_lds" output="screen">
         <param name="port" value="/dev/ttyUSB0"/>
         <param name="frame_id" value="$(arg set_frame_id)"/>
     </node> -->
 
-    <!-- <node pkg="tf" type="static_transform_publisher" name="scan_broadcaster" args="0 0 0 0 0 0 1 base_footprint base_scan 100" /> -->
-    <node pkg="lib_transform" type="tf_transform" name="robot_tf_publisher" output="screen"> </node>
-	<node pkg="lib_transform" type="odom_transform" name="odom_publisher" output="screen"> </node>
+    <!-- <node pkg="tf" type="static_transform_publisher" name="scan_broadcaster" args="0 0 0 0 0 0 1 base_link base_footprint 100" /> -->
+    <!-- <node pkg="lib_transform" type="tf_transform" name="robot_tf_publisher" output="screen"> </node> -->
+	<!-- <node pkg="lib_transform" type="odom_transform" name="odom_publisher" output="screen"> </node> -->
+
+    <arg name="model" default="$(find lib_omni_mobile)/urdf/omni_mobile.urdf.xacro"/>
+    <arg name="gui" default="false" />
+    <!-- <arg name="rvizconfig" default="$(find lib_omni_mobile)/rviz/urdf.rviz" /> -->
+    <arg name="urdf_file" default="$(find xacro)/xacro $(find lib_omni_mobile)/urdf/omni_mobile.urdf.xacro" />
+
+    <param name="robot_description" command="$(arg urdf_file)" />
+    <param name="use_gui" value="$(arg gui)"/>
+
+    <!-- <node pkg="lib_omni_mobile" type="controlKeyboard.py" name="control_keyboard" output="screen" /> -->
+    <!-- <node pkg="lib_omni_mobile" type="omni_mobile" name="omni_mobile"/> -->
+    <node pkg="lib_omni_mobile" type="convert" name="convert"/>
+    
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" /> -->
+
+    <!-- <node pkg="rosserial_python" name="control_wheels" type="serial_node.py" output = "screen">
+        <param name="port" value="/dev/ttyACM0"/>
+        <param name="baud" value="57600"/>
+    </node> -->
+
 
 </launch>

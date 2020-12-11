@@ -18,6 +18,9 @@ include_directories(${catkin_INCLUDE_DIRS})
 add_executable(omni_mobile src/OmniMobile.cpp)
 target_link_libraries(omni_mobile ${catkin_LIBRARIES})
 
+add_executable(convert src/convertTwist2Speed.cpp)
+target_link_libraries(convert ${catkin_LIBRARIES})
+
 catkin_install_python(PROGRAMS
   scripts/controlKeyboard.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
