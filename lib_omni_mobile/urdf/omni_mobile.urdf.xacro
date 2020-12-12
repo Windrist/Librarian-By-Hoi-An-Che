@@ -30,9 +30,9 @@
 		</inertial>
 	</link>
 
-	<xacro:rim name="left_wheel" parent="base_link" xyz="${-0.5*(base_link_radius+wheel_length/2)} ${0.866*(base_link_radius+wheel_length/2)} ${base_link_length}" rpy="0 ${PI/2} ${2*PI/3}"/>
-	<xacro:rim name="right_wheel" parent="base_link" xyz="${-0.5*(base_link_radius+wheel_length/2)} ${-0.866*(base_link_radius+wheel_length/2)} ${base_link_length}" rpy="0 ${PI/2} ${-2*PI/3}"/>
-	<xacro:rim name="front_wheel" parent="base_link" xyz="${base_link_radius+wheel_length/2} 0 ${base_link_length}" rpy="0 ${PI/2} ${PI}"/>
+	<xacro:rim name="left_wheel" parent="base_link" xyz="${-0.5*(base_link_radius+wheel_length/2)} ${0.866*(base_link_radius+wheel_length/2)} ${-base_link_length}" rpy="0 ${PI/2} ${2*PI/3}"/>
+	<xacro:rim name="right_wheel" parent="base_link" xyz="${-0.5*(base_link_radius+wheel_length/2)} ${-0.866*(base_link_radius+wheel_length/2)} ${-base_link_length}" rpy="0 ${PI/2} ${-2*PI/3}"/>
+	<xacro:rim name="front_wheel" parent="base_link" xyz="${base_link_radius+wheel_length/2} 0 ${-base_link_length}" rpy="0 ${PI/2} ${PI}"/>
 
 	<joint name="scan_joint" type="fixed">
 		<parent link="base_link"/>
@@ -47,7 +47,7 @@
 				<mesh filename="package://turtlebot3_description/meshes/sensors/lds.stl" scale="0.001 0.001 0.001"/>
 			</geometry>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
-			<material name="dark"/>
+			<material name="black"/>
 		</visual>
 	</link>
 
