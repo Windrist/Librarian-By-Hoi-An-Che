@@ -3,24 +3,26 @@
 	<xacro:include filename="$(find lib_omni_mobile)/urdf/rim_wheel.urdf.xacro"/>
 	<xacro:include filename="$(find lib_omni_mobile)/urdf/omni_mobile.gazebo.xacro" />
 	<xacro:property name="PI" value="3.14" />
-    <xacro:property name="base_link_length" value="0.07" />
+    <xacro:property name="base_link_length" value="0.12" />
     <xacro:property name="base_link_radius" value="0.15" />
-	<xacro:property name="wheel_length" value="0.04" />
-	<xacro:property name="wheel_radius" value="0.04" />
+	<xacro:property name="wheel_length" value="0.036" />
+	<xacro:property name="wheel_radius" value="0.032" />
+	<xacro:property name="roller_length" value="0.018" />
+	<xacro:property name="roller_radius" value="0.009" />
 	
     <link name="base_link">
 		<visual>
 			<geometry>
 				<cylinder length="${base_link_length}" radius="${base_link_radius}"/>
 			</geometry>
-			<origin xyz="0 0 ${base_link_length/2+wheel_radius}" rpy="0 0 0"/>
+			<origin xyz="0 0 ${base_link_length/2+roller_length}" rpy="0 0 0"/>
 			<material name="white"/>
 		</visual>
 		<collision>
 			<geometry>
 				<cylinder length="${base_link_length}" radius="${base_link_radius}"/>
 			</geometry>
-			<origin xyz="0 0 ${base_link_length/2+wheel_radius}" rpy="0 0 0"/>
+			<origin xyz="0 0 ${base_link_length/2+roller_length}" rpy="0 0 0"/>
 			<material name="white"/>
 		</collision>
 		<inertial>
@@ -30,14 +32,14 @@
 		</inertial>
 	</link>
 
-	<xacro:rim name="left_wheel" parent="base_link" xyz="${-0.5*(base_link_radius+wheel_length/2)} ${0.866*(base_link_radius+wheel_length/2)} ${-base_link_length}" rpy="0 ${PI/2} ${2*PI/3}"/>
-	<xacro:rim name="right_wheel" parent="base_link" xyz="${-0.5*(base_link_radius+wheel_length/2)} ${-0.866*(base_link_radius+wheel_length/2)} ${-base_link_length}" rpy="0 ${PI/2} ${-2*PI/3}"/>
-	<xacro:rim name="front_wheel" parent="base_link" xyz="${base_link_radius+wheel_length/2} 0 ${-base_link_length}" rpy="0 ${PI/2} ${PI}"/>
+	<xacro:rim name="left_wheel" parent="base_link" xyz="${0.5*(base_link_radius+wheel_length/2)} ${0.866*(base_link_radius+wheel_length/2)} ${base_link_length/2-roller_radius}" rpy="0 ${PI/2} ${PI/3}"/>
+	<xacro:rim name="right_wheel" parent="base_link" xyz="${0.5*(base_link_radius+wheel_length/2)} ${-0.866*(base_link_radius+wheel_length/2)} ${base_link_length/2-roller_radius}" rpy="0 ${PI/2} ${-PI/3}"/>
+	<xacro:rim name="front_wheel" parent="base_link" xyz="${-base_link_radius-wheel_length/2} 0 ${base_link_length/2-roller_radius}" rpy="0 ${PI/2} ${PI}"/>
 
 	<joint name="scan_joint" type="fixed">
 		<parent link="base_link"/>
 		<child link="base_scan"/>
-		<origin xyz="-0.024 0 0.17" rpy="0 0 0"/> 
+		<origin xyz="${base_link_radius-wheel_length/2} 0 ${base_link_length+roller_radius*4}" rpy="0 0 0"/> 
   	</joint>
 
 	<link name="base_scan">

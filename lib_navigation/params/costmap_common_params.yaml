@@ -1,7 +1,7 @@
 robot_radius: 0.2
 obstacle_range: 3.0
 raytrace_range: 3.5
-inflation_radius: 0.55
+inflation_radius: 0.2
 
 observation_sources: laser_scan_sensor
 laser_scan_sensor: {data_type: LaserScan, sensor_frame: base_scan, clearing: true, marking: true, topic: scan}

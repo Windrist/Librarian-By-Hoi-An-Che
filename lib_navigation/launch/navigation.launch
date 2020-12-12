@@ -1,6 +1,6 @@
 <launch>
   <!-- Arguments -->
-  <arg name="map_file" default="$(find lib_bringup)/maps/house.yaml"/>
+  <arg name="map_file" default="$(find lib_bringup)/maps/Dong.yaml"/>
   <arg name="open_rviz" default="true"/>
   <arg name="move_forward_only" default="false"/>
 
@@ -9,8 +9,8 @@
 
   <!-- AMCL -->
   <include file="$(find lib_navigation)/launch/amcl.launch">
-    <arg name="initial_pose_x"  value="-2.0" />
-    <arg name="initial_pose_y"  value="1.0" />
+    <arg name="initial_pose_x"  value="-0.3" />
+    <arg name="initial_pose_y"  value="-0.4" />
     <arg name="initial_pose_a"  value="0" />
   </include>
 

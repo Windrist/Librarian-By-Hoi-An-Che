@@ -7,8 +7,8 @@
 #include <geometry_msgs/Point.h>
 #include <move_base_msgs/MoveBaseActionGoal.h>
 
-float location_x[5] =     {-0.50f, -1.50f, -2.50f, -3.50f, -4.50f};
-float location_y[5] =     {+4.00f, +4.00f, +4.00f, +4.00f, +4.00f};
+float location_x[5] =     {+1.00f, -1.50f, -2.50f, -3.50f, -4.50f};
+float location_y[5] =     {+0.50f, +4.00f, +4.00f, +4.00f, +4.00f};
 float location_theta[5] = {-1.57f, -1.57f, -1.57f, -1.57f, -1.57f};
 
 float grip_pose_x[5] = {-0.50f, -1.50f, -2.50f, -3.50f, -4.50f};
@@ -107,8 +107,8 @@ void gripCallback(const std_msgs::Bool& msg)
         goal.header.stamp = ros::Time::now();
         goal.goal.target_pose.header.stamp = ros::Time::now();
         goal.goal.target_pose.header.frame_id = "map";
-        goal.goal.target_pose.pose.position.x = -2.0;
-        goal.goal.target_pose.pose.position.y = 1.0;
+        goal.goal.target_pose.pose.position.x = -0.3;
+        goal.goal.target_pose.pose.position.y = -0.4;
         tf::Quaternion orientation = tf::createQuaternionFromYaw(0.0);
         quaternionTFToMsg(orientation, goal.goal.target_pose.pose.orientation);
         pub.publish(goal);
