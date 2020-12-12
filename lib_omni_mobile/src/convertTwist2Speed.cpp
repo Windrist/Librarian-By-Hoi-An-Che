@@ -1,6 +1,6 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
-#include <std_msgs/Float64.h>
+#include <std_msgs/Float32.h>
 
 const float PI = 3.14159265;
 const float R = 0.05;
@@ -14,7 +14,7 @@ void velocityCallback(const geometry_msgs::Twist::ConstPtr& msg)
 }
 
 void convert2Speed(const geometry_msgs::Twist& twist,
-        std_msgs::Float64& w1, std_msgs::Float64& w2, std_msgs::Float64& w3)
+        std_msgs::Float32& w1, std_msgs::Float32& w2, std_msgs::Float32& w3)
 {
     /* Inverse kinematic */
 
@@ -22,9 +22,9 @@ void convert2Speed(const geometry_msgs::Twist& twist,
     float vy = twist.linear.y;
     float w = twist.angular.z;
 
-    w1.data = L*w/R;
-    w2.data = -(L*w - 0.5*vx)/R;
-    w3.data = -(L*w + 0.5*vx)/R;
+    w1.data = -(L*w) / R * 16;
+    w2.data = -(L*w - sqrt(3)*vx) / R * 16;
+    w3.data = -(L*w + sqrt(3)*vx) / R * 16;
 }
 
 int main(int argc, char** argv)
@@ -35,12 +35,12 @@ int main(int argc, char** argv)
 
     // Init publisher and subscriber
     ros::Subscriber vel_sub = nh.subscribe("/cmd_vel", 10, velocityCallback);
-    ros::Publisher w1_pub = nh.advertise<std_msgs::Float64>("/omni_mobile/front_wheel_controller/command", 10);
-    ros::Publisher w2_pub = nh.advertise<std_msgs::Float64>("/omni_mobile/left_wheel_controller/command", 10);
-    ros::Publisher w3_pub = nh.advertise<std_msgs::Float64>("/omni_mobile/right_wheel_controller/command", 10);
+    ros::Publisher w1_pub = nh.advertise<std_msgs::Float32>("/librarian/front_wheel_controller/command", 10);
+    ros::Publisher w2_pub = nh.advertise<std_msgs::Float32>("/librarian/left_wheel_controller/command", 10);
+    ros::Publisher w3_pub = nh.advertise<std_msgs::Float32>("/librarian/right_wheel_controller/command", 10);
 
     // Create Twist message
-    std_msgs::Float64 w1, w2, w3;
+    std_msgs::Float32 w1, w2, w3;
 
     ros::Rate r(10);
     while(nh.ok())

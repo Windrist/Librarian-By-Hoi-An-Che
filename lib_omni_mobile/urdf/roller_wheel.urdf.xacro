@@ -17,7 +17,7 @@
             </geometry>
         </collision>
     </link>
-    <joint name="roller_${name}_${parent}" type="fixed">
+    <joint name="roller_${name}_${parent}" type="continuous">
         <parent link="${parent}"/>
         <child link="roller_${name}_${parent}"/>
         <axis xyz="0 0 1"/>

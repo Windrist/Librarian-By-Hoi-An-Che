@@ -7,13 +7,13 @@
   <xacro:include filename="$(find lib_omni_mobile)/urdf/omni_mobile.urdf.xacro" />
 
   <!-- Include Planar Arm URDF -->
-  <xacro:include filename="$(find lib_planar_arm)/urdf/planar_arm.urdf.xacro" />
+  <!-- <xacro:include filename="$(find lib_planar_arm)/urdf/planar_arm.urdf.xacro" /> -->
 
   <!-- Base fixed joint -->
-  <joint name="base_fixed" type="fixed">
+  <!-- <joint name="base_fixed" type="fixed">
     <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="planar_link"/>
-  </joint>
+  </joint> -->
 
 </robot>

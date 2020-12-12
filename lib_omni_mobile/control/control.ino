@@ -1,7 +1,7 @@
 // ROS lib
 #include <ros.h>
 #include <geometry_msgs/Twist.h>
-#include <std_msgs/Float32.h>
+#include <std_msgs/Float64.h>
 
 // Stepper lib
 #include <AccelStepper.h>
@@ -34,7 +34,7 @@ int convertVelocity2StepSpeed(float vel)
     return speed;
 }
 
-void speed1StateCallback(const std_msgs::Float32& msg)
+void speed1StateCallback(const std_msgs::Float64& msg)
 {
     /*Wheel 1 velocity call back (rad/s) and control wheel 1*/
     int speed = convertVelocity2StepSpeed(msg.data);
@@ -42,7 +42,7 @@ void speed1StateCallback(const std_msgs::Float32& msg)
 //    Step1.runSpeed();
 }
 
-void speed2StateCallback(const std_msgs::Float32& msg)
+void speed2StateCallback(const std_msgs::Float64& msg)
 {
     /*Wheel 2 velocity call back (rad/s) and control wheel 2*/
     int speed = convertVelocity2StepSpeed(msg.data);
@@ -50,7 +50,7 @@ void speed2StateCallback(const std_msgs::Float32& msg)
 //    Step2.runSpeed();
 }
 
-void speed3StateCallback(const std_msgs::Float32& msg)
+void speed3StateCallback(const std_msgs::Float64& msg)
 {
     /*Wheel 3 velocity call back (rad/s) and control wheel 3*/
     int speed = convertVelocity2StepSpeed(msg.data);
@@ -58,9 +58,9 @@ void speed3StateCallback(const std_msgs::Float32& msg)
 //    Step3.runSpeed();
 }
 
-ros::Subscriber<std_msgs::Float32> w1_sub("/omni_mobile/front_wheel_controller/command", &speed1StateCallback);
-ros::Subscriber<std_msgs::Float32> w2_sub("/omni_mobile/left_wheel_controller/command", &speed2StateCallback);
-ros::Subscriber<std_msgs::Float32> w3_sub("/omni_mobile/right_wheel_controller/command", &speed3StateCallback);
+ros::Subscriber<std_msgs::Float64> w1_sub("/librarian/front_wheel_controller/command", &speed1StateCallback);
+ros::Subscriber<std_msgs::Float64> w2_sub("/librarian/left_wheel_controller/command", &speed2StateCallback);
+ros::Subscriber<std_msgs::Float64> w3_sub("/librarian/right_wheel_controller/command", &speed3StateCallback);
 
 void setup()
 {

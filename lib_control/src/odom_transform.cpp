@@ -31,7 +31,7 @@ int main(int argc, char** argv){
     ros::Time current_time, last_time;
     current_time = ros::Time::now();
     last_time = ros::Time::now();
-    ros::Rate r(30.0);
+    ros::Rate r(10.0);
     while(n.ok()){
 
         ros::spinOnce();               // check for incoming messages
@@ -39,8 +39,8 @@ int main(int argc, char** argv){
 
         //compute odometry in a typical way given the velocities of the robot
         double dt = (current_time - last_time).toSec();
-        double delta_x = (twist.linear.x * cos(th) - twist.linear.y * sin(th)) * dt;
-        double delta_y = (twist.linear.x * sin(th) + twist.linear.y * cos(th)) * dt;
+        double delta_x = twist.linear.x * cos(th) * dt;
+        double delta_y = twist.linear.x * sin(th) * dt;
         double delta_th = twist.angular.z * dt;
 
         x += delta_x;
@@ -63,6 +63,7 @@ int main(int argc, char** argv){
 
         //send the transform
         odom_broadcaster.sendTransform(odom_trans);
+        
         //next, we'll publish the odometry message over ROS
         nav_msgs::Odometry odom;
         odom.header.stamp = current_time;

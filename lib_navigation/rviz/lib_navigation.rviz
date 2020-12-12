@@ -52,19 +52,236 @@ Visualization Manager:
       Reference Frame: <Fixed Frame>
       Value: true
     - Class: rviz/TF
-      Enabled: false
+      Enabled: true
       Frame Timeout: 15
       Frames:
         All Enabled: false
+        base_link:
+          Value: true
+        base_scan:
+          Value: false
+        front_wheel:
+          Value: false
+        imu_link:
+          Value: false
+        left_wheel:
+          Value: false
+        map:
+          Value: true
+        odom:
+          Value: true
+        right_wheel:
+          Value: false
+        roller_10_front_wheel:
+          Value: false
+        roller_10_left_wheel:
+          Value: false
+        roller_10_right_wheel:
+          Value: false
+        roller_11_front_wheel:
+          Value: false
+        roller_11_left_wheel:
+          Value: false
+        roller_11_right_wheel:
+          Value: false
+        roller_12_front_wheel:
+          Value: false
+        roller_12_left_wheel:
+          Value: false
+        roller_12_right_wheel:
+          Value: false
+        roller_13_front_wheel:
+          Value: false
+        roller_13_left_wheel:
+          Value: false
+        roller_13_right_wheel:
+          Value: false
+        roller_14_front_wheel:
+          Value: false
+        roller_14_left_wheel:
+          Value: false
+        roller_14_right_wheel:
+          Value: false
+        roller_15_front_wheel:
+          Value: false
+        roller_15_left_wheel:
+          Value: false
+        roller_15_right_wheel:
+          Value: false
+        roller_16_front_wheel:
+          Value: false
+        roller_16_left_wheel:
+          Value: false
+        roller_16_right_wheel:
+          Value: false
+        roller_1_front_wheel:
+          Value: false
+        roller_1_left_wheel:
+          Value: false
+        roller_1_right_wheel:
+          Value: false
+        roller_2_front_wheel:
+          Value: false
+        roller_2_left_wheel:
+          Value: false
+        roller_2_right_wheel:
+          Value: false
+        roller_3_front_wheel:
+          Value: false
+        roller_3_left_wheel:
+          Value: false
+        roller_3_right_wheel:
+          Value: false
+        roller_4_front_wheel:
+          Value: false
+        roller_4_left_wheel:
+          Value: false
+        roller_4_right_wheel:
+          Value: false
+        roller_5_front_wheel:
+          Value: false
+        roller_5_left_wheel:
+          Value: false
+        roller_5_right_wheel:
+          Value: false
+        roller_6_front_wheel:
+          Value: false
+        roller_6_left_wheel:
+          Value: false
+        roller_6_right_wheel:
+          Value: false
+        roller_7_front_wheel:
+          Value: false
+        roller_7_left_wheel:
+          Value: false
+        roller_7_right_wheel:
+          Value: false
+        roller_8_front_wheel:
+          Value: false
+        roller_8_left_wheel:
+          Value: false
+        roller_8_right_wheel:
+          Value: false
+        roller_9_front_wheel:
+          Value: false
+        roller_9_left_wheel:
+          Value: false
+        roller_9_right_wheel:
+          Value: false
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: false
       Tree:
-        {}
+        map:
+          odom:
+            base_link:
+              base_scan:
+                {}
+              front_wheel:
+                roller_10_front_wheel:
+                  {}
+                roller_11_front_wheel:
+                  {}
+                roller_12_front_wheel:
+                  {}
+                roller_13_front_wheel:
+                  {}
+                roller_14_front_wheel:
+                  {}
+                roller_15_front_wheel:
+                  {}
+                roller_16_front_wheel:
+                  {}
+                roller_1_front_wheel:
+                  {}
+                roller_2_front_wheel:
+                  {}
+                roller_3_front_wheel:
+                  {}
+                roller_4_front_wheel:
+                  {}
+                roller_5_front_wheel:
+                  {}
+                roller_6_front_wheel:
+                  {}
+                roller_7_front_wheel:
+                  {}
+                roller_8_front_wheel:
+                  {}
+                roller_9_front_wheel:
+                  {}
+              imu_link:
+                {}
+              left_wheel:
+                roller_10_left_wheel:
+                  {}
+                roller_11_left_wheel:
+                  {}
+                roller_12_left_wheel:
+                  {}
+                roller_13_left_wheel:
+                  {}
+                roller_14_left_wheel:
+                  {}
+                roller_15_left_wheel:
+                  {}
+                roller_16_left_wheel:
+                  {}
+                roller_1_left_wheel:
+                  {}
+                roller_2_left_wheel:
+                  {}
+                roller_3_left_wheel:
+                  {}
+                roller_4_left_wheel:
+                  {}
+                roller_5_left_wheel:
+                  {}
+                roller_6_left_wheel:
+                  {}
+                roller_7_left_wheel:
+                  {}
+                roller_8_left_wheel:
+                  {}
+                roller_9_left_wheel:
+                  {}
+              right_wheel:
+                roller_10_right_wheel:
+                  {}
+                roller_11_right_wheel:
+                  {}
+                roller_12_right_wheel:
+                  {}
+                roller_13_right_wheel:
+                  {}
+                roller_14_right_wheel:
+                  {}
+                roller_15_right_wheel:
+                  {}
+                roller_16_right_wheel:
+                  {}
+                roller_1_right_wheel:
+                  {}
+                roller_2_right_wheel:
+                  {}
+                roller_3_right_wheel:
+                  {}
+                roller_4_right_wheel:
+                  {}
+                roller_5_right_wheel:
+                  {}
+                roller_6_right_wheel:
+                  {}
+                roller_7_right_wheel:
+                  {}
+                roller_8_right_wheel:
+                  {}
+                roller_9_right_wheel:
+                  {}
       Update Interval: 0
-      Value: false
+      Value: true
     - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
@@ -90,27 +307,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         left_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        planar_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -407,29 +608,6 @@ Visualization Manager:
       Use Timestamp: false
       Value: true
     - Alpha: 1
-      Buffer Length: 1
-      Class: rviz/Path
-      Color: 0; 0; 0
-      Enabled: true
-      Head Diameter: 0.30000001192092896
-      Head Length: 0.20000000298023224
-      Length: 0.30000001192092896
-      Line Style: Lines
-      Line Width: 0.029999999329447746
-      Name: Planner Plan
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Pose Color: 255; 85; 255
-      Pose Style: None
-      Radius: 0.029999999329447746
-      Shaft Diameter: 0.10000000149011612
-      Shaft Length: 0.10000000149011612
-      Topic: /move_base/NavfnROS/plan
-      Unreliable: false
-      Value: true
-    - Alpha: 1
       Arrow Length: 0.05000000074505806
       Axes Length: 0.30000001192092896
       Axes Radius: 0.009999999776482582
@@ -488,6 +666,59 @@ Visualization Manager:
       Unreliable: false
       Use Timestamp: false
       Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 25; 255; 0
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic: /move_base/NavfnROS/plan
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/PoseWithCovariance
+      Color: 255; 25; 0
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: false
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: PoseWithCovariance
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic: /amcl_pose
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -521,7 +752,7 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 157.930419921875
+      Scale: 107.62516021728516
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
       X: -1.8864564895629883

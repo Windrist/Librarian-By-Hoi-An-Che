@@ -20,14 +20,15 @@
     <rosparam file="$(find lib_navigation)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find lib_navigation)/params/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find lib_navigation)/params/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find lib_navigation)/params/base_local_planner_params.yaml" command="load" />
   </node>
 
   <!-- Navigation Node -->
-  <!-- <node pkg="lib_navigation" type="navigation" name="navigation"/> -->
+  <node pkg="lib_navigation" type="navigation" name="navigation"/>
 
   <!-- rviz -->
-  <group if="$(arg open_rviz)"> 
+  <!-- <group if="$(arg open_rviz)"> 
     <node pkg="rviz" type="rviz" name="rviz" required="true"
           args="-d $(find lib_navigation)/rviz/lib_navigation.rviz" output="screen"/>
-  </group>
+  </group> -->
 </launch>
