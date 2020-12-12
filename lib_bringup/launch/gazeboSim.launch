@@ -1,12 +1,13 @@
 <launch>
+    <param name="/use_sim_time" value="true"/>
     <include file="$(find lib_bringup)/launch/bringUp.launch" />
 
     <arg name="x_pos" default="-2.0"/>
-    <arg name="y_pos" default="-0.5"/>
+    <arg name="y_pos" default="1.0"/>
     <arg name="z_pos" default="0.0"/>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/>
+        <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/>
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>
         <arg name="gui" value="true"/>
@@ -14,7 +15,5 @@
         <arg name="debug" value="false"/>
     </include>
 
-    <!-- <param name="robot_description" command="$(find xacro)/xacro $(find lib_omni_mobile)/urdf/omni_mobile.xacro" /> -->
-
-    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf"  args="-urdf -model omni_mobile -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model librarian -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
 </launch>

@@ -10,6 +10,8 @@ project(lib_control)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
+  tf
+  geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -206,3 +208,6 @@ include_directories(
 
 add_executable(control src/control.cpp)
 target_link_libraries(control ${catkin_LIBRARIES})
+
+add_executable(odom_transform src/odom_transform.cpp)
+target_link_libraries(odom_transform ${catkin_LIBRARIES})

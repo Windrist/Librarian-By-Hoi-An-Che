@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="planar_arm">
-    <xacro:include filename="$(find lib_planar_arm)/urdf/materials.xacro" />
 	<xacro:property name="offset" value="0.02" />
     <xacro:property name="base_link_length" value="0.05" />
     <xacro:property name="base_link_radius" value="0.08" />
@@ -9,7 +8,7 @@
 	<xacro:property name="link2_length" value="0.20" />
 	<xacro:property name="link3_length" value="0.20" />
 
-    <link name="base_link">
+    <link name="planar_link">
 		<visual>
 			<geometry>
 				<cylinder length="${base_link_length}" radius="${base_link_radius}"/>
@@ -27,7 +26,7 @@
 	</link>
 
 	<joint name="joint_1" type="revolute">
-		<parent link="base_link"/>
+		<parent link="planar_link"/>
 		<child link="link_1"/>
 		<origin xyz="0.0 ${link_width} ${base_link_length+offset}"/>
 		<axis xyz="0 1 0"/>

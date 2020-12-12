@@ -1,17 +1,19 @@
 <?xml version="1.0"?>
 <robot name="librarian" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <!-- Include TurtleBot3 Waffle URDF -->
-  <xacro:include filename="$(find lib_bringup)/urdf/turtlebot3_waffle_pi_for_open_manipulator.urdf.xacro"/>
+  <xacro:include filename="$(find lib_bringup)/urdf/materials.xacro" />
 
-  <!-- Include OpenMANIPULATOR URDF -->
-  <xacro:include filename="$(find lib_bringup)/urdf/open_manipulator_x.urdf.xacro"/>
+  <!-- Include Omni Mobile URDF -->
+  <xacro:include filename="$(find lib_omni_mobile)/urdf/omni_mobile.urdf.xacro" />
+
+  <!-- Include Planar Arm URDF -->
+  <xacro:include filename="$(find lib_planar_arm)/urdf/planar_arm.urdf.xacro" />
 
   <!-- Base fixed joint -->
   <joint name="base_fixed" type="fixed">
-    <origin xyz="-0.092 0.0 0.091" rpy="0 0 0"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
     <parent link="base_link"/>
-    <child link="link1"/>
+    <child link="planar_link"/>
   </joint>
 
 </robot>

@@ -1,130 +1,38 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omni_mobile">
-    <xacro:include filename="$(find lib_omni_mobile)/urdf/materials.xacro" />
-	<xacro:include filename="$(find lib_omni_mobile)/urdf/roller_wheel.urdf.xacro"/>
+<robot name="omni_mobile" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:include filename="$(find lib_omni_mobile)/urdf/rim_wheel.urdf.xacro"/>
 	<xacro:include filename="$(find lib_omni_mobile)/urdf/omni_mobile.gazebo.xacro" />
 	<xacro:property name="PI" value="3.14" />
-    <xacro:property name="base_link_length" value="0.1" />
+    <xacro:property name="base_link_length" value="0.07" />
     <xacro:property name="base_link_radius" value="0.15" />
-	<xacro:property name="wheel_length" value="0.035" />
-	<xacro:property name="wheel_radius" value="0.1" />
+	<xacro:property name="wheel_length" value="0.04" />
+	<xacro:property name="wheel_radius" value="0.04" />
 	
     <link name="base_link">
 		<visual>
 			<geometry>
 				<cylinder length="${base_link_length}" radius="${base_link_radius}"/>
-				<!-- <mesh filename="package://lib_omni_mobile/meshes/base.STL" scale="0.001 0.001 0.001"/> -->
 			</geometry>
-			<origin xyz="0 0 ${base_link_length/2+wheel_radius/2}"/>
-			<!-- <origin xyz="0 0 0" rpy="1.5708 0 0"/> -->
-			<material name="blue"/>
+			<origin xyz="0 0 ${base_link_length/2+wheel_radius}" rpy="0 0 0"/>
+			<material name="white"/>
 		</visual>
 		<collision>
 			<geometry>
 				<cylinder length="${base_link_length}" radius="${base_link_radius}"/>
-				<!-- <mesh filename="package://lib_omni_mobile/meshes/base.STL" scale="0.001 0.001 0.001"/> -->
 			</geometry>
-			<origin xyz="0 0 ${base_link_length/2+wheel_radius/2}"/>
-			<!-- <origin xyz="0 0 0" rpy="1.5708 0 0"/> -->
-			<material name="blue"/>
-		</collision>
-	</link>
-
-	<joint name="jwheel_1" type="continuous">
-		<parent link="base_link"/>
-		<child link="wheel_1"/>
-		<origin xyz="${base_link_radius+wheel_length/2} 0 ${base_link_length}" rpy="0 ${PI/2} ${PI/2}"/>
-		<axis xyz="0 0 1"/>
-		<limit effort="1000" lower="${-PI}" upper="${PI}" velocity="5"/>
-	</joint>
-
-	<link name="wheel_1">
-		<visual>
-			<geometry>
-				<cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-			</geometry>
-			<origin xyz="0 0 0" rpy="1.57 0 0"/>
-			<material name="black"/>
-		</visual>
-		<collision>
-			<geometry>
-				<cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-			</geometry>
-			<origin xyz="0 0 0" rpy="0 0 0"/>
-			<material name="black"/>
+			<origin xyz="0 0 ${base_link_length/2+wheel_radius}" rpy="0 0 0"/>
+			<material name="white"/>
 		</collision>
 		<inertial>
-			<origin xyz="0 0 0" />
-			<mass value="2.8498940e-02" />
-			<inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09"
-					iyy="1.1192413e-05" iyz="-1.4400107e-11"
-					izz="2.0712558e-05" />
-      	</inertial>
-	</link>
-
-	<joint name="jwheel_2" type="continuous">
-		<parent link="base_link"/>
-		<child link="wheel_2"/>
-		<origin xyz="${-0.5*(base_link_radius+wheel_length/2)} ${0.866*(base_link_radius+wheel_length/2)} ${base_link_length}" rpy="0 ${PI/2} ${7*PI/6}"/>
-		<axis xyz="0 0 1"/>
-		<limit effort="1000" lower="${-PI}" upper="${PI}" velocity="5"/>
-	</joint>
-
-	<link name="wheel_2">
-		<visual>
-			<geometry>
-				<cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-			</geometry>
-			<origin xyz="0 0 0" rpy="1.57 0 0"/>
-			<material name="black"/>
-		</visual>
-		<collision>
-			<geometry>
-				<cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-			</geometry>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
-			<material name="black"/>
-		</collision>
-		<inertial>
-			<origin xyz="0 0 0" />
-			<mass value="2.8498940e-02" />
-			<inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09"
-					iyy="1.1192413e-05" iyz="-1.4400107e-11"
-					izz="2.0712558e-05" />
-      	</inertial>
+			<mass value="0.10"/>
+			<inertia ixx="0.00092" ixy="0.0" ixz="0.0" iyy="0.00178" iyz="0.0" izz="0.00092"/>
+		</inertial>
 	</link>
 
-	<joint name="jwheel_3" type="continuous">
-		<parent link="base_link"/>
-		<child link="wheel_3"/>
-		<origin xyz="${-0.5*(base_link_radius+wheel_length/2)} ${-0.866*(base_link_radius+wheel_length/2)} ${base_link_length}" rpy="0 ${PI/2} ${-PI/6}"/>
-		<axis xyz="0 0 1"/>
-		<limit effort="1000" lower="${-PI}" upper="${PI}" velocity="5"/>
-	</joint>
-
-	<link name="wheel_3">
-		<visual>
-			<geometry>
-				<cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-			</geometry>
-			<origin xyz="0 0 0" rpy="1.57 0 0"/>
-			<material name="black"/>
-		</visual>
-		<collision>
-			<geometry>
-				<cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-			</geometry>
-			<origin xyz="0 0 0" rpy="0 0 0"/>
-			<material name="black"/>
-		</collision>
-		<inertial>
-			<origin xyz="0 0 0" />
-			<mass value="2.8498940e-02" />
-			<inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09"
-					iyy="1.1192413e-05" iyz="-1.4400107e-11"
-					izz="2.0712558e-05" />
-      	</inertial>
-	</link>
+	<xacro:rim name="left_wheel" parent="base_link" xyz="${-0.5*(base_link_radius+wheel_length/2)} ${0.866*(base_link_radius+wheel_length/2)} ${base_link_length}" rpy="0 ${PI/2} ${2*PI/3}"/>
+	<xacro:rim name="right_wheel" parent="base_link" xyz="${-0.5*(base_link_radius+wheel_length/2)} ${-0.866*(base_link_radius+wheel_length/2)} ${base_link_length}" rpy="0 ${PI/2} ${-2*PI/3}"/>
+	<xacro:rim name="front_wheel" parent="base_link" xyz="${base_link_radius+wheel_length/2} 0 ${base_link_length}" rpy="0 ${PI/2} ${PI}"/>
 
 	<joint name="scan_joint" type="fixed">
 		<parent link="base_link"/>
@@ -141,20 +49,6 @@
 			<origin xyz="0 0 0" rpy="0 0 0"/>
 			<material name="dark"/>
 		</visual>
-		<collision>
-			<geometry>
-				<cylinder length="0.0315" radius="0.045"/>
-			</geometry>
-			<origin xyz="0.015 0 -0.0065"  rpy="0 0 0"/>
-			<material name="dark"/>
-		</collision>
-		<inertial>
-			<mass value="0.114" />
-			<origin xyz="0 0 0" />
-			<inertia ixx="0.001" ixy="0.0" ixz="0.0"
-					iyy="0.001" iyz="0.0"
-					izz="0.001" />
-		</inertial>
 	</link>
-	
+
 </robot>

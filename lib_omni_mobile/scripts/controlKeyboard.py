@@ -10,7 +10,7 @@ from geometry_msgs.msg import Twist
 
 import sys, select, termios, tty
 
-MAX_SPEED = 2
+MAX_SPEED = 5
 
 msg = """
 Reading from the keyboard  and Publishing to Twist!

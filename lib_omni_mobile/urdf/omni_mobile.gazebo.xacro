@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="omni_mobile" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="laser_visual"  default="false"/>
   <xacro:arg name="camera_visual" default="false"/>
   <xacro:arg name="imu_visual"    default="false"/>
@@ -8,7 +8,7 @@
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
-  <!-- <gazebo reference="wheel_1">
+  <!-- <gazebo reference="front_wheel">
     <mu1>10000</mu1>
     <mu2>10000</mu2>
     <kp>500000.0</kp>
@@ -19,7 +19,7 @@
     <material>Gazebo/FlatBlack</material>
   </gazebo> -->
 
-  <!-- <gazebo reference="wheel_2">
+  <!-- <gazebo reference="left_wheel">
     <mu1>10000</mu1>
     <mu2>10000</mu2>
     <kp>500000.0</kp>
@@ -30,7 +30,7 @@
     <material>Gazebo/FlatBlack</material>
   </gazebo> -->
 
-  <!-- <gazebo reference="wheel_3">
+  <!-- <gazebo reference="right_wheel">
     <mu1>10000</mu1>
     <mu2>10000</mu2>
     <kp>500000.0</kp>
@@ -49,14 +49,14 @@
     <material>Gazebo/Grey</material>
   </gazebo> -->
 
-  <!-- <gazebo>
+  <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <robotNamespace>/librarian</robotNamespace>
       <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
     </plugin>
- </gazebo> -->
+ </gazebo>
 
-  <gazebo>
+  <!-- <gazebo>
     <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
@@ -64,7 +64,7 @@
       <odometryRate>30.0</odometryRate>
       <robotBaseFrame>base_link</robotBaseFrame>
     </plugin>
-  </gazebo>
+  </gazebo> -->
 
   <!-- <gazebo reference="imu_link">
     <gravity>true</gravity>
@@ -120,7 +120,7 @@
     <material>Gazebo/FlatBlack</material>
     <sensor type="ray" name="lds_lfcd_sensor">
       <pose>0 0 0 0 0 0</pose>
-      <visualize>$(arg laser_visual)</visualize>
+      <visualize>false</visualize>
       <update_rate>5</update_rate>
       <ray>
         <scan>

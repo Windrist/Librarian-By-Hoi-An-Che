@@ -6,7 +6,7 @@
 #include <std_msgs/String.h>
 
 #define PI 3.141592654
-#define V_x 0.6
+#define V_x 0.2
 #define V_z 1.2
 #define distance_to_stop 0.2
 #define MAX_SPEED 1216
@@ -34,11 +34,11 @@ int main(int argc, char** argv)
     ros::NodeHandle nh;
 
     // Init Publisher and Subcriber
-    cli_makePlan = nh.serviceClient<nav_msgs::GetPlan>("/global_plan/planner/make_plan");
+    cli_makePlan = nh.serviceClient<nav_msgs::GetPlan>("/move_base/make_plan");
     pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
     pubMain = nh.advertise<std_msgs::String>("/Main_state", 100);
     ros::Subscriber goal_subscribe = nh.subscribe("/move_base_simple/goal", 1000, goalCallback);
-    ros::Subscriber odom_subscribe = nh.subscribe("/amcl", 1000, odomCallback);
+    ros::Subscriber odom_subscribe = nh.subscribe("/odom", 1000, odomCallback);
     
     ros::Rate r(10);
     while (ros::ok()) {
@@ -140,5 +140,5 @@ void navigation_process()
             pubMain.publish(main_msg);
         }
     }
-    set_robot_move(x, z);
+    // set_robot_move(x, z);
 }

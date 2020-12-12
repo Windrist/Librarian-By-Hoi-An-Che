@@ -3,7 +3,7 @@
 import rospy
 import os
 from std_msgs.msg import String
-from geometry_msgs import Pose2D
+from geometry_msgs.msg import Pose2D
 from lib_chatbot.msg import Chatbot
 from database import checkBook, checkName, borrowBook, returnBook
 import sys

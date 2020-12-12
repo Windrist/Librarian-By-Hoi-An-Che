@@ -6,13 +6,13 @@
 #include <geometry_msgs/Pose2D.h>
 #include <geometry_msgs/Point.h>
 
-float location_x[13] =     {+2.24f, +1.91f, +0.51f, -1.69f, -1.69f, -3.09f, -3.23f, -3.06f, -2.15f, -0.18f, +1.47f, +2.24f, +2.24f};
-float location_y[13] =     {+1.66f, -0.37f, +0.24f, +0.24f, +0.24f, +0.31f, +2.38f, +4.58f, +5.00f, +5.00f, +5.00f, +1.66f, +1.66f};
-float location_theta[13] = {-1.57f, +1.57f, +1.57f, +1.57f, +1.57f, +0.43f, +0.00f, -0.34f, -1.16f, -1.57f, -1.57f, +3.17f, -1.57f};
+float location_x[5] =     {-0.50f, -1.50f, -2.50f, -3.50f, -4.50f};
+float location_y[5] =     {+4.00f, +4.00f, +4.00f, +4.00f, +4.00f};
+float location_theta[5] = {-1.57f, -1.57f, -1.57f, -1.57f, -1.57f};
 
-float grip_pose_x[13] = {+2.24f, +1.91f, +0.51f, -1.69f, -1.69f, -3.09f, -3.23f, -3.06f, -2.15f, -0.18f, +1.47f, +2.24f, +2.24f};
-float grip_pose_y[13] = {+1.66f, -0.37f, +0.24f, +0.24f, +0.24f, +0.31f, +2.38f, +4.58f, +5.00f, +5.00f, +5.00f, +1.66f, +1.66f};
-float grip_pose_z[13] = {-1.57f, +1.57f, +1.57f, +1.57f, +1.57f, +0.43f, +0.00f, -0.34f, -1.16f, -1.57f, -1.57f, +3.17f, -1.57f};
+float grip_pose_x[5] = {-0.50f, -1.50f, -2.50f, -3.50f, -4.50f};
+float grip_pose_y[5] = {+4.00f, +4.00f, +4.00f, +4.00f, +4.00f};
+float grip_pose_z[3] = {+0.30f, +0.60f, +0.90f};
 
 ros::Publisher pub, pubGrip, pubMain;
 
@@ -74,8 +74,8 @@ void navCallback(const geometry_msgs::Pose2D& msg)
     goal_x = location_x[int(msg.x)];
     goal_y = location_y[int(msg.x)];
     goal_theta = location_theta[int(msg.x)];
-    grip_x = grip_pose_x[int(msg.y)];
-    grip_y = grip_pose_y[int(msg.y)];
+    grip_x = grip_pose_x[int(msg.x)];
+    grip_y = grip_pose_y[int(msg.x)];
     grip_z = grip_pose_z[int(msg.y)];
 }
 

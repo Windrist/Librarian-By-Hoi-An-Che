@@ -1,6 +1,6 @@
 <launch>
   <!-- Arguments -->
-  <arg name="map_file" default="$(find lib_bringup)/maps/map.yaml"/>
+  <arg name="map_file" default="$(find lib_bringup)/maps/house.yaml"/>
   <arg name="open_rviz" default="true"/>
   <arg name="move_forward_only" default="false"/>
 
@@ -9,15 +9,21 @@
 
   <!-- AMCL -->
   <include file="$(find lib_navigation)/launch/amcl.launch">
-    <!-- <arg name="initial_pose_x"  value="-2.0" />
-    <arg name="initial_pose_y"  value="0.5" />
-    <arg name="initial_pose_a"  value="1.5708" /> -->
+    <arg name="initial_pose_x"  value="-2.0" />
+    <arg name="initial_pose_y"  value="1.0" />
+    <arg name="initial_pose_a"  value="0" />
   </include>
 
-  <!-- move_base -->
-  <include file="$(find lib_navigation)/launch/move_base.launch">
-    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
-  </include>
+  <!-- Planner -->
+  <node name="move_base" pkg="move_base" type="move_base" >
+    <rosparam file="$(find lib_navigation)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find lib_navigation)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find lib_navigation)/params/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find lib_navigation)/params/global_costmap_params.yaml" command="load" />
+  </node>
+
+  <!-- Navigation Node -->
+  <!-- <node pkg="lib_navigation" type="navigation" name="navigation"/> -->
 
   <!-- rviz -->
   <group if="$(arg open_rviz)"> 

@@ -58,9 +58,9 @@ void speed3StateCallback(const std_msgs::Float32& msg)
 //    Step3.runSpeed();
 }
 
-ros::Subscriber<std_msgs::Float32> w1_sub("/omni/speed_1", &speed1StateCallback);
-ros::Subscriber<std_msgs::Float32> w2_sub("/omni/speed_2", &speed2StateCallback);
-ros::Subscriber<std_msgs::Float32> w3_sub("/omni/speed_3", &speed3StateCallback);
+ros::Subscriber<std_msgs::Float32> w1_sub("/omni_mobile/front_wheel_controller/command", &speed1StateCallback);
+ros::Subscriber<std_msgs::Float32> w2_sub("/omni_mobile/left_wheel_controller/command", &speed2StateCallback);
+ros::Subscriber<std_msgs::Float32> w3_sub("/omni_mobile/right_wheel_controller/command", &speed3StateCallback);
 
 void setup()
 {
