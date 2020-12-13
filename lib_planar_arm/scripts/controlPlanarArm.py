@@ -146,7 +146,7 @@ def computing():
     # print("computing")
     global ARM_LENGTH, GOAL, JOINT_SETS, STATE, COUNT
     goal = inverse_kinematic(ARM_LENGTH, GOAL)
-    JOINT_SETS = compute_joint_sets(np.array(CURRENT.position[3:7]), goal)
+    JOINT_SETS = compute_joint_sets(np.array(CURRENT.position[3:6]), goal)
     STATE = 2   # STATE: Moving
     COUNT = 0
 

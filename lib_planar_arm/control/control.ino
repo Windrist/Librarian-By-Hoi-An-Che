@@ -35,9 +35,9 @@ void jointStateCallback(const sensor_msgs::JointState& msg)
      * Output: 3 angle of theta 1,2,3 (angle)
      */
     sensor_msgs::JointState joint_state = msg;
-    theta_1 = joint_state.position[0]/PI*180;
-    theta_2 = joint_state.position[1]/PI*180;
-    theta_3 = joint_state.position[2]/PI*180;
+    theta_1 = joint_state.position[3]/PI*180;
+    theta_2 = joint_state.position[4]/PI*180;
+    theta_3 = joint_state.position[5]/PI*180;
 }
 
 void gripStateCallback(const std_msgs::Bool& msg)
@@ -93,10 +93,25 @@ void controlJoint3(float theta)
     J3Servo.write(theta);
 }
 
-
 // Subscribe joint state data
 ros::Subscriber<sensor_msgs::JointState> joint_sub("/joint_states", &jointStateCallback);
 ros::Subscriber<std_msgs::Bool> joint_sub("/grip_state", &gripStateCallback);
+
+const int check_pin = 10;
+
+void calibrate()
+{
+    // Calib joint 1
+    while(!check_pin)
+    {
+        J1Stepper.setSpeed(-500);
+        J1Stepper.run();
+    }
+    // calib joint 2+3
+    J2Servo.write(0);
+    J3Servo.write(0);
+    delay(5000); // delay 5 seconds
+}
 
 void setup()
 {
@@ -104,12 +119,17 @@ void setup()
     nh.initNode();
     nh.subscribe(joint_sub);
 
+    // Declare Checked pin
+    pinMode(check_pin, INPUT);
+
     // Declare Plarnar Arm 3DOF params
     J1Stepper.setmaxSpeed(10000);
     J2Servo.attach(j2_servo_pin);   // Joint 2
     J3Servo.attach(j3_servo_pin);   // Joint 3
     GripServo.attach(grip_servo_pin);   // Grip
     
+    // Calib robot arm
+    calibrate();
 }
 
 void loop()
