@@ -102,8 +102,10 @@ const int check_pin = 10;
 void calibrate()
 {
     // Calib joint 1
-    while(!check_pin)
+    int checked = 0;
+    while(!checked)
     {
+        checked = digitalRead(check_pin);
         J1Stepper.setSpeed(-500);
         J1Stepper.run();
     }
