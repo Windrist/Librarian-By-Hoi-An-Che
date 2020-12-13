@@ -73,8 +73,8 @@ void controlJoint1(float theta)
     int curr_step = round(theta/step);  // compute current step position need move to
     int speed = round((curr_step-last_step)*10);    // compute speed of stepper by differention
     J1Stepper.setSpeed(speed);          // set speed for stepper
-    J1Stepper.moveTo(curr_step*49);     // move to current position (gear ratio 1:49)
-    last_step = curr_step;              // update last step position
+    J1Stepper.runToNewPosition(curr_step*49);     // move to current position (gear ratio 1:49)
+    last_step = curr_step;              // upda     te last step position
 }
 
 void controlJoint2(float theta)
@@ -109,6 +109,7 @@ void calibrate()
         J1Stepper.setSpeed(-500);
         J1Stepper.run();
     }
+    setCurrentPosition(25*49); // ~45degree
     // calib joint 2+3
     J2Servo.write(0);
     J3Servo.write(0);
