@@ -14,7 +14,7 @@ from sensor_msgs.msg import JointState
 
 # Declare the params of planar arm
 global ARM_LENGTH
-ARM_LENGTH = np.array([5.2, 6.9, 6.8])  # cm
+ARM_LENGTH = np.array([14, 17, 17])  # cm
 global GRIP
 GRIP = 10                               # cm
 global CURRENT
@@ -26,9 +26,9 @@ JOINT_SETS = []
 global STATE
 STATE = 0
 global JOINT_NAMES
-JOINT_NAMES = ["joint_1", "joint_2", "joint_3"]
+JOINT_NAMES = ["joint_front_wheel", "joint_left_wheel", "joint_right_wheel","joint_1", "joint_2", "joint_3"]
 global RATE
-RATE = 10 # 10Hz
+RATE = 20 # 20Hz
 global GOAL
 GOAL = Point()
 GOAL.x = GOAL.y = GOAL.z = 0
@@ -77,7 +77,7 @@ def inverse_kinematic(arm_length, goal):
     pz = goal.z
 
     # The target phi of End-Effector is 0 rad
-    phi = 0
+    phi = np.pi/2
 
     # Equations for Inverse kinematics
     wx = px - a3*np.cos(phi)
@@ -103,6 +103,7 @@ def compute_joint_sets(current, goal):
     Build parameter set for each joint. [c0 c1 c2 tc tf]
     Output: Joint value set of each joint
     '''
+    print(current)
     # Compute the max time tf
     speed_max = 150*np.pi/180
     angle_max = np.max(np.abs(goal - current))  # Angle max of moving in all joints
@@ -145,7 +146,7 @@ def computing():
     # print("computing")
     global ARM_LENGTH, GOAL, JOINT_SETS, STATE, COUNT
     goal = inverse_kinematic(ARM_LENGTH, GOAL)
-    JOINT_SETS = compute_joint_sets(np.array(CURRENT.position), goal)
+    JOINT_SETS = compute_joint_sets(np.array(CURRENT.position[3:7]), goal)
     STATE = 2   # STATE: Moving
     COUNT = 0
 
@@ -157,7 +158,7 @@ def moving():
     # print("Move to goal")
     global CURRENT, COUNT, STATE, JOINT_SETS, RATE
     pre_pos = np.array(CURRENT.position)
-    cur_pos = np.array(JOINT_SETS[:,COUNT])
+    cur_pos = np.append(np.array([0, 0, 0]), np.array(JOINT_SETS[:,COUNT]), 0)
 
     # Update Joint State
     CURRENT.position = list(cur_pos)
@@ -199,7 +200,7 @@ def state_planar_arm():
         STATE = 0
     
     if STATE != 2:
-        CURRENT.velocity = [0.0, 0.0, 0.0]
+        CURRENT.velocity = [0.0, 0.0, 0.0, 0,0, 0,0, 0,0]
 
 def ros_control():
     rospy.init_node("planar_arm", anonymous=True)
@@ -216,7 +217,7 @@ def ros_control():
     CURRENT.header.stamp = rospy.Time.now()
     CURRENT.name = JOINT_NAMES
 
-    CURRENT.position = [0, 0, 0]
+    CURRENT.position = [0, 0, 0, 0, 0, 0]
     CURRENT.velocity = []
     CURRENT.effort = []
 
