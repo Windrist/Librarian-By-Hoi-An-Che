@@ -11,6 +11,7 @@ from geometry_msgs.msg import Point
 from std_msgs.msg import Bool
 from std_msgs.msg import Header
 from sensor_msgs.msg import JointState
+from std_msgs.msg import Float64
 
 # Declare the params of planar arm
 global ARM_LENGTH
@@ -94,7 +95,7 @@ def inverse_kinematic(arm_length, goal):
     theta_3 = phi-theta_1-theta_2
 
     joint_target = np.array([theta_1, theta_2, theta_3])
-    print "Target joint: {}".format(joint_target)
+    print("Target joint: {}".format(joint_target))
     return joint_target
 
 def compute_joint_sets(current, goal):
@@ -135,7 +136,7 @@ def compute_joint_sets(current, goal):
                 joint_set[j] = goal[i] - 0.5*c2*(tf-dt*j)**2
         
         joint_sets[i] = joint_set
-    print joint_sets
+    print(joint_sets)
     return np.array(joint_sets)
 
 def computing():
@@ -208,8 +209,13 @@ def ros_control():
     rospy.Subscriber("/goal_point", Point, goal_point_callback)
     rospy.Subscriber("/joint_states", JointState, current_joint_callback)
     # Publish joint values
-    pub_joint = rospy.Publisher('/joint_states', JointState, queue_size=RATE)
-    pub_is_grip = rospy.Publisher('/grip_state', Bool, queue_size=RATE)
+    pub_joint = rospy.Publisher('/joint_states', JointState, queue_size=1)
+
+    pub_joint_1 = rospy.Publisher('/joint_1', Float64, queue_size=1)
+    pub_joint_2 = rospy.Publisher('/joint_2', Float64, queue_size=1)
+    pub_joint_3 = rospy.Publisher('/joint_3', Float64, queue_size=1)
+
+    pub_is_grip = rospy.Publisher('/grip_state', Bool, queue_size=1)
 
     # Create a robot joint state message
     global CURRENT, is_grip
@@ -226,6 +232,9 @@ def ros_control():
 
     r = rospy.Rate(RATE)
 
+    j1 = Float64()
+    j2 = Float64()
+    j3 = Float64()
 
     while not rospy.is_shutdown():
         state_planar_arm()
@@ -233,7 +242,15 @@ def ros_control():
         CURRENT.header.stamp = rospy.Time.now()
         grip_state.data = is_grip
         # Publish robot joint state data
+        
         pub_joint.publish(CURRENT)
+
+        j1.data = float(CURRENT.position[3])
+        j2.data = CURRENT.position[4]
+        j3.data = CURRENT.position[5]
+        pub_joint_1.publish(j1)
+        pub_joint_2.publish(j2)
+        pub_joint_3.publish(j3)
         pub_is_grip.publish(grip_state)
         r.sleep()
 
