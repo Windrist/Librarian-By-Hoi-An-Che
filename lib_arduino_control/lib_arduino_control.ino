@@ -30,20 +30,25 @@ Servo J2Servo;
 Servo J3Servo;
 Servo GripServo;
 
-float theta_1, theta_2, theta_3;
-bool is_grip = false;
+std_msgs::Float64 theta_msg;
+ros::Publisher chatter("chatter", &theta_msg);
 
-void jointStateCallback(const sensor_msgs::JointState& msg)
-{
-    /*
-     * Get angle of each joints, get from robot
-     * Output: 3 angle of theta 1,2,3 (angle)
-     */
-    sensor_msgs::JointState joint_state = msg;
-    theta_1 = joint_state.position[3]/PI*180;
-    theta_2 = joint_state.position[4]/PI*180;
-    theta_3 = joint_state.position[5]/PI*180;
-}
+float theta_1 = 0, theta_2 = 0, theta_3 = 0;
+bool is_grip = false;
+//
+//void jointStateCallback(const sensor_msgs::JointState& msg)
+//{
+//    /*
+//     * Get angle of each joints, get from robot
+//     * Output: 3 angle of theta 1,2,3 (angle)
+//     */
+//     theta_msg.data = 30;
+//    chatter.publish( &theta_msg );
+//    sensor_msgs::JointState joint_state = msg;
+//    theta_1 = joint_state.position[3]/PI*180;
+//    theta_2 = joint_state.position[4]/PI*180;
+//    theta_3 = joint_state.position[5]/PI*180;
+//}
 
 void gripStateCallback(const std_msgs::Bool& msg)
 {
@@ -67,12 +72,13 @@ void gripStateCallback(const std_msgs::Bool& msg)
 
 }
 
-void controlJoint1(float theta)
+void joint1Callback(const std_msgs::Float64& msg)
 {
     /*
      * Control joint 1 - Stepper motor
      */
     // Convert angular to step number
+    float theta = msg.data/PI*180;
     static float last_step = 0;
     float step = 1.8; // 1 step = 1.8 degree
     int curr_step = round(theta/step);  // compute current step position need move to
@@ -82,25 +88,31 @@ void controlJoint1(float theta)
     last_step = curr_step;              // upda     te last step position
 }
 
-void controlJoint2(float theta)
+void joint2Callback(const std_msgs::Float64& msg)
 {
     /*
      * Control joint 2 - Servo motor
      */
+    float theta = msg.data/PI*180;
     J2Servo.write(theta);
 }
 
-void controlJoint3(float theta)
+void joint3Callback(const std_msgs::Float64& msg)
 {
     /*
      * Control joint 3 - Servo motor
      */
+    float theta = msg.data/PI*180;
     J3Servo.write(theta);
 }
 
 // Subscribe joint state data
-ros::Subscriber<sensor_msgs::JointState> joint_sub("/joint_states", &jointStateCallback);
+//ros::Subscriber<sensor_msgs::JointState> joint_sub("/librarian/joint_states", &jointStateCallback);
 ros::Subscriber<std_msgs::Bool> grip_sub("/grip_state", &gripStateCallback);
+
+ros::Subscriber<std_msgs::Float64> j1_sub("/joint_1", &joint1Callback);
+ros::Subscriber<std_msgs::Float64> j2_sub("/joint_2", &joint2Callback);
+ros::Subscriber<std_msgs::Float64> j3_sub("/joint_3", &joint3Callback);
 
 const int check_pin = 10;
 
@@ -131,7 +143,7 @@ void calibrate()
 #define MotorInterfaceType 1
 #define step1_pin A0
 #define step1_dir A1
-#define step1_en 38
+#define step1_en 38msg
 #define step2_pin A6
 #define step2_dir A7
 #define step2_en A2
@@ -180,18 +192,21 @@ ros::Subscriber<std_msgs::Float64> w3_sub("/librarian/right_wheel_controller/com
 
 void setup()
 {
+    Serial.begin(57600);
+    
     // ros init arduino
     nh.initNode();
 
     /************************
     * PLANAR ARM 3DOF SETUP *
     ************************/
-    nh.subscribe(joint_sub);
+//    nh.subscribe(joint_sub);
 
     // Declare Checked pin
     pinMode(check_pin, INPUT);
 
     // Declare Plarnar Arm 3DOF params
+    nh.advertise(chatter);
     J1Stepper.setMaxSpeed(10000);
     J2Servo.attach(j2_servo_pin);   // Joint 2
     J3Servo.attach(j3_servo_pin);   // Joint 3
@@ -218,9 +233,9 @@ void setup()
 void loop()
 {
     /*Planar Arm*/
-    controlJoint1(theta_1);
-    controlJoint2(theta_2);
-    controlJoint3(theta_3);
+//    controlJoint1(theta_1);
+//    controlJoint2(theta_2);
+//    controlJoint3(theta_3);
 
     /*Omni wheel*/
     Step1.runSpeed();
@@ -229,5 +244,5 @@ void loop()
 
     // ros spin
     nh.spinOnce();
-    delay(100);
+//    delay(100);
 }
