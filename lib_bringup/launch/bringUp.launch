@@ -16,9 +16,9 @@
 
     <!-- <node pkg="lib_omni_mobile" type="controlKeyboard.py" name="control_keyboard" output="screen" /> -->
     <node pkg="lib_omni_mobile" type="convert" name="convert"/>
-    <node name="control_planar_arm" pkg="lib_planar_arm" type="controlPlanarArm.py" output="screen">
+    <!-- <node name="control_planar_arm" pkg="lib_planar_arm" type="controlPlanarArm.py" output="screen">
         <remap from="/joint_states" to="/librarian/joint_states" />
-    </node>
+    </node> -->
     
     <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
         <remap from="/joint_states" to="/librarian/joint_states" />
@@ -28,18 +28,33 @@
         <remap from="/joint_states" to="/librarian/joint_states" />
     </node>
     <rosparam file="$(find lib_navigation)/config/librarian.yaml" command="load" />
-    <!-- <node name="control_spawn" pkg="controller_manager" type="spawner" respawn="false" ns="/librarian"
-        output="screen" args="joint_state_controller left_wheel_controller right_wheel_controller front_wheel_controller" /> -->
+    <node name="control_spawn" pkg="controller_manager" type="spawner" respawn="false" ns="/librarian"
+        output="screen" args="joint_state_controller left_wheel_controller right_wheel_controller front_wheel_controller" />
 
-    <node pkg="lib_control" type="odom_transform" name="odom_publisher"> </node>
-    <node pkg="lib_control" type="control" name="control"/>
+    <node pkg="lib_control" type="odom_transform" name="odom_publisher" />
+    <node pkg="lib_control" type="control" name="control" />
+
+    <!-- Odom-IMU Extended Kalman Filter-->
+    <!-- <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_odom" clear_params="true"> 
+        <rosparam command="load" file="$(find lib_bringup)/param/robot_localization_odom.yaml" />
+    </node> -->
+
+    <!-- AMCL Extended Kalman Filter-->
+    <!-- <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_map" clear_params="true"> 
+        <rosparam command="load" file="$(find lib_bringup)/param/robot_localization_map.yaml" />
+    </node> -->
+
     <!-- <node pkg="rosserial_python" name="control_wheels" type="serial_node.py" output = "screen">
         <param name="port" value="/dev/ttyACM0"/>
         <param name="baud" value="57600"/> 
     </node> -->
+    <!-- <node pkg="rosserial_python" name="imu_data" type="serial_node.py">
+        <param name="port" value="/dev/ttyACM1"/>
+        <param name="baud" value="115200"/> 
+    </node> -->
 
     <!-- RViz -->
     <arg name="rvizconfig" default="$(find lib_omni_mobile )/rviz/urdf.rviz" />
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" /> -->
 
 </launch>

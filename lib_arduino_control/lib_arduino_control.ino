@@ -17,11 +17,11 @@ ros::NodeHandle nh;
  * PLANAR ARM 3DOF CONTROLLER *
 ******************************/
 // Declare all PIN used
-#define j1_step_pin 1
-#define j1_step_dir 2
-#define j2_servo_pin 3
-#define j3_servo_pin 4
-#define grip_servo_pin 5
+#define j1_step_pin 26
+#define j1_step_dir 28
+#define j2_servo_pin 4
+#define j3_servo_pin 5
+#define grip_servo_pin 6
 
 // Create objects
 #define MotorInterfaceType 1
@@ -73,7 +73,7 @@ void controlJoint1(float theta)
      * Control joint 1 - Stepper motor
      */
     // Convert angular to step number
-    static last_step = 0;
+    static float last_step = 0;
     float step = 1.8; // 1 step = 1.8 degree
     int curr_step = round(theta/step);  // compute current step position need move to
     int speed = round((curr_step-last_step)*10);    // compute speed of stepper by differention
@@ -100,7 +100,7 @@ void controlJoint3(float theta)
 
 // Subscribe joint state data
 ros::Subscriber<sensor_msgs::JointState> joint_sub("/joint_states", &jointStateCallback);
-ros::Subscriber<std_msgs::Bool> joint_sub("/grip_state", &gripStateCallback);
+ros::Subscriber<std_msgs::Bool> grip_sub("/grip_state", &gripStateCallback);
 
 const int check_pin = 10;
 
@@ -114,7 +114,7 @@ void calibrate()
         J1Stepper.setSpeed(-500);
         J1Stepper.run();
     }
-    setCurrentPosition(25*49); // ~45degree
+//    setCurrentPosition(25*49); // ~45degree
     // calib joint 2+3
     J2Servo.write(0);
     J3Servo.write(0);
@@ -145,7 +145,7 @@ AccelStepper Step3(MotorInterfaceType, step3_pin, step3_dir);
 int convertVelocity2StepSpeed(float vel)
 {
     /*Convert angular velocity (rad/s) of wheel to step/s to control Stepper*/
-    int speed = int(vel/(2*PI)*200);
+    int speed = int(vel/(2*PI)*200) * 16;
     return speed;
 }
 
@@ -192,13 +192,13 @@ void setup()
     pinMode(check_pin, INPUT);
 
     // Declare Plarnar Arm 3DOF params
-    J1Stepper.setmaxSpeed(10000);
+    J1Stepper.setMaxSpeed(10000);
     J2Servo.attach(j2_servo_pin);   // Joint 2
     J3Servo.attach(j3_servo_pin);   // Joint 3
     GripServo.attach(grip_servo_pin);   // Grip
     
     // Calib robot arm
-    calibrate();
+//    calibrate();
 
     /********************
     * OMNI WHEELS SETUP *

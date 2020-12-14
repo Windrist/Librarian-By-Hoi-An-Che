@@ -30,7 +30,7 @@ ros::NodeHandle nh;
 int convertVelocity2StepSpeed(float vel)
 {
     /*Convert angular velocity (rad/s) of wheel to step/s to control Stepper*/
-    int speed = int(vel/(2*PI)*200);
+    int speed = int(vel/(2*PI)*200) * 16;
     return speed;
 }
 

@@ -1,21 +1,30 @@
 <launch>
   <!-- Arguments -->
-  <arg name="map_file" default="$(find lib_bringup)/maps/Dong.yaml"/>
+  <!-- <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/> -->
+  <arg name="map_file" default="$(find lib_bringup)/maps/house.yaml"/>
   <arg name="open_rviz" default="true"/>
   <arg name="move_forward_only" default="false"/>
+
+  <!-- <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
+    <arg name="model" value="$(arg model)" />
+  </include> -->
 
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
 
   <!-- AMCL -->
   <include file="$(find lib_navigation)/launch/amcl.launch">
-    <arg name="initial_pose_x"  value="-0.3" />
-    <arg name="initial_pose_y"  value="-0.4" />
-    <arg name="initial_pose_a"  value="0" />
+    <arg name="initial_pose_x"  value="-2.0" />
+    <arg name="initial_pose_y"  value="1.0" />
+    <arg name="initial_pose_a"  value="0.0" />
   </include>
 
   <!-- Planner -->
+  <node pkg="costmap_2d" type="costmap_2d_markers" name="voxel_visualizer">
+    <remap from="voxel_grid" to="costmap/voxel_grid"/>
+  </node>
   <node name="move_base" pkg="move_base" type="move_base" >
+    <!-- <remap from="/cmd_vel" to="/librarian/cmd_vel" /> -->
     <rosparam file="$(find lib_navigation)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find lib_navigation)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find lib_navigation)/params/local_costmap_params.yaml" command="load" />
@@ -27,8 +36,8 @@
   <node pkg="lib_navigation" type="navigation" name="navigation"/>
 
   <!-- rviz -->
-  <!-- <group if="$(arg open_rviz)"> 
+  <group if="$(arg open_rviz)"> 
     <node pkg="rviz" type="rviz" name="rviz" required="true"
           args="-d $(find lib_navigation)/rviz/lib_navigation.rviz" output="screen"/>
-  </group> -->
+  </group>
 </launch>

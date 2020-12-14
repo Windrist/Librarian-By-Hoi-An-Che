@@ -200,7 +200,7 @@ def state_planar_arm():
         STATE = 0
     
     if STATE != 2:
-        CURRENT.velocity = [0.0, 0.0, 0.0, 0,0, 0,0, 0,0]
+        CURRENT.velocity = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
 def ros_control():
     rospy.init_node("planar_arm", anonymous=True)

@@ -4,10 +4,12 @@
 #include <nav_msgs/Odometry.h>
 #include <std_msgs/Int16.h>
 #include <std_msgs/String.h>
+#include <nav_msgs/Path.h>
+#include <geometry_msgs/PoseWithCovarianceStamped.h>
 
 #define PI 3.141592654
 #define V_x 0.2
-#define V_z 1.2
+#define V_z 0.5
 #define distance_to_stop 0.2
 #define MAX_SPEED 1216
 #define MAX_W 19
@@ -23,6 +25,7 @@ bool getGoal = false;
 bool isFirstPath = true;
 
 void goalCallback(const geometry_msgs::PoseStamped& msg);
+// void pathCallback(const nav_msgs::Path& msg);
 void odomCallback(const nav_msgs::Odometry& msg);
 void set_robot_move(float x, float z);
 void navigation_process();
@@ -34,11 +37,13 @@ int main(int argc, char** argv)
     ros::NodeHandle nh;
 
     // Init Publisher and Subcriber
-    cli_makePlan = nh.serviceClient<nav_msgs::GetPlan>("/move_base/make_plan");
+    // cli_makePlan = nh.serviceClient<nav_msgs::GetPlan>("/move_base/make_plan");
+    cli_makePlan = nh.serviceClient<nav_msgs::GetPlan>("/global_plan/planner/make_plan");
     pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
     pubMain = nh.advertise<std_msgs::String>("/Main_state", 100);
     ros::Subscriber goal_subscribe = nh.subscribe("/move_base_simple/goal", 1000, goalCallback);
-    ros::Subscriber odom_subscribe = nh.subscribe("/odom", 1000, odomCallback);
+    // ros::Subscriber path_subscribe = nh.subscribe("/move_base/Navfn/plan", 1000, pathCallback);
+    ros::Subscriber odom_subscribe = nh.subscribe("/odometry/filtered", 1000, odomCallback);
     
     ros::Rate r(10);
     while (ros::ok()) {
@@ -61,6 +66,12 @@ void goalCallback(const geometry_msgs::PoseStamped& msg)
     goal_theta = tf::getYaw(msg.pose.orientation);
     getGoal = true;
 }
+
+// void pathCallback(const nav_msgs::Path& msg)
+// {
+//     path_x = msg.poses[10].pose.position.x;
+//     path_y = msg.poses[10].pose.position.y;
+// }
 
 void odomCallback(const nav_msgs::Odometry& msg)
 {

@@ -168,8 +168,10 @@ class StateMachine(object):
     def callbackChat(self, msg):
         if msg.state == "@Greeting":
             self.state = msg.state
-            self.talk.data = msg.data
-            self.pub_talk.publish(self.talk)
+            # self.talk.data = msg.data
+            # self.pub_talk.publish(self.talk)
+            self.play.data = "Ask_Book.mp3"
+            self.pub_play.publish(self.play)
         elif msg.state == "@Borrow_Book":
             self.borrow_state = True
             self.return_state = False
@@ -191,8 +193,10 @@ class StateMachine(object):
             self.book_name = list_name[1]
             self.author, self.amount, self.column, self.row = checkBook(self.book_name)
             self.state = msg.state
-            self.talk.data = u"tên bạn là {}".format(self.name) + " và hiện taị bạn muốn mượn sách {}. bạn xác nhận lại thông tin giúp mình được không?".format(self.book_name)
-            self.pub_talk.publish(self.talk)
+            # self.talk.data = u"tên bạn là {}".format(self.name) + " và hiện taị bạn muốn mượn sách {}. bạn xác nhận lại thông tin giúp mình được không?".format(self.book_name)
+            # self.pub_talk.publish(self.talk)
+            self.play.data = "Ask_Book.mp3"
+            self.pub_play.publish(self.play)
         elif msg.state == "@Check_Return":
             self.borrow_state = False
             self.return_state = True
@@ -227,8 +231,10 @@ class StateMachine(object):
                     self.pub_talk.publish(self.talk)
                 else:
                     self.state = "Correct_Borrow_Book"
-                    self.talk.data = "sách {} bạn đang muốn tìm ".format(self.book_name) + "của tác giả {}".format(self.author) + " hiện còn {}".format(self.amount) + " quyển, vị trí ở kệ số {}".format(self.column) + ", hàng {}.".format(self.row)
-                    self.pub_talk.publish(self.talk)
+                    # self.talk.data = "sách {} bạn đang muốn tìm ".format(self.book_name) + "của tác giả {}".format(self.author) + " hiện còn {}".format(self.amount) + " quyển, vị trí ở kệ số {}".format(self.column) + ", hàng {}.".format(self.row)
+                    # self.pub_talk.publish(self.talk)
+                    self.play.data = "Ask_Book.mp3"
+                    self.pub_play.publish(self.play)
         elif msg.state == "@Affirm_Take_Book":
             if self.chitchat_state == True:
                 self.state = "Affirm_Chitchat"

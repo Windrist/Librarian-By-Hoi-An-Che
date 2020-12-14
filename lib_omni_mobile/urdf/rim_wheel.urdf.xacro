@@ -9,13 +9,13 @@
         </inertial>
         <visual>
             <geometry>
-                <cylinder radius="0.032" length="0.036"/>
+                <cylinder radius="0.0435" length="0.029"/>
             </geometry>
             <material name="black"/>
         </visual>
         <collision>
             <geometry>
-                <cylinder radius="0.032" length="0.036"/>
+                <cylinder radius="0.0435" length="0.029"/>
             </geometry>
             <material name="black"/>
         </collision>
@@ -28,22 +28,22 @@
         <limit effort="1000" velocity="3140"/>
     </joint>
 
-    <xacro:roller name="8" parent="${name}"  xyz="0.041 0 0.01" rpy="1.57 0 0"/>
-	<xacro:roller name="7" parent="${name}"  xyz="0.037879 0.015690 -0.01" rpy="1.57 0 0.3927"/>
-	<xacro:roller name="6" parent="${name}"  xyz="0.028991 0.028991 0.01" rpy="1.57 0 0.7854"/>
-	<xacro:roller name="5" parent="${name}"  xyz="0.015690 0.037879 -0.01" rpy="1.57 0 1.1781"/>
-	<xacro:roller name="4" parent="${name}"  xyz="0 0.041 0.01" rpy="1.57 0 1.5708"/>
-	<xacro:roller name="3" parent="${name}"  xyz="-0.015690 0.037879 -0.01" rpy="1.57 0 1.9635"/>
-	<xacro:roller name="2" parent="${name}"  xyz="-0.028991 0.028991 0.01" rpy="1.57 0 2.3562"/>
-	<xacro:roller name="1" parent="${name}"  xyz="-0.037879 0.015690 -0.01" rpy="1.57 0 2.7489"/>
-	<xacro:roller name="16" parent="${name}" xyz="-0.041 0 0.01" rpy="1.57 0 3.1416"/>
-	<xacro:roller name="15" parent="${name}" xyz="-0.037879 -0.015690 -0.01" rpy="1.57 0 -2.7489"/>
-	<xacro:roller name="14" parent="${name}" xyz="-0.028991 -0.028991 0.01" rpy="1.57 0 -2.3562"/>
-	<xacro:roller name="13" parent="${name}" xyz="-0.015690 -0.037879 -0.01" rpy="1.57 0 -1.9635"/>
-	<xacro:roller name="12" parent="${name}" xyz="0 -0.041 0.01" rpy="1.57 0 -1.5708"/>
-	<xacro:roller name="11" parent="${name}" xyz="0.015690 -0.037879 -0.01" rpy="1.57 0 -1.1781"/>
-	<xacro:roller name="10" parent="${name}" xyz="0.028991 -0.028991 0.01" rpy="1.57 0 -0.7854"/>
-	<xacro:roller name="9" parent="${name}" xyz="0.037879 -0.015690 -0.01" rpy="1.57 0 -0.3927"/>
+    <xacro:roller name="8" parent="${name}"  xyz="0.053 0 0.0095" rpy="1.57 0 0"/>
+	<xacro:roller name="7" parent="${name}"  xyz="0.048966 0.020282 -0.0095" rpy="1.57 0 0.3927"/>
+	<xacro:roller name="6" parent="${name}"  xyz="0.037477 0.037477 0.0095" rpy="1.57 0 0.7854"/>
+	<xacro:roller name="5" parent="${name}"  xyz="0.020282 0.048966 -0.0095" rpy="1.57 0 1.1781"/>
+	<xacro:roller name="4" parent="${name}"  xyz="0 0.053 0.0095" rpy="1.57 0 1.5708"/>
+	<xacro:roller name="3" parent="${name}"  xyz="-0.020282 0.048966 -0.0095" rpy="1.57 0 1.9635"/>
+	<xacro:roller name="2" parent="${name}"  xyz="-0.037477 0.037477 0.0095" rpy="1.57 0 2.3562"/>
+	<xacro:roller name="1" parent="${name}"  xyz="-0.048966 0.020282 -0.0095" rpy="1.57 0 2.7489"/>
+	<xacro:roller name="16" parent="${name}" xyz="-0.053 0 0.0095" rpy="1.57 0 3.1416"/>
+	<xacro:roller name="15" parent="${name}" xyz="-0.048966 -0.020282 -0.0095" rpy="1.57 0 -2.7489"/>
+	<xacro:roller name="14" parent="${name}" xyz="-0.037477 -0.037477 0.0095" rpy="1.57 0 -2.3562"/>
+	<xacro:roller name="13" parent="${name}" xyz="-0.020282 -0.048966 -0.0095" rpy="1.57 0 -1.9635"/>
+	<xacro:roller name="12" parent="${name}" xyz="0 -0.053 0.0095" rpy="1.57 0 -1.5708"/>
+	<xacro:roller name="11" parent="${name}" xyz="0.020282 -0.048966 -0.0095" rpy="1.57 0 -1.1781"/>
+	<xacro:roller name="10" parent="${name}" xyz="0.037477 -0.037477 0.0095" rpy="1.57 0 -0.7854"/>
+	<xacro:roller name="9" parent="${name}" xyz="0.048966 -0.020282 -0.0095" rpy="1.57 0 -0.3927"/>
 
     <transmission name="${name}_tran">
         <type>transmission_interface/SimpleTransmission</type>

@@ -7,8 +7,8 @@
 #include <geometry_msgs/Point.h>
 #include <move_base_msgs/MoveBaseActionGoal.h>
 
-float location_x[5] =     {+1.00f, -1.50f, -2.50f, -3.50f, -4.50f};
-float location_y[5] =     {+0.50f, +4.00f, +4.00f, +4.00f, +4.00f};
+float location_x[5] =     {-0.50f, -1.50f, -2.50f, -3.50f, -4.50f};
+float location_y[5] =     {+4.00f, +4.00f, +4.00f, +4.00f, +4.00f};
 float location_theta[5] = {-1.57f, -1.57f, -1.57f, -1.57f, -1.57f};
 
 float grip_pose_x[5] = {-0.50f, -1.50f, -2.50f, -3.50f, -4.50f};
@@ -30,8 +30,7 @@ int main(int argc, char** argv)
     ros::NodeHandle nh;
 
     // Init Publisher and Subcriber
-    // pub = nh.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
-    pub = nh.advertise<move_base_msgs::MoveBaseActionGoal>("/move_base/goal", 100);
+    pub = nh.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
     pubGrip = nh.advertise<geometry_msgs::Point>("/goal_point", 100);
     pubMain = nh.advertise<std_msgs::String>("/Main_state", 100);
     ros::Subscriber state_subscribe = nh.subscribe("/Main_state", 1000, stateCallback);
@@ -45,25 +44,17 @@ int main(int argc, char** argv)
 void stateCallback(const std_msgs::String& msg)
 {
     if (msg.data == "Navigation") {
-        // geometry_msgs::PoseStamped goal;
-        // goal.header.stamp = ros::Time::now();
-        // goal.header.frame_id = "map";
-        // goal.pose.position.x = goal_x;
-        // goal.pose.position.y = goal_y;
-        // tf::Quaternion orientation = tf::createQuaternionFromYaw(goal_theta);
-        // quaternionTFToMsg(orientation, goal.pose.orientation);
-
-        move_base_msgs::MoveBaseActionGoal goal;
-        goal.goal.target_pose.header.stamp = ros::Time::now();
-        goal.goal.target_pose.header.frame_id = "map";
-        goal.goal.target_pose.pose.position.x = goal_x;
-        goal.goal.target_pose.pose.position.y = goal_y;
+        geometry_msgs::PoseStamped goal;
+        goal.header.stamp = ros::Time::now();
+        goal.header.frame_id = "map";
+        goal.pose.position.x = goal_x;
+        goal.pose.position.y = goal_y;
         tf::Quaternion orientation = tf::createQuaternionFromYaw(goal_theta);
-        quaternionTFToMsg(orientation, goal.goal.target_pose.pose.orientation);
+        quaternionTFToMsg(orientation, goal.pose.orientation);
         pub.publish(goal);
     }
     else if (msg.data == "Gripper") {
-        if (!isGrip) {
+        if (isGrip = false) {
             geometry_msgs::Point grip;
             grip.x = grip_x;
             grip.y = grip_y;
@@ -95,22 +86,13 @@ void gripCallback(const std_msgs::Bool& msg)
 {
     isGrip = msg.data;
     if (isGrip) {
-        // geometry_msgs::PoseStamped goal;
-        // goal.header.stamp = ros::Time::now();
-        // goal.header.frame_id = "map";
-        // goal.pose.position.x = -2.0;
-        // goal.pose.position.y = 1.0;
-        // tf::Quaternion orientation = tf::createQuaternionFromYaw(goal_theta);
-        // quaternionTFToMsg(orientation, goal.pose.orientation);
-
-        move_base_msgs::MoveBaseActionGoal goal;
+        geometry_msgs::PoseStamped goal;
         goal.header.stamp = ros::Time::now();
-        goal.goal.target_pose.header.stamp = ros::Time::now();
-        goal.goal.target_pose.header.frame_id = "map";
-        goal.goal.target_pose.pose.position.x = -0.3;
-        goal.goal.target_pose.pose.position.y = -0.4;
-        tf::Quaternion orientation = tf::createQuaternionFromYaw(0.0);
-        quaternionTFToMsg(orientation, goal.goal.target_pose.pose.orientation);
+        goal.header.frame_id = "map";
+        goal.pose.position.x = -2.0;
+        goal.pose.position.y = 1.0;
+        tf::Quaternion orientation = tf::createQuaternionFromYaw(goal_theta);
+        quaternionTFToMsg(orientation, goal.pose.orientation);
         pub.publish(goal);
     }
     else {
