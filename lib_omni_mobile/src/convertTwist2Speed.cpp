@@ -23,9 +23,9 @@ void convert2Speed(const geometry_msgs::Twist& twist,
     float vy = twist.linear.y;
     float w = twist.angular.z;
 
-    w1.data = (2*vy + L*w) / R;
-    w2.data = (L*w - sqrt(3)*vx - vy) / R;
-    w3.data = (L*w + sqrt(3)*vx - vy) / R;
+    w1.data = -(2*vy + L*w) / R;
+    w2.data = -(L*w - sqrt(3)*vx - vy) / R;
+    w3.data = -(L*w + sqrt(3)*vx - vy) / R;
 }
 
 int main(int argc, char** argv)
