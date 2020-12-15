@@ -32,7 +32,7 @@ Servo J2Servo;
 Servo J3Servo;
 Servo GripServo;
 
-std_msgs::Float64 theta_msg;
+std_msgs::Int16 theta_msg;
 ros::Publisher chatter("chatter", &theta_msg);
 
 float theta_1 = 0, theta_2 = 0, theta_3 = 0;
@@ -54,6 +54,8 @@ bool is_grip = false;
 
 void moveToGoal()
 {
+  
+  GripServo.write(60);
   for(int i = 0; i < 15; i++)
   {
     J2Servo.write((60-0)/15*i);
@@ -62,10 +64,20 @@ void moveToGoal()
   }
   delay(1000);
   GripServo.write(10);
+  delay(1000);
+  for(int i = 0; i < 15; i++)
+  {
+    J2Servo.write((0-60)/15*i+60);
+    J3Servo.write((0-180)/15*i+180);
+    delay(150);
+  }
+  delay(1000);
 }
 
 void droff()
 {
+  
+  GripServo.write(10);
   for(int i = 0; i < 15; i++)
   {
     J2Servo.write((60-0)/15*i);
@@ -74,10 +86,7 @@ void droff()
   }
   delay(1000);
   GripServo.write(60);
-}
-
-void comeBack()
-{
+  delay(1000);
   for(int i = 0; i < 15; i++)
   {
     J2Servo.write((0-60)/15*i+60);
@@ -85,8 +94,19 @@ void comeBack()
     delay(150);
   }
   delay(1000);
-  GripServo.write(10);
 }
+//
+//void comeBack()
+//{
+//  for(int i = 0; i < 15; i++)
+//  {
+//    J2Servo.write((0-60)/15*i+60);
+//    J3Servo.write((0-180)/15*i+180);
+//    delay(150);
+//  }
+//  delay(1000);
+//  GripServo.write(10);
+//}
 
 void gripStateCallback(const std_msgs::Bool& msg)
 {
@@ -223,6 +243,8 @@ int lastState = 0;
 void stateCallback(const std_msgs::Int16& msg)
 {
     int cmd = msg.data;
+    theta_msg.data = cmd;
+    chatter.publish(&theta_msg);
     if (lastState != cmd)
     {
         switch (cmd)
@@ -234,7 +256,7 @@ void stateCallback(const std_msgs::Int16& msg)
             }
             case 2:
             {
-                comeBack();
+//                comeBack();
                 break;
             }
             case 3:
@@ -256,7 +278,7 @@ void setup()
 //    Serial.begin(57600);
     
     // ros init arduino
-    nh.getHardware()->setBaud(115200);
+    nh.getHardware()->setBaud(57600);
     nh.initNode();
 
     /************************
@@ -302,29 +324,29 @@ void loop()
 //    controlJoint1(theta_1);
 //    controlJoint2(theta_2);
 //    controlJoint3(theta_3);
-    if(Serial.available() > 0)
-    {
-        String cmd = Serial.readString();
-        int a = cmd.toInt();
-        switch (a)
-        {
-          case 1:
-          {
-            moveToGoal();
-            break;
-          }
-          case 2:
-          {
-            comeBack();
-            break;
-          }
-          case 3:
-          {
-            droff();
-            break;
-          }
-        }
-    }
+//    if(Serial.available() > 0)
+//    {
+//        String cmd = Serial.readString();
+//        int a = cmd.toInt();
+//        switch (a)
+//        {
+//          case 1:
+//          {
+//            moveToGoal();
+//            break;
+//          }
+//          case 2:
+//          {
+//            comeBack();
+//            break;
+//          }
+//          case 3:
+//          {
+//            droff();
+//            break;
+//          }
+//        }
+//    }
 
     /*Omni wheel*/
 //    Step1.runSpeed();
@@ -333,5 +355,5 @@ void loop()
 
     // ros spin
     nh.spinOnce();
-    delay(200);
+//    delay(200);
 }
