@@ -6,10 +6,10 @@
 
     <arg name="set_frame_id" default="base_scan"/>
 
-    <!-- <node pkg="hls_lfcd_lds_driver" type="hlds_laser_publisher" name="lib_lds" output="screen">
+    <node pkg="hls_lfcd_lds_driver" type="hlds_laser_publisher" name="lib_lds" output="screen">
         <param name="port" value="/dev/ttyUSB0"/>
         <param name="frame_id" value="$(arg set_frame_id)"/>
-    </node> -->
+    </node>
 
     <arg name="urdf_file" default="$(find xacro)/xacro $(find lib_bringup)/urdf/librarian.urdf.xacro" />
     <param name="robot_description" command="$(arg urdf_file)" />
@@ -20,9 +20,9 @@
         <remap from="/joint_states" to="/librarian/joint_states" />
     </node> -->
     
-    <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
         <remap from="/joint_states" to="/librarian/joint_states" />
-    </node> -->
+    </node>
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
         <remap from="/joint_states" to="/librarian/joint_states" />
