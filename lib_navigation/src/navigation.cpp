@@ -6,6 +6,7 @@
 #include <std_msgs/String.h>
 #include <nav_msgs/Path.h>
 #include <geometry_msgs/PoseWithCovarianceStamped.h>
+#include <move_base_msgs/MoveBaseActionResult.h>
 
 #define PI 3.141592654
 #define V_x 0.2
@@ -25,7 +26,7 @@ bool getGoal = false;
 bool isFirstPath = true;
 
 void goalCallback(const geometry_msgs::PoseStamped& msg);
-// void pathCallback(const nav_msgs::Path& msg);
+void resultCallback(const move_base_msgs::MoveBaseActionResult& msg);
 void odomCallback(const nav_msgs::Odometry& msg);
 void set_robot_move(float x, float z);
 void navigation_process();
@@ -37,24 +38,22 @@ int main(int argc, char** argv)
     ros::NodeHandle nh;
 
     // Init Publisher and Subcriber
-    // cli_makePlan = nh.serviceClient<nav_msgs::GetPlan>("/move_base/make_plan");
-    cli_makePlan = nh.serviceClient<nav_msgs::GetPlan>("/global_plan/planner/make_plan");
     pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
     pubMain = nh.advertise<std_msgs::String>("/Main_state", 100);
     ros::Subscriber goal_subscribe = nh.subscribe("/move_base_simple/goal", 1000, goalCallback);
-    // ros::Subscriber path_subscribe = nh.subscribe("/move_base/Navfn/plan", 1000, pathCallback);
+    ros::Subscriber path_subscribe = nh.subscribe("/move_base/result", 1000, resultCallback);
     ros::Subscriber odom_subscribe = nh.subscribe("/odometry/filtered", 1000, odomCallback);
     
     ros::Rate r(10);
-    while (ros::ok()) {
+    // while (ros::ok()) {
 
-        // If get Goal from Move_base
-        if (getGoal)
-            navigation_process();
+    //     // If get Goal from Move_base
+    //     if (getGoal)
+    //         navigation_process();
 
-        ros::spinOnce();
-		r.sleep();
-    }
+    //     ros::spinOnce();
+	// 	r.sleep();
+    // }
     ros::spin();
     return 0;
 }
@@ -67,11 +66,12 @@ void goalCallback(const geometry_msgs::PoseStamped& msg)
     getGoal = true;
 }
 
-// void pathCallback(const nav_msgs::Path& msg)
-// {
-//     path_x = msg.poses[10].pose.position.x;
-//     path_y = msg.poses[10].pose.position.y;
-// }
+void resultCallback(const move_base_msgs::MoveBaseActionResult& msg)
+{
+    std_msgs::String main_msg;
+    main_msg.data = "Gripper";
+    pubMain.publish(main_msg);
+}
 
 void odomCallback(const nav_msgs::Odometry& msg)
 {
@@ -146,9 +146,6 @@ void navigation_process()
             z = 0;
             isFirstPath = true;
             getGoal = false;
-            std_msgs::String main_msg;
-            main_msg.data = "Gripper";
-            pubMain.publish(main_msg);
         }
     }
     // set_robot_move(x, z);

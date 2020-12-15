@@ -23,9 +23,9 @@ void convert2Speed(const geometry_msgs::Twist& twist,
     float vy = twist.linear.y;
     float w = twist.angular.z;
 
-    w1.data = -(2*vy + L*w) / R;
-    w2.data = -(L*w - sqrt(3)*vx - vy) / R;
-    w3.data = -(L*w + sqrt(3)*vx - vy) / R;
+    w1.data = (2*vy + L*w) / R;
+    w2.data = (L*w - sqrt(3)*vx - vy) / R;
+    w3.data = (L*w + sqrt(3)*vx - vy) / R;
 }
 
 int main(int argc, char** argv)
@@ -60,10 +60,29 @@ int main(int argc, char** argv)
 
         // joint_states.header.stamp = ros::Time::now();
         // joint_states.header.frame_id = "base_link";
-        // joint_states.name = {(char*)"joint_front_wheel", (char*)"joint_left_wheel", (char*)"joint_right_wheel", (char*)"joint_1", (char*)"joint_2", (char*)"joint_3"};
+        // joint_states.name = {(char*)"joint_left_wheel", (char*)"roller_8_left_wheel", (char*)"roller_7_left_wheel", (char*)"roller_6_left_wheel",
+        //                     (char*)"roller_5_left_wheel", (char*)"roller_4_left_wheel", (char*)"roller_3_left_wheel", (char*)"roller_2_left_wheel",
+        //                     (char*)"roller_1_left_wheel", (char*)"roller_16_left_wheel", (char*)"roller_15_left_wheel", (char*)"roller_14_left_wheel",
+        //                     (char*)"roller_13_left_wheel", (char*)"roller_12_left_wheel", (char*)"roller_11_left_wheel", (char*)"roller_10_left_wheel",
+        //                     (char*)"roller_9_left_wheel", (char*)"joint_right_wheel", (char*)"roller_8_right_wheel", (char*)"roller_7_right_wheel",
+        //                     (char*)"roller_6_right_wheel", (char*)"roller_5_right_wheel", (char*)"roller_4_right_wheel", (char*)"roller_3_right_wheel",
+        //                     (char*)"roller_2_right_wheel", (char*)"roller_1_right_wheel", (char*)"roller_16_right_wheel", (char*)"roller_15_right_wheel",
+        //                     (char*)"roller_14_right_wheel", (char*)"roller_13_right_wheel", (char*)"roller_12_right_wheel", (char*)"roller_11_right_wheel",
+        //                     (char*)"roller_10_right_wheel", (char*)"roller_9_right_wheel", (char*)"joint_front_wheel", (char*)"roller_8_front_wheel",
+        //                     (char*)"roller_7_front_wheel", (char*)"roller_6_front_wheel", (char*)"roller_5_front_wheel", (char*)"roller_4_front_wheel",
+        //                     (char*)"roller_3_front_wheel", (char*)"roller_2_front_wheel", (char*)"roller_1_front_wheel", (char*)"roller_16_front_wheel",
+        //                     (char*)"roller_15_front_wheel", (char*)"roller_14_front_wheel", (char*)"roller_13_front_wheel", (char*)"roller_12_front_wheel",
+        //                     (char*)"roller_11_front_wheel", (char*)"roller_10_front_wheel", (char*)"roller_9_front_wheel",
+        //                     (char*)"joint_1", (char*)"joint_2", (char*)"joint_3"};
         
-        // joint_states.position = {joint_states.position[0] + w1.data * dt, joint_states.position[1] + w2.data * dt, joint_states.position[2] + w3.data * dt, 0, 0, 0};
-        // joint_states.velocity = {w1.data, w2.data, w3.data, 0, 0, 0};
+        // joint_states.position = {joint_states.position[0] + w1.data * dt, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        //                         joint_states.position[1] + w2.data * dt, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        //                         joint_states.position[2] + w3.data * dt, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        //                         0, 0, 0};
+        // joint_states.velocity = {w1.data, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        //                         w2.data, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        //                         w3.data, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        //                         0, 0, 0};
 
         // joint_states_pub.publish(joint_states);
 

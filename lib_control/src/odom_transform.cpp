@@ -11,8 +11,8 @@ void velocityCallback(const geometry_msgs::Twist &msg)
 {
     /* Subscribe velocity of robot */
     twist = msg;
-    twist.linear.x = twist.linear.x * 1.5;
-    twist.angular.z = twist.angular.z * 1.19;
+    twist.linear.x = twist.linear.x * 2.2;
+    twist.angular.z = twist.angular.z;
 }
 
 // void imuCallback(const sensor_msgs::Imu &msg)
