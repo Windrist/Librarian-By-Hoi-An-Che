@@ -16,9 +16,9 @@
 
     <!-- <node pkg="lib_omni_mobile" type="controlKeyboard.py" name="control_keyboard" output="screen" /> -->
     <node pkg="lib_omni_mobile" type="convert" name="convert"/>
-    <node name="control_planar_arm" pkg="lib_planar_arm" type="controlPlanarArm.py" output="screen">
+    <!-- <node name="control_planar_arm" pkg="lib_planar_arm" type="controlPlanarArm.py" output="screen">
         <remap from="/joint_states" to="/librarian/joint_states" />
-    </node>
+    </node> -->
     
     <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
         <remap from="/joint_states" to="/librarian/joint_states" />
@@ -46,7 +46,7 @@
 
     <node pkg="rosserial_python" name="control_wheels" type="serial_node.py" output = "screen">
         <param name="port" value="/dev/ttyACM0"/>
-        <param name="baud" value="57600"/> 
+        <param name="baud" value="115200"/> 
     </node>
     <!-- <node pkg="rosserial_python" name="imu_data" type="serial_node.py">
         <param name="port" value="/dev/ttyACM1"/>
