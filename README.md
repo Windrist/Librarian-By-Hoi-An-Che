@@ -6,26 +6,25 @@ Librarian Robot that help you borrow book, return book and ask something else!
 
 ```bash
 Librarian ChatBot with Power Support of Rasa
-Speech to Text by Google Cloud
-Text to Speech by FPT AI
+Speech to Text and Speech to Text by Google Cloud
 Manipulator with 3 DOF
 SLAM and Navigation with Lidar
+Support Gazebo Simulation
 ```
 
 ## Requirements
-- Ubuntu 16.04 / 18.04 / 20.04
+- Ubuntu 16.04 / 18.04
 - ROS - Robot Operating System
-- Python 3
+- Python 3.6
 
 ## Installation
 ```bash
 mkdir -p Workspace/Librarian_ws/src && cd Workspace/Librarian_ws
-python3 -m venv venv
+python3.6 -m venv venv
 . venv/bin/activate
 cd src && git clone https://github.com/Windrist/Librarian-By-Hoi-An-Che
 cd Librarian-By-Hoi-An-Che
 . setup.sh
-cd ../../../.. && catkin_make
 ```
 
 ## Usage

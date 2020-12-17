@@ -11,9 +11,64 @@
 #include <Servo.h>
 #include <AccelStepper.h>
 
-#define PI 3.14159265
-#define USE_USBCON
 ros::NodeHandle nh;
+
+/**************************
+* OMNI WHEELS CONTROLLER *
+**************************/
+#define MAX_SPEED 10000
+#define MAX_ACCEL 10
+
+// Declare all PIN used
+#define MotorInterfaceType 1
+#define step1_pin A0
+#define step1_dir A1
+#define step1_en 38
+#define step2_pin A6
+#define step2_dir A7
+#define step2_en A2
+#define step3_pin 46
+#define step3_dir 48
+#define step3_en A8
+
+// Create Steppers
+AccelStepper Step1(MotorInterfaceType, step1_pin, step1_dir);
+AccelStepper Step2(MotorInterfaceType, step2_pin, step2_dir);
+AccelStepper Step3(MotorInterfaceType, step3_pin, step3_dir);
+
+// Get Stepper Variable
+int convertVelocity2StepSpeed(float vel)
+{
+   /*Convert angular velocity (rad/s) of wheel to steps/s to control Stepper*/
+   int speed = int(vel / (2*PI) * 200) * 16;
+   return speed;
+}
+
+void frontCallback(const std_msgs::Float64& msg)
+{
+   /*Front Wheel velocity call back (rad/s) and control Front Wheel*/
+   int speed = convertVelocity2StepSpeed(msg.data);
+   Step1.setSpeed(speed);
+}
+
+void leftCallback(const std_msgs::Float64& msg)
+{
+   /*Left Wheel velocity call back (rad/s) and control Front Wheel*/
+   int speed = convertVelocity2StepSpeed(msg.data);
+   Step2.setSpeed(speed);
+}
+
+void rightCallback(const std_msgs::Float64& msg)
+{
+   /*Right Wheel velocity call back (rad/s) and control Right Wheel*/
+   int speed = convertVelocity2StepSpeed(msg.data);
+   Step3.setSpeed(speed);
+}
+
+// Subscribe to Stepper Speed Message
+ros::Subscriber<std_msgs::Float64> fw_sub("/librarian/front_wheel_controller/command", &frontCallback);
+ros::Subscriber<std_msgs::Float64> lw_sub("/librarian/left_wheel_controller/command", &leftCallback);
+ros::Subscriber<std_msgs::Float64> rw_sub("/librarian/right_wheel_controller/command", &rightCallback);
 
 /******************************
  * PLANAR ARM 3DOF CONTROLLER *
@@ -25,32 +80,19 @@ ros::NodeHandle nh;
 #define j3_servo_pin 5
 #define grip_servo_pin 6
 
-// Create objects
+// Create Joints
 #define MotorInterfaceType 1
 AccelStepper J1Stepper(MotorInterfaceType, j1_step_pin, j1_step_dir);
 Servo J2Servo;
 Servo J3Servo;
 Servo GripServo;
 
+// Call ROS for Grip State Message
 std_msgs::Int16 theta_msg;
-ros::Publisher chatter("chatter", &theta_msg);
+ros::Subscriber<std_msgs::Int16> state_sub("/Grip_state", &stateCallback);
 
 float theta_1 = 0, theta_2 = 0, theta_3 = 0;
 bool is_grip = false;
-//
-//void jointStateCallback(const sensor_msgs::JointState& msg)
-//{
-//    /*
-//     * Get angle of each joints, get from robot
-//     * Output: 3 angle of theta 1,2,3 (angle)
-//     */
-//     theta_msg.data = 30;
-//    chatter.publish( &theta_msg );
-//    sensor_msgs::JointState joint_state = msg;
-//    theta_1 = joint_state.position[3]/PI*180;
-//    theta_2 = joint_state.position[4]/PI*180;
-//    theta_3 = joint_state.position[5]/PI*180;
-//}
 
 void moveToGoal()
 {
@@ -95,35 +137,6 @@ void droff()
   }
   delay(1000);
 }
-//
-//void comeBack()
-//{
-//  for(int i = 0; i < 15; i++)
-//  {
-//    J2Servo.write((0-60)/15*i+60);
-//    J3Servo.write((0-180)/15*i+180);
-//    delay(150);
-//  }
-//  delay(1000);
-//  GripServo.write(10);
-//}
-
-void gripStateCallback(const std_msgs::Bool& msg)
-{
-    /*
-     * Get grip robot state (pick up/droff off) andf control gripper
-     */
-//    int cmd = Serial.read();
-//    if(cmd == 'true')
-//    {
-//        moveToGoal();
-//    }
-//    else if (cmd == 'false')
-//    {
-//        comeBack();
-//    }
-
-}
 
 void joint1Callback(const std_msgs::Float64& msg)
 {
@@ -141,110 +154,13 @@ void joint1Callback(const std_msgs::Float64& msg)
     last_step = curr_step;              // upda     te last step position
 }
 
-void joint2Callback(const std_msgs::Float64& msg)
-{
-    /*
-     * Control joint 2 - Servo motor
-     */
-    // float theta = msg.data/PI*180;
-    // J2Servo.write(theta);
-}
-
-void joint3Callback(const std_msgs::Float64& msg)
-{
-    /*
-     * Control joint 3 - Servo motor
-     */
-    // float theta = msg.data/PI*180;
-    // J3Servo.write(theta);
-}
-
-// Subscribe joint state data
-//ros::Subscriber<sensor_msgs::JointState> joint_sub("/librarian/joint_states", &jointStateCallback);
-ros::Subscriber<std_msgs::Bool> grip_sub("/grip_state", &gripStateCallback);
-
-ros::Subscriber<std_msgs::Float64> j1_sub("/joint_1", &joint1Callback);
-ros::Subscriber<std_msgs::Float64> j2_sub("/joint_2", &joint2Callback);
-ros::Subscriber<std_msgs::Float64> j3_sub("/joint_3", &joint3Callback);
-
 const int check_pin = 10;
-
-//void calibrate()
-//{
-//    // Calib joint 1
-//    int checked = 0;
-//    while(!checked)
-//    {
-//        checked = digitalRead(check_pin);
-//        J1Stepper.setSpeed(-500);
-//        J1Stepper.run();
-//    }
-////    setCurrentPosition(25*49); // ~45degree
-//    // calib joint 2+3
-//    J2Servo.write(0);
-//    J3Servo.write(0);
-//    delay(5000); // delay 5 seconds
-//}
-//
-///**************************
-// * OMNI WHEELS CONTROLLER *
-//**************************/
-//#define MAX_SPEED 10000
-//#define MAX_ACCEL 10
-//
-//// define Step pins
-//#define MotorInterfaceType 1
-//#define step1_pin A0
-//#define step1_dir A1
-//#define step1_en 38msg
-//#define step2_pin A6
-//#define step2_dir A7
-//#define step2_en A2
-//#define step3_pin 46
-//#define step3_dir 48
-//#define step3_en A8
-//AccelStepper Step1(MotorInterfaceType, step1_pin, step1_dir);
-//AccelStepper Step2(MotorInterfaceType, step2_pin, step2_dir);
-//AccelStepper Step3(MotorInterfaceType, step3_pin, step3_dir);
-//
-//int convertVelocity2StepSpeed(float vel)
-//{
-//    /*Convert angular velocity (rad/s) of wheel to step/s to control Stepper*/
-//    int speed = int(vel/(2*PI)*200) * 16;
-//    return speed;
-//}
-//
-//void speed1StateCallback(const std_msgs::Float64& msg)
-//{
-//    /*Wheel 1 velocity call back (rad/s) and control wheel 1*/
-//    int speed = convertVelocity2StepSpeed(msg.data);
-//    Step1.setSpeed(speed);
-////    Step1.runSpeed();
-//}
-//
-//void speed2StateCallback(const std_msgs::Float64& msg)
-//{
-//    /*Wheel 2 velocity call back (rad/s) and control wheel 2*/
-//    int speed = convertVelocity2StepSpeed(msg.data);
-//    Step2.setSpeed(speed);
-////    Step2.runSpeed();
-//}
-//
-//void speed3StateCallback(const std_msgs::Float64& msg)
-//{
-//    /*Wheel 3 velocity call back (rad/s) and control wheel 3*/
-//    int speed = convertVelocity2StepSpeed(msg.data);
-//    Step3.setSpeed(speed);
-////    Step3.runSpeed();
-//}
 
 int lastState = 0;
 
 void stateCallback(const std_msgs::Int16& msg)
 {
     int cmd = msg.data;
-    theta_msg.data = cmd;
-    chatter.publish(&theta_msg);
     if (lastState != cmd)
     {
         switch (cmd)
@@ -256,7 +172,6 @@ void stateCallback(const std_msgs::Int16& msg)
             }
             case 2:
             {
-//                comeBack();
                 break;
             }
             case 3:
@@ -268,36 +183,28 @@ void stateCallback(const std_msgs::Int16& msg)
     }
 }
 
-//ros::Subscriber<std_msgs::Float64> w1_sub("/librarian/front_wheel_controller/command", &speed1StateCallback);
-//ros::Subscriber<std_msgs::Float64> w2_sub("/librarian/left_wheel_controller/command", &speed2StateCallback);
-//ros::Subscriber<std_msgs::Float64> w3_sub("/librarian/right_wheel_controller/command", &speed3StateCallback);
-ros::Subscriber<std_msgs::Int16> state_sub("/state", &stateCallback);
-
 void setup()
-{
-//    Serial.begin(57600);
-    
-    // ros init arduino
-    nh.getHardware()->setBaud(57600);
+{    
+    // ROS Init Arduino
     nh.initNode();
+    nh.getHardware()->setBaud(57600);
 
     /************************
     * PLANAR ARM 3DOF SETUP *
     ************************/
-//    nh.subscribe(joint_sub);
+    // Subscribe to Grip State Message
+    nh.subscribe(state_sub);
 
     // Declare Checked pin
     pinMode(check_pin, INPUT);
 
     // Declare Plarnar Arm 3DOF params
-    nh.advertise(chatter);
     J1Stepper.setMaxSpeed(10000);
     J2Servo.attach(j2_servo_pin);   // Joint 2
     J3Servo.attach(j3_servo_pin);   // Joint 3
     GripServo.attach(grip_servo_pin);   // Grip
     
-    // Calib robot arm
-//    calibrate();
+    // Calib Robot Arm
     J2Servo.write(0);
     J3Servo.write(0);
     GripServo.write(60);
@@ -305,55 +212,27 @@ void setup()
     /********************
     * OMNI WHEELS SETUP *
     ********************/
-//    nh.subscribe(w1_sub);   
-//    nh.subscribe(w2_sub);
-//    nh.subscribe(w3_sub);
-    nh.subscribe(state_sub);
-//    // Set max Speed for each stepper
-//    Step1.setMaxSpeed(MAX_SPEED);
-//    Step2.setMaxSpeed(MAX_SPEED);
-//    Step3.setMaxSpeed(MAX_SPEED);
-//    Step1.setAcceleration(MAX_ACCEL);
-//    Step2.setAcceleration(MAX_ACCEL);
-//    Step3.setAcceleration(MAX_ACCEL);
+    // Subscribe to Wheels Velocity Message
+    nh.subscribe(fw_sub);   // Front Wheel
+    nh.subscribe(lw_sub);   // Left Wheel
+    nh.subscribe(rw_sub);   // Right Wheel
+
+    // Set Value for each stepper
+    Step1.setMaxSpeed(MAX_SPEED);
+    Step2.setMaxSpeed(MAX_SPEED);
+    Step3.setMaxSpeed(MAX_SPEED);
+    Step1.setAcceleration(MAX_ACCEL);
+    Step2.setAcceleration(MAX_ACCEL);
+    Step3.setAcceleration(MAX_ACCEL);
 }
 
 void loop()
 {
-    /*Planar Arm*/
-//    controlJoint1(theta_1);
-//    controlJoint2(theta_2);
-//    controlJoint3(theta_3);
-//    if(Serial.available() > 0)
-//    {
-//        String cmd = Serial.readString();
-//        int a = cmd.toInt();
-//        switch (a)
-//        {
-//          case 1:
-//          {
-//            moveToGoal();
-//            break;
-//          }
-//          case 2:
-//          {
-//            comeBack();
-//            break;
-//          }
-//          case 3:
-//          {
-//            droff();
-//            break;
-//          }
-//        }
-//    }
+    /*Omni Wheel Send Command*/
+    Step1.runSpeed();
+    Step2.runSpeed();
+    Step3.runSpeed();
 
-    /*Omni wheel*/
-//    Step1.runSpeed();
-//    Step2.runSpeed();
-//    Step3.runSpeed();
-
-    // ros spin
+    // ROS Spin
     nh.spinOnce();
-//    delay(200);
 }
