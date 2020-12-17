@@ -15,12 +15,12 @@ SLAM and Navigation with Lidar
 ## Requirements
 - Ubuntu 16.04 / 18.04 / 20.04
 - ROS - Robot Operating System
-- Python 3
+- Python 3.6
 
 ## Installation
 ```bash
 mkdir -p Workspace/Librarian_ws/src && cd Workspace/Librarian_ws
-python3 -m venv venv
+python3.6 -m venv venv
 . venv/bin/activate
 cd src && git clone https://github.com/Windrist/Librarian-By-Hoi-An-Che
 cd Librarian-By-Hoi-An-Che
