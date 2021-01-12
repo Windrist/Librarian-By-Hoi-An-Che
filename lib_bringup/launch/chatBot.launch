@@ -11,7 +11,6 @@
 
     <!-- Run Chatbot -->
     <node pkg="lib_chatbot" name="Chatbot" type="connect_rasa.py" output="screen" /> 
-    <!-- <node pkg="lib_bringup" name="Demo" type="demo.py" output="screen" /> -->
   
 </launch>
 

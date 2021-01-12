@@ -15,5 +15,9 @@
         <arg name="debug" value="false"/>
     </include>
 
+    <rosparam file="$(find lib_bringup)/config/librarian.yaml" command="load" />
+    <node name="control_spawn" pkg="controller_manager" type="spawner" respawn="false" ns="/librarian"
+        output="screen" args="joint_state_controller left_wheel_controller right_wheel_controller front_wheel_controller" />
+
     <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model librarian -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
 </launch>

@@ -136,7 +136,7 @@ def compute_joint_sets(current, goal):
                 joint_set[j] = goal[i] - 0.5*c2*(tf-dt*j)**2
         
         joint_sets[i] = joint_set
-    print(joint_sets)
+    print(list(joint_sets))
     return np.array(joint_sets)
 
 def computing():
@@ -256,9 +256,9 @@ def ros_control():
 
 if __name__ == '__main__':    
     try:
-        ros_control()
+        # ros_control()
         # inverse_kinematic(arm_length, goal)
-        # joint_sets = compute_joint_sets(np.array([0,0,0]), np.array([3.14,2.51,3.00]))
+        joint_sets = compute_joint_sets(np.array([0,0,40]), np.array([75,180,10]))
         # for i in range (5):
         #     print(joint_sets[:,i])
         
