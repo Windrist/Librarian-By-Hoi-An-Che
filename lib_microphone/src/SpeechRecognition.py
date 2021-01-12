@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import speech_recognition as sr
 import rospy
 import time
@@ -24,7 +25,7 @@ class SoundRecognition(object):
         self.mic = Chatbot()
         self.play = String()
         self.state = "Idle"
-        self.json_key = open(self.file + '/../file/Librarian.json').read()
+        self.json_key = open(self.file + '/../../lib_bringup/config/Librarian.json').read()
         self.r = sr.Recognizer()
         self.r.energy_threshold = 300
         self.count_again = 0
@@ -47,7 +48,7 @@ class SoundRecognition(object):
                 print("Got Something!")
 
                 # Get Text from Google API
-                text = self.r.recognize_google(audio, None, "vi-VN")
+                text = self.r.recognize_google_cloud(audio, self.json_key, "vi-VN")
                 text = text.lower()
                 print("I heard: " + text)
 
@@ -77,7 +78,7 @@ class SoundRecognition(object):
                 print("Got Something!")
 
                 # Get Text from Google API
-                text = self.r.recognize_google(audio, None, "vi-VN")
+                text = self.r.recognize_google_cloud(audio, self.json_key, "vi-VN")
                 text = text.lower()
                 print("I heard: " + text)
 

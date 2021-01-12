@@ -1,4 +1,4 @@
-sudo apt install -y ros-$ROS_DISTRO-navigation ros-$ROS_DISTRO-effort-controllers ros-$ROS_DISTRO-amcl ros-$ROS_DISTRO-laser-filters ros-$ROS_DISTRO-hls-lfcd-lds-driver portaudio19-dev
+sudo apt install -y mpg123 ros-$ROS_DISTRO-navigation ros-$ROS_DISTRO-effort-controllers ros-$ROS_DISTRO-amcl ros-$ROS_DISTRO-laser-filters ros-$ROS_DISTRO-hls-lfcd-lds-driver portaudio19-dev
 cd ../.. && catkin_make
 . devel/setup.bash
 cd src/Librarian-By-Hoi-An-Che/lib_run

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="planar_arm">
 	<xacro:property name="offset" value="0.02" />
-    <xacro:property name="base_link_length" value="0.05" />
-    <xacro:property name="base_link_radius" value="0.08" />
+    <xacro:property name="base_link_length" value="0.124" />
+    <xacro:property name="base_link_radius" value="0.14256" />
     <xacro:property name="link_width" value="0.02" />
 	<xacro:property name="link1_length" value="0.20" />
 	<xacro:property name="link2_length" value="0.20" />

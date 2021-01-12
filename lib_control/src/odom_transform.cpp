@@ -85,7 +85,7 @@ int main(int argc, char** argv)
 
         // Reformat Time
         last_time = current_time;
-        last_theta = theta;
+        // last_theta = theta;
         r.sleep();
     }
 }
